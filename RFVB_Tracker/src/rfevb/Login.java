@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Color;
@@ -32,8 +33,13 @@ public class Login extends JFrame implements ActionListener{
 	private JButton btnAceptar; 
 	
 	/*USUARIOS Y CONTRASEÑAS*/
-	private String admin_user = "admin_rfvb";
-	private String admin_password = "RFVB@4dm1n*25";
+	
+	/*
+	  	private String admin_user = "admin_rfvb";
+		private String admin_password = "RFVB@4dm1n*25";
+	*/
+	private String admin_user = "admin";
+	private String admin_password = "admin";
 	private String delegado_user = "delegado_rfvb";
 	private String delegado_password ="Jorn4da#Delg";
 	private String anonimo_user = "anonimo";
@@ -170,24 +176,29 @@ public class Login extends JFrame implements ActionListener{
 		         * equals que es el metodo que usa Java para comparar Strings*/
 		        if(username.equals(admin_user)) {
 		        	if(password.equals(admin_password)) {
+		        		/*Abre el panel admin y cierra la ventana de login*/
+		        		PanelAdmin panelAdmin = new PanelAdmin();
+		        		panelAdmin.setVisible(true);
+		        		this.dispose();
 		        		//System.out.println("Bienvenido admin");
 		        	} else {
-		        		System.out.println("Contraseña incorrecta");
+						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		        	}
 		        } else if(username.equals(delegado_user)){
 		        	if(password.equals(delegado_password)) {
 			        	System.out.println("Bienvenido delegado");
 		        	} else {
-		        		System.out.println("Contraseña incorrecta");
+						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		        	}
 		        } else if(username.equals(anonimo_user)) {
 		        	if(password.equals(anonimo_password)) {
 			        	System.out.println("Bienvenido anonimo");
 		        	} else {
-		        		System.out.println("Contraseña incorrecta");
+						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		        	}
 		        } else {
-		        	System.out.println("Usuario incorrecto");
+					JOptionPane.showMessageDialog(this, (String)"Error. Usuario incorrecto","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
+		        	//System.out.println("Usuario incorrecto");
 		        }
 		        
 		  } else if(o == txtUsernameValue) {
