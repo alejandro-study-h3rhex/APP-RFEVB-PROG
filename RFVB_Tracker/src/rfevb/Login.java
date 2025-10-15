@@ -203,7 +203,10 @@ public class Login extends JFrame implements ActionListener{
 		        	}
 		        } else if(username.equals(anonimo_user)) {
 		        	if(password.equals(anonimo_password)) {
-			        	System.out.println("Bienvenido anonimo");
+		        		PanelAnonimos panelAnonimos = new PanelAnonimos();
+		        		panelAnonimos.setVisible(true);
+		        		this.dispose();
+		        		//System.out.println("Bienvenido anonimo");
 		        	} else {
 						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		        	}
