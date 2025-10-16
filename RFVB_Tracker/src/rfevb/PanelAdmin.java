@@ -1,6 +1,5 @@
 package rfevb;
 
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -135,7 +134,7 @@ public class PanelAdmin extends JFrame  implements ActionListener{
 			gestionLigas.setVisible(true);
 			this.dispose();
 		} else if(o == btnGestionEquipos) {
-			GestionEquipos gestionEquipos = new GestionEquipos();
+			GestionJornadas gestionEquipos = new GestionJornadas();
 			gestionEquipos.setVisible(true);
 			this.dispose();
 		}

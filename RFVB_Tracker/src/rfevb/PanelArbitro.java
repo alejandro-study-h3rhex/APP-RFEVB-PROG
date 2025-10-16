@@ -1,6 +1,5 @@
 package rfevb;
 
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -26,7 +25,8 @@ public class PanelArbitro extends JFrame  implements ActionListener{
 	
 	/*BOTONES*/
 	JButton btnCerrarsesion;
-	JButton btnGestionLigas;
+	JButton btnGestionJornadas;
+	JButton btnGestionClasificacion;
 
 
 	/**
@@ -69,14 +69,10 @@ public class PanelArbitro extends JFrame  implements ActionListener{
 		mainFramePanelArbitro.add(optionPanel, BorderLayout.CENTER);
 		
 		// --- GESTION EQUIPOS ---
-		JButton btnGestionEquipos = new JButton("Gestionar Clasificación");
-		btnGestionEquipos.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnGestionEquipos.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnGestionEquipos.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        // Lógica de acción para Gestion Equipos
-		    }
-		});
+		btnGestionClasificacion = new JButton("Gestionar Clasificación");
+		btnGestionClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnGestionClasificacion.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnGestionClasificacion.addActionListener(this);
 		// Cargar la imagen
 		ImageIcon iconoGestionEquipos = new ImageIcon(PanelArbitro.class.getResource("assets/Gestion-Clasificacion.png"));
 		Image imagenGestionEquipos = iconoGestionEquipos.getImage();
@@ -86,15 +82,15 @@ public class PanelArbitro extends JFrame  implements ActionListener{
 		ImageIcon iconoEscaladoGestionEquipos = new ImageIcon(imagenEscaladaGestionEquipos);
 
 		// Asignar el icono escalado al botón correcto
-		btnGestionEquipos.setIcon(iconoEscaladoGestionEquipos);
+		btnGestionClasificacion.setIcon(iconoEscaladoGestionEquipos);
 
 		// ***** APLICAR TRANSPARENCIA *****
-		btnGestionEquipos.setContentAreaFilled(false); // Quita el color de fondo
-		btnGestionEquipos.setBorderPainted(false);    // Quita el borde
+		btnGestionClasificacion.setContentAreaFilled(false); // Quita el color de fondo
+		btnGestionClasificacion.setBorderPainted(false);    // Quita el borde
 		// **********************************
 
-		btnGestionEquipos.setHorizontalAlignment(SwingConstants.TRAILING);
-		optionPanel.add(btnGestionEquipos);
+		btnGestionClasificacion.setHorizontalAlignment(SwingConstants.TRAILING);
+		optionPanel.add(btnGestionClasificacion);
 
 
 		// --- GESTION LIGAS ---
@@ -107,25 +103,21 @@ public class PanelArbitro extends JFrame  implements ActionListener{
 		ImageIcon iconoEscaladoGestionLigas = new ImageIcon(imagenEscaladaGestionLigas);
 
 		// Crear y configurar el botón LIGAS (Asegúrate de inicializarlo aquí)
-		JButton btnGestionLigas = new JButton();
-		btnGestionLigas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnGestionLigas.setText("Gestionar Jornadas");
-		btnGestionLigas.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        // Lógica de acción para Gestion Ligas
-		    }
-		});
+		btnGestionJornadas = new JButton();
+		btnGestionJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnGestionJornadas.setText("Gestionar Jornadas");
+		btnGestionJornadas.addActionListener(this);
 
 		// Asignar el icono escalado al botón
-		btnGestionLigas.setIcon(iconoEscaladoGestionLigas);
+		btnGestionJornadas.setIcon(iconoEscaladoGestionLigas);
 
 		// ***** APLICAR TRANSPARENCIA *****
-		btnGestionLigas.setContentAreaFilled(false); // Quita el color de fondo
-		btnGestionLigas.setBorderPainted(false);    // Quita el borde
+		btnGestionJornadas.setContentAreaFilled(false); // Quita el color de fondo
+		btnGestionJornadas.setBorderPainted(false);    // Quita el borde
 		// **********************************
 
-		btnGestionLigas.setHorizontalAlignment(SwingConstants.CENTER);
-		optionPanel.add(btnGestionLigas);
+		btnGestionJornadas.setHorizontalAlignment(SwingConstants.CENTER);
+		optionPanel.add(btnGestionJornadas);
 
 	}
 
@@ -136,6 +128,11 @@ public class PanelArbitro extends JFrame  implements ActionListener{
     		/*Cierra el panel admin y abre la ventana de login*/
 			Login login = new Login();
 			login.setVisible(true);
+			this.dispose();
+		}
+		if(o == btnGestionJornadas) {
+			GestionJornadas gestionJornadas = new GestionJornadas();
+			gestionJornadas.setVisible(true);
 			this.dispose();
 		}
 		
