@@ -22,44 +22,33 @@ import javax.swing.SwingConstants;
 public class PanelAdmin extends JFrame  implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private JPanel mainFramePanelAdmin;
 	
 	/*BOTONES*/
 	JButton btnCerrarsesion;
 	JButton btnGestionLigas;
+	JButton btnGestionEquipos;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PanelAdmin frame = new PanelAdmin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
 	public PanelAdmin() {
+		// NO PERMITE HACER MAS GRANDE O MAS PEQUEÑA LA PANTALLA
 		setResizable(false);
+		//LOGO Y TITULO
 		setTitle("RFEVB Tracker - Panel Admininstrador");
+		// OBTIENE EL RECURSO DE LA DIRECCION RELATIVA
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PanelAdmin.class.getResource("assets/favicon/web-app-manifest-512x512.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 401);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		mainFramePanelAdmin = new JPanel();
+		mainFramePanelAdmin.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(mainFramePanelAdmin);
+		mainFramePanelAdmin.setLayout(new BorderLayout(0, 0));
 		
 		JPanel northPanel = new JPanel();
-		contentPane.add(northPanel, BorderLayout.NORTH);
+		mainFramePanelAdmin.add(northPanel, BorderLayout.NORTH);
 		
 		JLabel lbl_Icono = new JLabel("");
 		lbl_Icono.setIcon(new ImageIcon(PanelAdmin.class.getResource("assets/favicon/icono-federacion.png")));
@@ -78,17 +67,13 @@ public class PanelAdmin extends JFrame  implements ActionListener{
 		northPanel.add(btnCerrarsesion);
 		
 		JPanel optionPanel = new JPanel();
-		contentPane.add(optionPanel, BorderLayout.CENTER);
+		mainFramePanelAdmin.add(optionPanel, BorderLayout.CENTER);
 		
 		// --- GESTION EQUIPOS ---
-		JButton btnGestionEquipos = new JButton("Gestionar Equipos");
+		btnGestionEquipos = new JButton("Gestionar Equipos");
 		btnGestionEquipos.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnGestionEquipos.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnGestionEquipos.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        // Lógica de acción para Gestion Equipos
-		    }
-		});
+		btnGestionEquipos.addActionListener(this);
 		// Cargar la imagen
 		ImageIcon iconoGestionEquipos = new ImageIcon(PanelAdmin.class.getResource("assets/Gestion-Equipos.png"));
 		Image imagenGestionEquipos = iconoGestionEquipos.getImage();
@@ -119,14 +104,10 @@ public class PanelAdmin extends JFrame  implements ActionListener{
 		ImageIcon iconoEscaladoGestionLigas = new ImageIcon(imagenEscaladaGestionLigas);
 
 		// Crear y configurar el botón LIGAS (Asegúrate de inicializarlo aquí)
-		JButton btnGestionLigas = new JButton(); // Nuevo botón
+		btnGestionLigas = new JButton(); // Nuevo botón
 		btnGestionLigas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnGestionLigas.setText("Gestionar Ligas");
-		btnGestionLigas.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        // Lógica de acción para Gestion Ligas
-		    }
-		});
+		btnGestionLigas.addActionListener(this);
 
 		// Asignar el icono escalado al botón
 		btnGestionLigas.setIcon(iconoEscaladoGestionLigas);
@@ -148,6 +129,14 @@ public class PanelAdmin extends JFrame  implements ActionListener{
     		/*Cierra el panel admin y abre la ventana de login*/
 			Login login = new Login();
 			login.setVisible(true);
+			this.dispose();
+		} else if(o == btnGestionLigas) {
+			GestionLigas gestionLigas = new GestionLigas();
+			gestionLigas.setVisible(true);
+			this.dispose();
+		} else if(o == btnGestionEquipos) {
+			GestionEquipos gestionEquipos = new GestionEquipos();
+			gestionEquipos.setVisible(true);
 			this.dispose();
 		}
 		
