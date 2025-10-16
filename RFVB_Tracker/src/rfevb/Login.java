@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Color;
@@ -32,10 +33,23 @@ public class Login extends JFrame implements ActionListener{
 	private JButton btnAceptar; 
 	
 	/*USUARIOS Y CONTRASEÑAS*/
-	private String admin_user = "admin_rfvb";
-	private String admin_password = "RFVB@4dm1n*25";
-	private String delegado_user = "delegado_rfvb";
-	private String delegado_password ="Jorn4da#Delg";
+	
+	/*
+	 	CREDENCIALES REALES
+	  	
+	  	private String admin_user = "admin_rfvb";
+		private String admin_password = "RFVB@4dm1n*25";
+		
+		private String arbitro_user = "arbitro_rfvb";
+		private String arbitro_password ="Jorn4da#Delg";
+		
+	*/
+	// Estas son claves que usamos para simplificar tareas en las etapas de desarrollo
+	private String admin_user = "admin";
+	private String admin_password = "admin";
+	private String arbitro_user = "arbitro";
+	private String arbitro_password ="arbitro";
+	
 	private String anonimo_user = "anonimo";
 	private String anonimo_password = "anonimo";
 	
@@ -67,7 +81,7 @@ public class Login extends JFrame implements ActionListener{
 		setTitle("RFEVB Tracker");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("assets/favicon/web-app-manifest-512x512.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 614, 311);
+		setBounds(100, 100, 680, 310);
 		mainFrameLogin = new JPanel();
 		mainFrameLogin.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(mainFrameLogin);
@@ -78,7 +92,7 @@ public class Login extends JFrame implements ActionListener{
 		
 		JLabel lbl_Icono = new JLabel("");
 		lbl_Icono.setFont(new Font("Tahoma", Font.PLAIN, 6));
-		lbl_Icono.setIcon(new ImageIcon("C:\\Users\\672252K\\Desktop\\RETO1-DATANOVA\\APP-RFEVB\\RFVB_Tracker\\src\\rfevb\\assets\\favicon\\icono-federacion.png"));
+		lbl_Icono.setIcon(new ImageIcon(Login.class.getResource("assets/favicon/icono-federacion.png")));
 		northPanel.add(lbl_Icono);
 		
 		JLabel lbl_titulo_federacion = new JLabel("Real Federacion Española de Voleibol");
@@ -170,24 +184,35 @@ public class Login extends JFrame implements ActionListener{
 		         * equals que es el metodo que usa Java para comparar Strings*/
 		        if(username.equals(admin_user)) {
 		        	if(password.equals(admin_password)) {
+		        		/*Abre el panel admin y cierra la ventana de login*/
+		        		PanelAdmin panelAdmin = new PanelAdmin();
+		        		panelAdmin.setVisible(true);
+		        		this.dispose();
 		        		//System.out.println("Bienvenido admin");
 		        	} else {
-		        		System.out.println("Contraseña incorrecta");
+						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		        	}
-		        } else if(username.equals(delegado_user)){
-		        	if(password.equals(delegado_password)) {
-			        	System.out.println("Bienvenido delegado");
+		        } else if(username.equals(arbitro_user)){
+		        	if(password.equals(arbitro_password)) {
+		        		PanelArbitro panelArbitro = new PanelArbitro();
+		        		panelArbitro.setVisible(true);
+		        		this.dispose();
+			        	//System.out.println("Bienvenido delegado");
 		        	} else {
-		        		System.out.println("Contraseña incorrecta");
+						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		        	}
 		        } else if(username.equals(anonimo_user)) {
 		        	if(password.equals(anonimo_password)) {
-			        	System.out.println("Bienvenido anonimo");
+		        		PanelAnonimos panelAnonimos = new PanelAnonimos();
+		        		panelAnonimos.setVisible(true);
+		        		this.dispose();
+		        		//System.out.println("Bienvenido anonimo");
 		        	} else {
-		        		System.out.println("Contraseña incorrecta");
+						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		        	}
 		        } else {
-		        	System.out.println("Usuario incorrecto");
+					JOptionPane.showMessageDialog(this, (String)"Error. Usuario incorrecto","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
+		        	//System.out.println("Usuario incorrecto");
 		        }
 		        
 		  } else if(o == txtUsernameValue) {
