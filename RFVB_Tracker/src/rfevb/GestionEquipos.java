@@ -77,7 +77,7 @@ public class GestionEquipos extends JFrame implements ActionListener{
 		lbl_titulo_federacion.setForeground(new Color(0, 128, 192)); 
 		northPanel.add(lbl_titulo_federacion);
 		
-		btnVolverPanel = new JButton("Cerrar Sesion");
+		btnVolverPanel = new JButton("Volver");
 		btnVolverPanel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnVolverPanel.setBackground(amarilloPrimero);
 		btnVolverPanel.setForeground(azulSegundo);
