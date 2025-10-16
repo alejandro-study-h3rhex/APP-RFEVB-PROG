@@ -133,7 +133,11 @@ public class PanelAdmin extends JFrame  implements ActionListener{
 		} else if(o == btnGestionLigas) {
 			GestionLigas gestionLigas = new GestionLigas();
 			gestionLigas.setVisible(true);
-			this.setVisible(false);
+			this.dispose();
+		} else if(o == btnGestionEquipos) {
+			GestionEquipos gestionEquipos = new GestionEquipos();
+			gestionEquipos.setVisible(true);
+			this.dispose();
 		}
 		
 	}
