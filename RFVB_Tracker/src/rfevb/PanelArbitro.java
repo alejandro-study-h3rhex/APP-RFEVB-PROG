@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
 public class PanelArbitro extends JFrame  implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private JPanel mainFramePanelArbitro;
 	
 	/*BOTONES*/
 	JButton btnCerrarsesion;
@@ -48,18 +48,21 @@ public class PanelArbitro extends JFrame  implements ActionListener{
 	 * Create the frame.
 	 */
 	public PanelArbitro() {
+		// NO PERMITE HACER MAS GRANDE O MAS PEQUEÑA LA PANTALLA
 		setResizable(false);
+		//LOGO Y TITULO
 		setTitle("RFEVB Tracker - Panel Arbitraje");
+		// OBTIENE EL RECURSO DE LA DIRECCION RELATIVA
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PanelArbitro.class.getResource("assets/favicon/web-app-manifest-512x512.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 401);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		mainFramePanelArbitro = new JPanel();
+		mainFramePanelArbitro.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(mainFramePanelArbitro);
+		mainFramePanelArbitro.setLayout(new BorderLayout(0, 0));
 		
 		JPanel northPanel = new JPanel();
-		contentPane.add(northPanel, BorderLayout.NORTH);
+		mainFramePanelArbitro.add(northPanel, BorderLayout.NORTH);
 		
 		JLabel lbl_Icono = new JLabel("");
 		lbl_Icono.setIcon(new ImageIcon(PanelArbitro.class.getResource("assets/favicon/icono-federacion.png")));
@@ -78,7 +81,7 @@ public class PanelArbitro extends JFrame  implements ActionListener{
 		northPanel.add(btnCerrarsesion);
 		
 		JPanel optionPanel = new JPanel();
-		contentPane.add(optionPanel, BorderLayout.CENTER);
+		mainFramePanelArbitro.add(optionPanel, BorderLayout.CENTER);
 		
 		// --- GESTION EQUIPOS ---
 		JButton btnGestionEquipos = new JButton("Gestionar Clasificación");

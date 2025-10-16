@@ -77,8 +77,11 @@ public class Login extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public Login() {
+		// NO PERMITE HACER MAS GRANDE O MAS PEQUEÑA LA PANTALLA
 		setResizable(false);
+		//LOGO Y TITULO
 		setTitle("RFEVB Tracker");
+		// OBTIENE EL RECURSO DE LA DIRECCION RELATIVA
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("assets/favicon/web-app-manifest-512x512.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 310);
