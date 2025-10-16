@@ -1,6 +1,5 @@
 package rfevb;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -8,6 +7,8 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -21,33 +22,23 @@ import java.awt.Insets;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-public class GestionLigas extends JFrame {
-
+public class GestionLigas extends JFrame  implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel mainFrameGestionLigas;
-	private JTextField txtCodEq;
-	private JTextField txtEquipo;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GestionLigas frame = new GestionLigas();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
+	/*Botones*/
+	private JButton btnVolverPanel; 
+	
+	/*JFields*/
+	private JTextField txtCodLiga;
+	private JTextField txtLiga;
+	
 	/**
 	 * Create the frame.
 	 */
 	public GestionLigas() {
+	
+	
 		// NO PERMITE HACER MAS GRANDE O MAS PEQUEÑA LA PANTALLA
 		setResizable(false);
 		// LOGO Y TITULO
@@ -55,6 +46,7 @@ public class GestionLigas extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GestionLigas.class.getResource("assets/favicon/web-app-manifest-512x512.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 742, 480); 
+		setVisible(true);
 		
 		// COLORES
 		Color azulPrimero = new Color(0, 128, 192); 
@@ -84,11 +76,13 @@ public class GestionLigas extends JFrame {
 		lbl_titulo_federacion.setForeground(new Color(0, 128, 192)); 
 		northPanel.add(lbl_titulo_federacion);
 		
-		JButton btnCerrarsesion = new JButton("Cerrar Sesion");
-		btnCerrarsesion.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCerrarsesion.setBackground(amarilloPrimero);
-		btnCerrarsesion.setForeground(azulSegundo);
-		northPanel.add(btnCerrarsesion);		
+		btnVolverPanel = new JButton("Volver");
+		btnVolverPanel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnVolverPanel.setBackground(amarilloPrimero);
+		btnVolverPanel.setForeground(azulSegundo);
+		btnVolverPanel.addActionListener(this);
+		northPanel.add(btnVolverPanel);	
+		
 		
 		mainFrameGestionLigas.add(northPanel, BorderLayout.NORTH);
 
@@ -125,14 +119,14 @@ public class GestionLigas extends JFrame {
 		gbc_lbl_CodEq.gridy = 0;
 		inputAndButtonsPanel.add(lbl_CodEq, gbc_lbl_CodEq);
 		
-		txtCodEq = new JTextField();
-		txtCodEq.setColumns(10);
+		txtCodLiga = new JTextField();
+		txtCodLiga.setColumns(10);
 		GridBagConstraints gbc_txtCodEq = new GridBagConstraints();
 		gbc_txtCodEq.insets = new Insets(0, 0, 5, 5);
 		gbc_txtCodEq.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtCodEq.gridx = 1;
 		gbc_txtCodEq.gridy = 0;
-		inputAndButtonsPanel.add(txtCodEq, gbc_txtCodEq);
+		inputAndButtonsPanel.add(txtCodLiga, gbc_txtCodEq);
 		
 		JLabel lbl_Equipo = new JLabel("LIGA:");
 		lbl_Equipo.setBackground(new Color(217, 217, 217));
@@ -145,14 +139,14 @@ public class GestionLigas extends JFrame {
 		gbc_lbl_Equipo.gridy = 0;
 		inputAndButtonsPanel.add(lbl_Equipo, gbc_lbl_Equipo);
 		
-		txtEquipo = new JTextField();
-		txtEquipo.setColumns(10);
+		txtLiga = new JTextField();
+		txtLiga.setColumns(10);
 		GridBagConstraints gbc_txtEquipo = new GridBagConstraints();
 		gbc_txtEquipo.insets = new Insets(0, 0, 5, 5);
 		gbc_txtEquipo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEquipo.gridx = 3;
 		gbc_txtEquipo.gridy = 0;
-		inputAndButtonsPanel.add(txtEquipo, gbc_txtEquipo);
+		inputAndButtonsPanel.add(txtLiga, gbc_txtEquipo);
 		
 		// BOTONES
 		JButton btnInsertar = new JButton("Insertar");
@@ -267,5 +261,17 @@ public class GestionLigas extends JFrame {
 		panelSur.add(listContainer);
 		
 		panelGestion.add(panelSur, BorderLayout.SOUTH);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		Object o = ae.getSource();
+		if(o == btnVolverPanel) {
+			PanelAdmin panelAdmin = new PanelAdmin();
+			panelAdmin.setVisible(true);
+			this.dispose();
+		}
+		
+		
 	}
 }

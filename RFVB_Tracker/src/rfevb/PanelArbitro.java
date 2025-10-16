@@ -28,21 +28,6 @@ public class PanelArbitro extends JFrame  implements ActionListener{
 	JButton btnCerrarsesion;
 	JButton btnGestionLigas;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PanelArbitro frame = new PanelArbitro();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
