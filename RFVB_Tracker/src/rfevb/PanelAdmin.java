@@ -27,6 +27,7 @@ public class PanelAdmin extends JFrame  implements ActionListener{
 	/*BOTONES*/
 	JButton btnCerrarsesion;
 	JButton btnGestionLigas;
+	JButton btnGestionEquipos;
 
 	/**
 	 * Launch the application.
@@ -84,14 +85,10 @@ public class PanelAdmin extends JFrame  implements ActionListener{
 		mainFramePanelAdmin.add(optionPanel, BorderLayout.CENTER);
 		
 		// --- GESTION EQUIPOS ---
-		JButton btnGestionEquipos = new JButton("Gestionar Equipos");
+		btnGestionEquipos = new JButton("Gestionar Equipos");
 		btnGestionEquipos.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnGestionEquipos.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnGestionEquipos.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        // Lógica de acción para Gestion Equipos
-		    }
-		});
+		btnGestionEquipos.addActionListener(this);
 		// Cargar la imagen
 		ImageIcon iconoGestionEquipos = new ImageIcon(PanelAdmin.class.getResource("assets/Gestion-Equipos.png"));
 		Image imagenGestionEquipos = iconoGestionEquipos.getImage();
@@ -122,14 +119,10 @@ public class PanelAdmin extends JFrame  implements ActionListener{
 		ImageIcon iconoEscaladoGestionLigas = new ImageIcon(imagenEscaladaGestionLigas);
 
 		// Crear y configurar el botón LIGAS (Asegúrate de inicializarlo aquí)
-		JButton btnGestionLigas = new JButton(); // Nuevo botón
+		btnGestionLigas = new JButton(); // Nuevo botón
 		btnGestionLigas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnGestionLigas.setText("Gestionar Ligas");
-		btnGestionLigas.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        // Lógica de acción para Gestion Ligas
-		    }
-		});
+		btnGestionLigas.addActionListener(this);
 
 		// Asignar el icono escalado al botón
 		btnGestionLigas.setIcon(iconoEscaladoGestionLigas);
@@ -152,6 +145,10 @@ public class PanelAdmin extends JFrame  implements ActionListener{
 			Login login = new Login();
 			login.setVisible(true);
 			this.dispose();
+		} else if(o == btnGestionLigas) {
+			GestionLigas gestionLigas = new GestionLigas();
+			gestionLigas.setVisible(true);
+			this.setVisible(false);
 		}
 		
 	}
