@@ -8,6 +8,9 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -21,29 +24,19 @@ import java.awt.Insets;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-public class GestionEquipos extends JFrame {
+public class GestionEquipos extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel mainFrameGestionLigas;
+	
+	/*Botones*/
+	private JButton btnVolverPanel; 
+	
+	/*JFields*/
 	private JTextField txtCodEq;
 	private JTextField txtEquipo;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GestionEquipos frame = new GestionEquipos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -84,11 +77,12 @@ public class GestionEquipos extends JFrame {
 		lbl_titulo_federacion.setForeground(new Color(0, 128, 192)); 
 		northPanel.add(lbl_titulo_federacion);
 		
-		JButton btnCerrarsesion = new JButton("Cerrar Sesion");
-		btnCerrarsesion.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCerrarsesion.setBackground(amarilloPrimero);
-		btnCerrarsesion.setForeground(azulSegundo);
-		northPanel.add(btnCerrarsesion);		
+		btnVolverPanel = new JButton("Cerrar Sesion");
+		btnVolverPanel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnVolverPanel.setBackground(amarilloPrimero);
+		btnVolverPanel.setForeground(azulSegundo);
+		btnVolverPanel.addActionListener(this);
+		northPanel.add(btnVolverPanel);		
 		
 		mainFrameGestionLigas.add(northPanel, BorderLayout.NORTH);
 
@@ -267,5 +261,17 @@ public class GestionEquipos extends JFrame {
 		panelSur.add(listContainer);
 		
 		panelGestion.add(panelSur, BorderLayout.SOUTH);
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		Object o = ae.getSource();
+		if(o == btnVolverPanel) {
+			PanelAdmin panelAdmin = new PanelAdmin();
+			panelAdmin.setVisible(true);
+			this.dispose();
+		}
+		
 	}
 }
