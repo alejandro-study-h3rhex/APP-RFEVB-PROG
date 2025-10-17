@@ -22,6 +22,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.ListModel;
 
 public class GestionClasificacion extends JFrame implements ActionListener{
 
@@ -364,34 +365,130 @@ public class GestionClasificacion extends JFrame implements ActionListener{
 		String[] equipos = {"CV Zaragoza", "CV San Fernando", "Valladolid CV", "CV Torrelavega", "CV Palma", "CV Rivas"};
 		
 		// MODELO DE LAS JLIST
-		DefaultListModel<String> modelCodigos = new DefaultListModel<>();
+		DefaultListModel<String> modelCodLiga_Masc = new DefaultListModel<>();
 		for (String cod : codigos) {
-			modelCodigos.addElement(cod);
+			modelCodLiga_Masc.addElement(cod);
 		}
 		
-		DefaultListModel<String> modelEquipos = new DefaultListModel<>();
+		DefaultListModel<String> modelEquipos_Masc= new DefaultListModel<>();
 		for (String eq : equipos) {
-			modelEquipos.addElement(eq);
+			modelEquipos_Masc.addElement(eq);
+		}
+		
+		DefaultListModel<String> modelPTOS_Masc = new DefaultListModel<>();
+		for (String eq : equipos) {
+			modelPTOS_Masc.addElement(eq);
+		}
+		
+		DefaultListModel<String> modelPJ_Masc = new DefaultListModel<>();
+		for (String eq : equipos) {
+			modelPJ_Masc.addElement(eq);
+		}
+		
+		DefaultListModel<String> modelPG_Masc = new DefaultListModel<>();
+		for (String eq : equipos) {
+			modelPG_Masc.addElement(eq);
+		}
+		
+		DefaultListModel<String> modelPP_Masc = new DefaultListModel<>();
+		for (String eq : equipos) {
+			modelPP_Masc.addElement(eq);
+		}
+		
+		DefaultListModel<String> modelSG_Masc = new DefaultListModel<>();
+		for (String eq : equipos) {
+			modelSG_Masc.addElement(eq);
+		}
+		
+		DefaultListModel<String> modelSP_Masc = new DefaultListModel<>();
+		for (String eq : equipos) {
+			modelSP_Masc.addElement(eq);
+		}
+		
+		DefaultListModel<String> modelTA_Masc = new DefaultListModel<>();
+		for (String eq : equipos) {
+			modelTA_Masc.addElement(eq);
+		}
+		
+		DefaultListModel<String> modelTC_Masc = new DefaultListModel<>();
+		for (String eq : equipos) {
+			modelTC_Masc.addElement(eq);
 		}
 
 		// JLIST DE CODIGOS
-		JList<String> listCodigos = new JList<>(modelCodigos);
-		listCodigos.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listCodigos.setBackground(azulTercero);
-		listCodigos.setForeground(new Color(50, 50, 50));
-		listCodigos.setFixedCellHeight(25); 
+		JList<String> listCodLiga = new JList<>(modelCodLiga_Masc);
+		listCodLiga.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listCodLiga.setBackground(azulTercero);
+		listCodLiga.setForeground(new Color(50, 50, 50));
+		listCodLiga.setFixedCellHeight(25); 
+		
+		// Panel de las dos JList 
+		JPanel listsPanel = new JPanel(new GridLayout(1, 2, 0, 0)); 
+		listsPanel.add(listCodLiga);
 		
 		// JLIST DE EQUIPOS
-		JList<String> listEquipos = new JList<>(modelEquipos);
+		JList<String> listEquipos = new JList<>(modelEquipos_Masc);
 		listEquipos.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listEquipos.setBackground(azulTercero);
 		listEquipos.setForeground(new Color(50, 50, 50));
 		listEquipos.setFixedCellHeight(25); 
-		
-		// Panel de las dos JList 
-		JPanel listsPanel = new JPanel(new GridLayout(1, 2, 0, 0)); 
-		listsPanel.add(listCodigos);
 		listsPanel.add(listEquipos);
+		
+		JList<String> listPTOS = new JList<String>(modelPTOS_Masc);
+		listPTOS.setForeground(new Color(50, 50, 50));
+		listPTOS.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPTOS.setFixedCellHeight(25);
+		listPTOS.setBackground(new Color(204, 229, 255));
+		listsPanel.add(listPTOS);
+		
+		JList<String> listPJ = new JList<String>(modelPJ_Masc);
+		listPJ.setForeground(new Color(50, 50, 50));
+		listPJ.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPJ.setFixedCellHeight(25);
+		listPJ.setBackground(new Color(204, 229, 255));
+		listsPanel.add(listPJ);
+		
+		JList<String> listPG = new JList<String>(modelPG_Masc);
+		listPG.setForeground(new Color(50, 50, 50));
+		listPG.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPG.setFixedCellHeight(25);
+		listPG.setBackground(new Color(204, 229, 255));
+		listsPanel.add(listPG);
+		
+		JList<String> listPP = new JList<String>(modelPP_Masc);
+		listPP.setForeground(new Color(50, 50, 50));
+		listPP.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPP.setFixedCellHeight(25);
+		listPP.setBackground(new Color(204, 229, 255));
+		listsPanel.add(listPP);
+		
+		JList<String> listSG = new JList<String>(modelSG_Masc);
+		listSG.setForeground(new Color(50, 50, 50));
+		listSG.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listSG.setFixedCellHeight(25);
+		listSG.setBackground(new Color(204, 229, 255));
+		listsPanel.add(listSG);
+		
+		JList<String> listSP = new JList<String>(modelSP_Masc);
+		listSP.setForeground(new Color(50, 50, 50));
+		listSP.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listSP.setFixedCellHeight(25);
+		listSP.setBackground(new Color(204, 229, 255));
+		listsPanel.add(listSP);
+		
+		JList<String> listTA = new JList<String>(modelTA_Masc);
+		listTA.setForeground(new Color(50, 50, 50));
+		listTA.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listTA.setFixedCellHeight(25);
+		listTA.setBackground(new Color(204, 229, 255));
+		listsPanel.add(listTA);
+		
+		JList<String> listTC = new JList<String>(modelTC_Masc);
+		listTC.setForeground(new Color(50, 50, 50));
+		listTC.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listTC.setFixedCellHeight(25);
+		listTC.setBackground(new Color(204, 229, 255));
+		listsPanel.add(listTC);
 		
 		// PANEL CABEZERA
 		JPanel headerPanel = new JPanel(new GridLayout(1, 2, 0, 0)); 
@@ -417,7 +514,7 @@ public class GestionClasificacion extends JFrame implements ActionListener{
 		int rowHeight = 25;
 		int headerHeight = 30;
 		
-		listContainer.setPreferredSize(new Dimension(500, numRows * rowHeight + headerHeight)); 
+		listContainer.setPreferredSize(new Dimension(1500, numRows * rowHeight + headerHeight)); 
 		
 		listContainer.add(headerPanel, BorderLayout.NORTH); 
 		
@@ -427,41 +524,47 @@ public class GestionClasificacion extends JFrame implements ActionListener{
 		headerPTOS.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanel.add(headerPTOS);
 		
-		JLabel headerEquipo_3 = new JLabel("EQUIPO");
-		headerEquipo_3.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEquipo_3.setForeground(Color.WHITE);
-		headerEquipo_3.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanel.add(headerEquipo_3);
+		JLabel headerPJ = new JLabel("P.J");
+		headerPJ.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPJ.setForeground(Color.WHITE);
+		headerPJ.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanel.add(headerPJ);
 		
-		JLabel headerEquipo_4 = new JLabel("EQUIPO");
-		headerEquipo_4.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEquipo_4.setForeground(Color.WHITE);
-		headerEquipo_4.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanel.add(headerEquipo_4);
+		JLabel headerPG = new JLabel("P.G");
+		headerPG.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPG.setForeground(Color.WHITE);
+		headerPG.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanel.add(headerPG);
 		
-		JLabel headerEquipo_5 = new JLabel("EQUIPO");
-		headerEquipo_5.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEquipo_5.setForeground(Color.WHITE);
-		headerEquipo_5.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanel.add(headerEquipo_5);
+		JLabel headerPP = new JLabel("P.P");
+		headerPP.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPP.setForeground(Color.WHITE);
+		headerPP.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanel.add(headerPP);
 		
-		JLabel headerEquipo_6 = new JLabel("EQUIPO");
-		headerEquipo_6.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEquipo_6.setForeground(Color.WHITE);
-		headerEquipo_6.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanel.add(headerEquipo_6);
+		JLabel headerSG = new JLabel("S.G");
+		headerSG.setHorizontalAlignment(SwingConstants.CENTER);
+		headerSG.setForeground(Color.WHITE);
+		headerSG.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanel.add(headerSG);
 		
-		JLabel headerEquipo_7 = new JLabel("EQUIPO");
-		headerEquipo_7.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEquipo_7.setForeground(Color.WHITE);
-		headerEquipo_7.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanel.add(headerEquipo_7);
+		JLabel headerSP = new JLabel("S.P");
+		headerSP.setHorizontalAlignment(SwingConstants.CENTER);
+		headerSP.setForeground(Color.WHITE);
+		headerSP.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanel.add(headerSP);
 		
-		JLabel headerEquipo_2 = new JLabel("EQUIPO");
-		headerEquipo_2.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEquipo_2.setForeground(Color.WHITE);
-		headerEquipo_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanel.add(headerEquipo_2);
+		JLabel headerTA = new JLabel("T.A");
+		headerTA.setHorizontalAlignment(SwingConstants.CENTER);
+		headerTA.setForeground(Color.WHITE);
+		headerTA.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanel.add(headerTA);
+		
+		JLabel headerTC = new JLabel("T.C");
+		headerTC.setHorizontalAlignment(SwingConstants.CENTER);
+		headerTC.setForeground(Color.WHITE);
+		headerTC.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanel.add(headerTC);
 		listContainer.add(listsPanel, BorderLayout.CENTER); 
 		
 		// CENTRAR EL CONTENEDOR EN EL PANEL SUR
