@@ -16,7 +16,6 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JList;
-import javax.swing.DefaultListModel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -30,11 +29,16 @@ public class GestionJornadas extends JFrame implements ActionListener{
 	
 	/*Botones*/
 	private JButton btnVolverPanel; 
+	private JButton btnBorrar;
+	private JButton btnInsertar;
+	private JButton btnLimpiar;
+	private JButton btnAnterior; 
+	private JButton btnSiguiente;
 	
 	/*JFields*/
 	private JTextField txtCodEq;
 	private JTextField txtEquipo;
-	private JTextField textField;
+	private JTextField txtNJornadas;
 
 	
 	/**
@@ -118,14 +122,14 @@ public class GestionJornadas extends JFrame implements ActionListener{
 		gbc_lbl_EqNJornadas.gridy = 0;
 		inputAndButtonsPanel.add(lbl_EqNJornadas, gbc_lbl_EqNJornadas);
 		
-		textField = new JTextField();
-		textField.setColumns(5);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 0;
-		inputAndButtonsPanel.add(textField, gbc_textField);
+		txtNJornadas = new JTextField();
+		txtNJornadas.setColumns(5);
+		GridBagConstraints gbc_txtNJornadas = new GridBagConstraints();
+		gbc_txtNJornadas.insets = new Insets(0, 0, 5, 5);
+		gbc_txtNJornadas.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtNJornadas.gridx = 1;
+		gbc_txtNJornadas.gridy = 0;
+		inputAndButtonsPanel.add(txtNJornadas, gbc_txtNJornadas);
 		
 		// ETIQUETAS Y CAMPOS DE TEXTO
 		JLabel lbl_EqLocal = new JLabel("EQUIPO LOCAL:");
@@ -169,7 +173,7 @@ public class GestionJornadas extends JFrame implements ActionListener{
 		inputAndButtonsPanel.add(txtEquipo, gbc_txtEquipo);
 		
 		// BOTONES
-		JButton btnInsertar = new JButton("Insertar");
+		btnInsertar = new JButton("Insertar");
 		btnInsertar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInsertar.setBackground(amarilloPrimero);
 		btnInsertar.setForeground(azulSegundo);
@@ -180,7 +184,7 @@ public class GestionJornadas extends JFrame implements ActionListener{
 		gbc_btnInsertar.gridy = 1;
 		inputAndButtonsPanel.add(btnInsertar, gbc_btnInsertar);
 		
-		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar = new JButton("Borrar");
 		btnBorrar.setForeground(azulSegundo);
 		btnBorrar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBorrar.setBackground(amarilloPrimero);
@@ -191,7 +195,7 @@ public class GestionJornadas extends JFrame implements ActionListener{
 		gbc_btnBorrar.gridy = 1;
 		inputAndButtonsPanel.add(btnBorrar, gbc_btnBorrar);
 		
-		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.setForeground(azulSegundo);
 		btnLimpiar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLimpiar.setBackground(amarilloPrimero);
@@ -296,6 +300,21 @@ public class GestionJornadas extends JFrame implements ActionListener{
 		panelSur.add(listContainer);
 		
 		panelGestion.add(panelSur, BorderLayout.SOUTH);
+	
+		JPanel btnPanel = new JPanel();
+		mainFrameGestionLigas.add(btnPanel, BorderLayout.SOUTH);
+		
+		btnAnterior = new JButton("ANTERIOR");
+		btnAnterior.setFont(new Font("Calibri", Font.PLAIN, 20));
+		btnAnterior.setBackground(amarilloPrimero);
+		btnAnterior.setForeground(azulPrimero);
+		btnPanel.add(btnAnterior);
+		
+		btnSiguiente = new JButton("SIGUIENTE");
+		btnSiguiente.setFont(new Font("Calibri", Font.PLAIN, 20));
+		btnSiguiente.setBackground(amarilloPrimero);
+		btnSiguiente.setForeground(azulPrimero);
+		btnPanel.add(btnSiguiente);
 	}
 
 
@@ -303,8 +322,8 @@ public class GestionJornadas extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
 		Object o = ae.getSource();
 		if(o == btnVolverPanel) {
-			PanelAdmin panelAdmin = new PanelAdmin();
-			panelAdmin.setVisible(true);
+			PanelArbitro panelArbitro = new PanelArbitro();
+			panelArbitro.setVisible(true);
 			this.dispose();
 		}
 		
