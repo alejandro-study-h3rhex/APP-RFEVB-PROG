@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
 import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -253,6 +255,20 @@ public class AppPrincipal extends JFrame {
 		
 		/*SELECIONAR JORNDAS*/
 		comboBoxJornadas = new JComboBox<String>(dcbmNumeroJornada);
+		// Asumiendo que 'comboBoxJornadas' ya está inicializado
+		comboBoxJornadas.addItemListener(new ItemListener() {
+		    
+		    @Override
+		    public void itemStateChanged(ItemEvent e) {
+		        
+		        // Comprobamos si el evento es de un ítem que acaba de ser SELECCIONADO
+		        if (e.getStateChange() == ItemEvent.SELECTED) {
+		            int indiceSeleccionado = comboBoxJornadas.getSelectedIndex();
+		            setEquiposLocales(dlmJornadasEqLocal, indiceSeleccionado, indiceSeleccionado+2);
+		            setEquiposVisitantes(dlmJornadasEqVisitante, indiceSeleccionado, indiceSeleccionado+2);
+		        }
+		    }
+		});
 		northPanelJornadas.add(comboBoxJornadas);
 		
 		anonCerrarSesion = new JButton("Cerrar Sesion");
