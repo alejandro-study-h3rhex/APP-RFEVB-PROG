@@ -25,6 +25,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.ListModel;
 
 
 
@@ -42,19 +43,25 @@ public class AppPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	JPanel panelAnonimo;
 	JPanel panelArbitro;
 	JPanel panelAdmin;
-	private JButton anonCerrarSesion;
+	private JButton CerrarSesion;
 	
-	// -- JORNDAS --
+	// -- ANON --
+	JPanel panelAnonimo;
+	private JPanel panelListasVerJornadas;
+	private JPanel midPanel;
+	private JScrollPane scrollPaneAnonimo;
+	private JPanel scrollPanelAnonimo;
+
+
+	// -- JORNDAS ANON --
 	private JComboBox<String> comboBoxJornadas;
 	private JPanel verJornadas;
 	private JPanel northPanelJornadas;
-	private JPanel panelJornadas;
-	private JLabel lblGestionarEquipos;
-	private JPanel panelSur;
-	private JPanel listContainer;
+	private JPanel panelVerJornadas;
+	private JLabel lblVerEquipos;
+	private JPanel listContainerVerJornadas;
 	private JPanel headerPanelJornadas;
 	private JLabel headerNJornadas;
 	private JLabel headerEqLocal;
@@ -63,13 +70,10 @@ public class AppPrincipal extends JFrame {
 	private JList<String> listEqLocal;
 	private JList<String> listEqVisitante;
 	
-	// -- CLASIFICACIÓN --
+	// -- CLASIFICACIÓN ANON --
 	private JPanel verClasificacion;
 	private JPanel northPanelClasificacion;
 	private JLabel lblClasificacion;
-	private JPanel midPanel;
-	private JPanel scrollPanel;
-	private JScrollPane scrollPane;
 	private JPanel clasificacionListContainer;
 	private JList<String> listEquipos;
 	private JList<String> listPTOS;
@@ -80,6 +84,27 @@ public class AppPrincipal extends JFrame {
 	private JList<String> listSP;
 	private JList<String> listTA;
 	private JList<String> listTC;
+	
+	// -- ARBITRO --
+	private JScrollPane scrollPaneArbitro;
+	private JPanel scrollPanelArbitro;
+
+	private JPanel gestionarJornadas;
+	private JPanel gestionarClasifiacion;
+	private JPanel northPanelGestionarJornadas;
+	private JComboBox<String> comboBoxGestionarJornadas;
+	private JButton btnCerrarSesionArbitros;
+	private JPanel panelGestionarJornadas;
+	private JLabel lblGestionarJornadas;
+	private JPanel panelListasGestionarJornadas;
+	private JPanel listContainerGestionarJornadas;
+	private JPanel headerPanelGestionarJornadas;
+	private JLabel headerNJornadas_1;
+	private JLabel headerEqLocal_1;
+	private JLabel headerEqVisitante_1;
+	private JPanel arbitroListPanelJornadas;
+	private JList<String> listEqLocalGestionar;
+	private JList<String> listEqVisitanteGestionar;
 	
 	// -- DLMs --
 	
@@ -183,7 +208,18 @@ public class AppPrincipal extends JFrame {
 	private DefaultListModel<Integer> dlmClasificacionSetsPerdidos;
 	private DefaultListModel<Integer> dlmClasificacionTantosFavor;
 	private DefaultListModel<Integer> dlmClasificacionTantosContra;
-	
+	private JPanel panelListasGestionarResultadosJornadas;
+	private JPanel panelResultadosHeader;
+	private JPanel panelResultadosListas;
+	private JLabel headerEquipo_1;
+	private JLabel headerPTOS_1;
+	private JLabel headerPJ_1;
+	private JLabel headerPG_1;
+	private JLabel headerPP_1;
+	private JLabel headerSG_1;
+	private JLabel headerSP_1;
+	private JLabel headerTA_1;
+	private JLabel headerTC_1;
 	
 	// -- DLMs --
 	
@@ -214,6 +250,7 @@ public class AppPrincipal extends JFrame {
 		
 		/*LLENAR DLMs y Arrays*/
 		setEquipos(dlmEquipos);
+		/*Por defecto se muestra la primera jornada*/
 		setEquiposLocales(dlmJornadasEqLocal, 0, 2);
 		setEquiposVisitantes(dlmJornadasEqVisitante, 0, 2);
 		/*SET NUMERO JORNDAS*/
@@ -238,15 +275,15 @@ public class AppPrincipal extends JFrame {
 		contentPane.add(panelAnonimo, "PanelAnonimo_");
 		
 		panelAnonimo.setLayout(new BorderLayout(0, 0));
-		scrollPanel = new JPanel();
-		scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
-		scrollPane = new JScrollPane(scrollPanel);
-		panelAnonimo.add(scrollPane, BorderLayout.CENTER);
+		scrollPanelAnonimo = new JPanel();
+		scrollPanelAnonimo.setLayout(new BoxLayout(scrollPanelAnonimo, BoxLayout.Y_AXIS));
+		scrollPaneAnonimo = new JScrollPane(scrollPanelAnonimo);
+		panelAnonimo.add(scrollPaneAnonimo, BorderLayout.CENTER);
 		
 		verJornadas = new JPanel();
 		verJornadas.setBorder(new EmptyBorder(5, 5, 5, 5));
 		verJornadas.setBackground(new Color(238, 235, 228));
-		scrollPanel.add(verJornadas); // <-- Esto está bien
+		scrollPanelAnonimo.add(verJornadas); // <-- Esto está bien
 		verJornadas.setLayout(new BorderLayout(0, 0));
 		
 		/*PANEL NORTE - VER JORNADAS*/
@@ -255,6 +292,8 @@ public class AppPrincipal extends JFrame {
 		
 		/*SELECIONAR JORNDAS*/
 		comboBoxJornadas = new JComboBox<String>(dcbmNumeroJornada);
+		comboBoxJornadas.setSelectedIndex(0);
+		comboBoxJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		// Asumiendo que 'comboBoxJornadas' ya está inicializado
 		comboBoxJornadas.addItemListener(new ItemListener() {
 		    
@@ -271,33 +310,33 @@ public class AppPrincipal extends JFrame {
 		});
 		northPanelJornadas.add(comboBoxJornadas);
 		
-		anonCerrarSesion = new JButton("Cerrar Sesion");
-		anonCerrarSesion.setFont(new Font("Calibri", Font.PLAIN, 20));
-		northPanelJornadas.add(anonCerrarSesion);
+		CerrarSesion = new JButton("Cerrar Sesion");
+		CerrarSesion.setFont(new Font("Calibri", Font.PLAIN, 20));
+		northPanelJornadas.add(CerrarSesion);
 			
-		panelJornadas = new JPanel();
-		panelJornadas.setBackground(new Color(238, 235, 228));
-		verJornadas.add(panelJornadas, BorderLayout.CENTER);
-		panelJornadas.setLayout(new BorderLayout(0, 20));
+		panelVerJornadas = new JPanel();
+		panelVerJornadas.setBackground(new Color(238, 235, 228));
+		verJornadas.add(panelVerJornadas, BorderLayout.CENTER);
+		panelVerJornadas.setLayout(new BorderLayout(0, 20));
 		
-		lblGestionarEquipos = new JLabel("JORNADAS");
-		lblGestionarEquipos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGestionarEquipos.setForeground(new Color(0, 128, 192));
-		lblGestionarEquipos.setFont(new Font("Leelawadee", Font.BOLD, 25));
-		panelJornadas.add(lblGestionarEquipos, BorderLayout.NORTH);
+		lblVerEquipos = new JLabel("JORNADAS");
+		lblVerEquipos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVerEquipos.setForeground(new Color(0, 128, 192));
+		lblVerEquipos.setFont(new Font("Leelawadee", Font.BOLD, 25));
+		panelVerJornadas.add(lblVerEquipos, BorderLayout.NORTH);
 		
-		panelSur = new JPanel();
-		panelSur.setBackground(new Color(238, 235, 228));
-		panelJornadas.add(panelSur, BorderLayout.SOUTH);
+		panelListasVerJornadas = new JPanel();
+		panelListasVerJornadas.setBackground(new Color(238, 235, 228));
+		panelVerJornadas.add(panelListasVerJornadas, BorderLayout.SOUTH);
 		
-		listContainer = new JPanel((LayoutManager) null);
-		listContainer.setPreferredSize(new Dimension(500, 180));
-		panelSur.add(listContainer);
-		listContainer.setLayout(new BorderLayout());
+		listContainerVerJornadas = new JPanel((LayoutManager) null);
+		listContainerVerJornadas.setPreferredSize(new Dimension(500, 180));
+		panelListasVerJornadas.add(listContainerVerJornadas);
+		listContainerVerJornadas.setLayout(new BorderLayout());
 		
 		headerPanelJornadas = new JPanel();
 		headerPanelJornadas.setBackground(new Color(51, 153, 204));
-		listContainer.add(headerPanelJornadas, BorderLayout.NORTH);
+		listContainerVerJornadas.add(headerPanelJornadas, BorderLayout.NORTH);
 		GridBagLayout gbl_headerPanelJornadas = new GridBagLayout();
 		gbl_headerPanelJornadas.columnWidths = new int[] {0, 0, 0, 0, 0, 20, 0, 30, 30};
 		gbl_headerPanelJornadas.rowHeights = new int[]{19, 0};
@@ -338,7 +377,7 @@ public class AppPrincipal extends JFrame {
 		headerPanelJornadas.add(headerEqVisitante, gbc_headerEqVisitante);
 		
 		anonListPanelJorndas = new JPanel();
-		listContainer.add(anonListPanelJorndas, BorderLayout.CENTER);
+		listContainerVerJornadas.add(anonListPanelJorndas, BorderLayout.CENTER);
 		anonListPanelJorndas.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		/*JORNADAS - EQ LOCALES*/
@@ -359,7 +398,7 @@ public class AppPrincipal extends JFrame {
 		
 		/*SUB PANEL ANONIMOS - VER CLASIFICIÓN*/
 		verClasificacion = new JPanel();
-		scrollPanel.add(verClasificacion);
+		scrollPanelAnonimo.add(verClasificacion);
 		verClasificacion.setLayout(new BorderLayout(0, 0));
 		
 		/*CLASIFICACION - NORTE*/
@@ -518,11 +557,252 @@ public class AppPrincipal extends JFrame {
 		headerTC.setHorizontalAlignment(SwingConstants.CENTER);
 		headerTC.setForeground(Color.WHITE);
 		headerTC.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerTC);		
-		
-		/*PANEL ARBITRO*/
+		headerPanelClasificacion.add(headerTC);
 		panelArbitro = new JPanel();
 		contentPane.add(panelArbitro, "PanelArbitro_");
+		panelArbitro.setLayout(new BorderLayout(0, 0));
+
+		scrollPanelArbitro = new JPanel();
+		scrollPanelArbitro.setLayout(new BoxLayout(scrollPanelArbitro, BoxLayout.Y_AXIS));
+
+		scrollPaneArbitro = new JScrollPane(scrollPanelArbitro);
+		panelArbitro.add(scrollPaneArbitro, BorderLayout.CENTER);
+		gestionarJornadas = new JPanel();
+		scrollPanelArbitro.add(gestionarJornadas);
+		gestionarJornadas.setLayout(new BorderLayout(0, 0));
+
+		northPanelGestionarJornadas = new JPanel();
+		gestionarJornadas.add(northPanelGestionarJornadas, BorderLayout.NORTH);
+		
+		comboBoxGestionarJornadas = new JComboBox<String>(dcbmNumeroJornada);
+		comboBoxGestionarJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		comboBoxGestionarJornadas.addItemListener(new ItemListener() {
+		    
+		    @Override
+		    public void itemStateChanged(ItemEvent e) {
+		        
+		        // Comprobamos si el evento es de un ítem que acaba de ser SELECCIONADO
+		        if (e.getStateChange() == ItemEvent.SELECTED) {
+		            int indiceSeleccionado = comboBoxJornadas.getSelectedIndex();
+		            setEquiposLocales(dlmJornadasEqLocal, indiceSeleccionado, indiceSeleccionado+2);
+		            setEquiposVisitantes(dlmJornadasEqVisitante, indiceSeleccionado, indiceSeleccionado+2);
+		        }
+		    }
+		});
+		northPanelGestionarJornadas.add(comboBoxGestionarJornadas);
+		
+		btnCerrarSesionArbitros = new JButton("Cerrar Sesion");
+		btnCerrarSesionArbitros.setFont(new Font("Calibri", Font.PLAIN, 20));
+		northPanelGestionarJornadas.add(btnCerrarSesionArbitros);
+		
+		panelGestionarJornadas = new JPanel();
+		panelGestionarJornadas.setBackground(new Color(238, 235, 228));
+		gestionarJornadas.add(panelGestionarJornadas, BorderLayout.CENTER);
+		panelGestionarJornadas.setLayout(new BoxLayout(panelGestionarJornadas, BoxLayout.Y_AXIS));
+		
+		lblGestionarJornadas = new JLabel("GESTIONAR JORNADAS");
+		lblGestionarJornadas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGestionarJornadas.setForeground(new Color(0, 128, 192));
+		lblGestionarJornadas.setFont(new Font("Leelawadee", Font.BOLD, 25));
+		panelGestionarJornadas.add(lblGestionarJornadas);
+		
+		panelListasGestionarJornadas = new JPanel();
+		panelGestionarJornadas.add(panelListasGestionarJornadas);
+		
+		listContainerGestionarJornadas = new JPanel((LayoutManager) null);
+		listContainerGestionarJornadas.setPreferredSize(new Dimension(500, 180));
+		panelListasGestionarJornadas.add(listContainerGestionarJornadas);
+		listContainerGestionarJornadas.setLayout(new BorderLayout());
+		
+		headerPanelGestionarJornadas = new JPanel();
+		headerPanelGestionarJornadas.setBackground(new Color(77, 130, 188));
+		listContainerGestionarJornadas.add(headerPanelGestionarJornadas, BorderLayout.NORTH);
+		GridBagLayout gbl_headerPanelGestionarJornadas = new GridBagLayout();
+		gbl_headerPanelGestionarJornadas.columnWidths = new int[]{40, 30, 117, 152, 0};
+		gbl_headerPanelGestionarJornadas.rowHeights = new int[]{19, 0};
+		gbl_headerPanelGestionarJornadas.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_headerPanelGestionarJornadas.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		headerPanelGestionarJornadas.setLayout(gbl_headerPanelGestionarJornadas);
+		
+			
+		headerNJornadas_1 = new JLabel("Nº  ");
+		headerNJornadas_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerNJornadas_1.setForeground(Color.WHITE);
+		headerNJornadas_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerNJornadas_1 = new GridBagConstraints();
+		gbc_headerNJornadas_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerNJornadas_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerNJornadas_1.gridx = 0;
+		gbc_headerNJornadas_1.gridy = 0;
+		headerPanelGestionarJornadas.add(headerNJornadas_1, gbc_headerNJornadas_1);
+		
+		headerEqLocal_1 = new JLabel("EQUIPO LOCAL");
+		headerEqLocal_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerEqLocal_1.setForeground(Color.WHITE);
+		headerEqLocal_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerEqLocal_1 = new GridBagConstraints();
+		gbc_headerEqLocal_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerEqLocal_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerEqLocal_1.gridx = 1;
+		gbc_headerEqLocal_1.gridy = 0;
+		headerPanelGestionarJornadas.add(headerEqLocal_1, gbc_headerEqLocal_1);
+		
+		headerEqVisitante_1 = new JLabel("EQUIPO VISITANTE");
+		headerEqVisitante_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerEqVisitante_1.setForeground(Color.WHITE);
+		headerEqVisitante_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerEqVisitante_1 = new GridBagConstraints();
+		gbc_headerEqVisitante_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerEqVisitante_1.gridx = 3;
+		gbc_headerEqVisitante_1.gridy = 0;
+		headerPanelGestionarJornadas.add(headerEqVisitante_1, gbc_headerEqVisitante_1);
+		
+		arbitroListPanelJornadas = new JPanel();
+		listContainerGestionarJornadas.add(arbitroListPanelJornadas, BorderLayout.CENTER);
+		arbitroListPanelJornadas.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		listEqLocalGestionar = new JList<String>(dlmJornadasEqLocal);
+		listEqLocalGestionar.setForeground(new Color(50, 50, 50));
+		listEqLocalGestionar.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listEqLocalGestionar.setFixedCellHeight(25);
+		listEqLocalGestionar.setBackground(new Color(204, 229, 255));
+		arbitroListPanelJornadas.add(listEqLocalGestionar);
+		
+		listEqVisitanteGestionar = new JList<String>(dlmJornadasEqVisitante);
+		listEqVisitanteGestionar.setForeground(new Color(50, 50, 50));
+		listEqVisitanteGestionar.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listEqVisitanteGestionar.setFixedCellHeight(25);
+		listEqVisitanteGestionar.setBackground(new Color(204, 229, 255));
+		arbitroListPanelJornadas.add(listEqVisitanteGestionar);
+		
+		panelListasGestionarResultadosJornadas = new JPanel();
+		panelGestionarJornadas.add(panelListasGestionarResultadosJornadas);
+		panelListasGestionarResultadosJornadas.setLayout(new BorderLayout(0, 0));
+		
+		/*CABEZERA GESTIONAR RESULTADOS JORNADAS*/
+		panelResultadosHeader = new JPanel(new GridLayout(1, 0, 0, 0)); 
+		panelResultadosHeader.setBackground(new Color(77, 130, 188));
+		panelListasGestionarResultadosJornadas.add(panelResultadosHeader, BorderLayout.NORTH);
+		GridBagLayout gbl_panelResultadosHeader = new GridBagLayout();
+		gbl_panelResultadosHeader.columnWidths = new int[]{239, 62, 41, 22, 26, 24, 26, 24, 25, 25, 0};
+		gbl_panelResultadosHeader.rowHeights = new int[]{19, 0};
+		gbl_panelResultadosHeader.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelResultadosHeader.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panelResultadosHeader.setLayout(gbl_panelResultadosHeader);
+		
+		headerEquipo_1 = new JLabel("EQUIPO");
+		headerEquipo_1.setBackground(new Color(77, 130, 188));
+		headerEquipo_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerEquipo_1.setForeground(Color.WHITE);
+		headerEquipo_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerEquipo_1 = new GridBagConstraints();
+		gbc_headerEquipo_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerEquipo_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerEquipo_1.gridx = 1;
+		gbc_headerEquipo_1.gridy = 0;
+		panelResultadosHeader.add(headerEquipo_1, gbc_headerEquipo_1);
+		
+		headerPTOS_1 = new JLabel("PTOS");
+		headerPTOS_1.setBackground(new Color(77, 130, 188));
+		headerPTOS_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPTOS_1.setForeground(Color.WHITE);
+		headerPTOS_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerPTOS_1 = new GridBagConstraints();
+		gbc_headerPTOS_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerPTOS_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerPTOS_1.gridx = 2;
+		gbc_headerPTOS_1.gridy = 0;
+		panelResultadosHeader.add(headerPTOS_1, gbc_headerPTOS_1);
+		
+		headerPJ_1 = new JLabel("P.J");
+		headerPJ_1.setBackground(new Color(77, 130, 188));
+		headerPJ_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPJ_1.setForeground(Color.WHITE);
+		headerPJ_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerPJ_1 = new GridBagConstraints();
+		gbc_headerPJ_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerPJ_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerPJ_1.gridx = 3;
+		gbc_headerPJ_1.gridy = 0;
+		panelResultadosHeader.add(headerPJ_1, gbc_headerPJ_1);
+		
+		headerPG_1 = new JLabel("P.G");
+		headerPG_1.setBackground(new Color(77, 130, 188));
+		headerPG_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPG_1.setForeground(Color.WHITE);
+		headerPG_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerPG_1 = new GridBagConstraints();
+		gbc_headerPG_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerPG_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerPG_1.gridx = 4;
+		gbc_headerPG_1.gridy = 0;
+		panelResultadosHeader.add(headerPG_1, gbc_headerPG_1);
+		
+		headerPP_1 = new JLabel("P.P");
+		headerPP_1.setBackground(new Color(77, 130, 188));
+		headerPP_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPP_1.setForeground(Color.WHITE);
+		headerPP_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerPP_1 = new GridBagConstraints();
+		gbc_headerPP_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerPP_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerPP_1.gridx = 5;
+		gbc_headerPP_1.gridy = 0;
+		panelResultadosHeader.add(headerPP_1, gbc_headerPP_1);
+		
+		headerSG_1 = new JLabel("S.G");
+		headerSG_1.setBackground(new Color(77, 130, 188));
+		headerSG_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerSG_1.setForeground(Color.WHITE);
+		headerSG_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerSG_1 = new GridBagConstraints();
+		gbc_headerSG_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerSG_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerSG_1.gridx = 6;
+		gbc_headerSG_1.gridy = 0;
+		panelResultadosHeader.add(headerSG_1, gbc_headerSG_1);
+		
+		headerSP_1 = new JLabel("S.P");
+		headerSP_1.setBackground(new Color(77, 130, 188));
+		headerSP_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerSP_1.setForeground(Color.WHITE);
+		headerSP_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerSP_1 = new GridBagConstraints();
+		gbc_headerSP_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerSP_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerSP_1.gridx = 7;
+		gbc_headerSP_1.gridy = 0;
+		panelResultadosHeader.add(headerSP_1, gbc_headerSP_1);
+		
+		headerTA_1 = new JLabel("T.A");
+		headerTA_1.setBackground(new Color(77, 130, 188));
+		headerTA_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerTA_1.setForeground(Color.WHITE);
+		headerTA_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerTA_1 = new GridBagConstraints();
+		gbc_headerTA_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerTA_1.insets = new Insets(0, 0, 0, 5);
+		gbc_headerTA_1.gridx = 8;
+		gbc_headerTA_1.gridy = 0;
+		panelResultadosHeader.add(headerTA_1, gbc_headerTA_1);
+		
+		headerTC_1 = new JLabel("T.C");
+		headerTC_1.setBackground(new Color(77, 130, 188));
+		headerTC_1.setHorizontalAlignment(SwingConstants.CENTER);
+		headerTC_1.setForeground(Color.WHITE);
+		headerTC_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		GridBagConstraints gbc_headerTC_1 = new GridBagConstraints();
+		gbc_headerTC_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_headerTC_1.gridx = 9;
+		gbc_headerTC_1.gridy = 0;
+		panelResultadosHeader.add(headerTC_1, gbc_headerTC_1);
+		
+		panelResultadosListas = new JPanel();
+		panelListasGestionarResultadosJornadas.add(panelResultadosListas, BorderLayout.CENTER);
+
+		gestionarClasifiacion = new JPanel();
+		scrollPanelArbitro.add(gestionarClasifiacion);
+		
 		/*PANEL ADMIN*/
 		panelAdmin = new JPanel();
 		contentPane.add(panelAdmin, "PanelAdmin_");
