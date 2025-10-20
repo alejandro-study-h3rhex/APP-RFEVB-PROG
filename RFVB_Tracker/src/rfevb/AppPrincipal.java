@@ -20,7 +20,9 @@ import javax.swing.JList;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 
 
 
@@ -44,6 +46,7 @@ public class AppPrincipal extends JFrame {
 	private JButton anonCerrarSesion;
 	
 	// -- JORNDAS --
+	private JComboBox<String> comboBoxJornadas;
 	private JPanel verJornadas;
 	private JPanel northPanelJornadas;
 	private JPanel panelJornadas;
@@ -83,6 +86,7 @@ public class AppPrincipal extends JFrame {
 	/*JORNADAS*/
 	private DefaultListModel<String> dlmJornadasEqLocal;
 	private DefaultListModel<String> dlmJornadasEqVisitante;
+	private	DefaultComboBoxModel<String> dcbmNumeroJornada;
 	private String[] equiposLocales = {
 			// Jornada 1
 			"CV ZARAGOZA",
@@ -178,6 +182,7 @@ public class AppPrincipal extends JFrame {
 	private DefaultListModel<Integer> dlmClasificacionTantosFavor;
 	private DefaultListModel<Integer> dlmClasificacionTantosContra;
 	
+	
 	// -- DLMs --
 	
 
@@ -193,6 +198,7 @@ public class AppPrincipal extends JFrame {
 		/*JORNADAS*/
 		dlmJornadasEqLocal = new DefaultListModel<String>();
 		dlmJornadasEqVisitante = new DefaultListModel<String>();
+		dcbmNumeroJornada = new DefaultComboBoxModel<String>();
 		
 		/*CLASIFICACIÓN*/
 		dlmClasificacionPuntos = new DefaultListModel<Integer>();
@@ -208,7 +214,9 @@ public class AppPrincipal extends JFrame {
 		setEquipos(dlmEquipos);
 		setEquiposLocales(dlmJornadasEqLocal, 0, 2);
 		setEquiposVisitantes(dlmJornadasEqVisitante, 0, 2);
-
+		/*SET NUMERO JORNDAS*/
+		setNumeroJorndas(dcbmNumeroJornada, 10);
+		
 		
 		
 		//LOGO Y TITULO
@@ -243,10 +251,14 @@ public class AppPrincipal extends JFrame {
 		northPanelJornadas = new JPanel();
 		verJornadas.add(northPanelJornadas, BorderLayout.NORTH);
 		
+		/*SELECIONAR JORNDAS*/
+		comboBoxJornadas = new JComboBox<String>(dcbmNumeroJornada);
+		northPanelJornadas.add(comboBoxJornadas);
+		
 		anonCerrarSesion = new JButton("Cerrar Sesion");
 		anonCerrarSesion.setFont(new Font("Calibri", Font.PLAIN, 20));
 		northPanelJornadas.add(anonCerrarSesion);
-		
+			
 		panelJornadas = new JPanel();
 		panelJornadas.setBackground(new Color(238, 235, 228));
 		verJornadas.add(panelJornadas, BorderLayout.CENTER);
@@ -533,6 +545,13 @@ public class AppPrincipal extends JFrame {
 		dlmEquiposVisitantes.clear(); // Vacia el dlm
 		for(int i = minIndex; i <= maxIndex; i++) {
 			dlmEquiposVisitantes.addElement(equiposVisitantes[i]);
+		}
+	}
+	
+	/*Establece el numero de jornadas en la dlm -> Necesario para poder usar ComboBox*/
+	private void setNumeroJorndas(DefaultComboBoxModel<String> dlmNumerosJorndas, int numeroJornadas) {
+		for(int i = 1; i<= numeroJornadas; i++) {
+			dlmNumerosJorndas.addElement("Jornada: " + i);
 		}
 	}
 
