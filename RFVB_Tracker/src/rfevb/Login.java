@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Toolkit;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -45,16 +46,12 @@ public class Login extends JFrame implements ActionListener{
 		
 	*/
 	// Estas son claves que usamos para simplificar tareas en las etapas de desarrollo
-	private String admin_user = "admin";
-	private String admin_password = "admin";
-	private String arbitro_user = "arbitro";
+	public static String admin_user = "admin";
+	private  String admin_password = "admin";
+	public static String arbitro_user = "arbitro";
 	private String arbitro_password ="arbitro";
-	
-	private String anonimo_user = "anonimo";
+	public static String anonimo_user = "anonimo";
 	private String anonimo_password = "anonimo";
-	
-	
-
 	
 
 	/**
@@ -171,7 +168,6 @@ public class Login extends JFrame implements ActionListener{
 	}
 
 	
-	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		Object o = ae.getSource();
@@ -183,40 +179,18 @@ public class Login extends JFrame implements ActionListener{
 		        String username = new String(txtUsernameValue.getText());
 		        String password = new String(txtPasswordValue.getPassword());
 		        
-		        /*Comprobamos que el usuario sea correcto, con uso de el metodo:
-		         * equals que es el metodo que usa Java para comparar Strings*/
-		        if(username.equals(admin_user)) {
-		        	if(password.equals(admin_password)) {
-		        		/*Abre el panel admin y cierra la ventana de login*/
-		        		PanelAdmin panelAdmin = new PanelAdmin();
-		        		panelAdmin.setVisible(true);
-		        		this.dispose();
-		        		//System.out.println("Bienvenido admin");
-		        	} else {
-						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
-		        	}
-		        } else if(username.equals(arbitro_user)){
-		        	if(password.equals(arbitro_password)) {
-		        		PanelArbitro panelArbitro = new PanelArbitro();
-		        		panelArbitro.setVisible(true);
-		        		this.dispose();
-			        	//System.out.println("Bienvenido delegado");
-		        	} else {
-						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
-		        	}
-		        } else if(username.equals(anonimo_user)) {
-		        	if(password.equals(anonimo_password)) {
-		        		PanelAnonimos panelAnonimos = new PanelAnonimos();
-		        		panelAnonimos.setVisible(true);
-		        		this.dispose();
-		        		//System.out.println("Bienvenido anonimo");
-		        	} else {
-						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
-		        	}
-		        } else {
-					JOptionPane.showMessageDialog(this, (String)"Error. Usuario incorrecto","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
-		        	//System.out.println("Usuario incorrecto");
-		        }
+		       if(username.equals(admin_user) && password.equals(admin_password)) {
+		    	  AppPrincipal appPrincipal = new AppPrincipal(username);
+		    	  appPrincipal.setVisible(true);
+		       } else if(username.equals(arbitro_user) && password.equals(arbitro_password)) {
+		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
+		    	   appPrincipal.setVisible(true);
+		       } else if(username.equals(anonimo_user) && password.equals(anonimo_password)) {
+		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
+		    	   appPrincipal.setVisible(true);
+		       } else {
+					JOptionPane.showMessageDialog(this, (String)"Error. Usuario o constraseña incorrectos","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
+		       }
 		        
 		  } else if(o == txtUsernameValue) {
 			  txtPasswordValue.requestFocus();
@@ -224,5 +198,6 @@ public class Login extends JFrame implements ActionListener{
 		  else {
 		        System.out.println("Error. No se ha reconocido el evento");
 		  }
-		}
 	}
+
+}
