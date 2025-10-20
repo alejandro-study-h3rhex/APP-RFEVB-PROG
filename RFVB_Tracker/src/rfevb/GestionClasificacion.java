@@ -22,7 +22,6 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import javax.swing.ListModel;
 
 public class GestionClasificacion extends JFrame implements ActionListener{
 
@@ -414,17 +413,9 @@ public class GestionClasificacion extends JFrame implements ActionListener{
 		for (String eq : equipos) {
 			modelTC_Masc.addElement(eq);
 		}
-
-		// JLIST DE CODIGOS
-		JList<String> listCodLiga = new JList<>(modelCodLiga_Masc);
-		listCodLiga.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listCodLiga.setBackground(azulTercero);
-		listCodLiga.setForeground(new Color(50, 50, 50));
-		listCodLiga.setFixedCellHeight(25); 
 		
 		// Panel de las dos JList 
-		JPanel listsPanel = new JPanel(new GridLayout(1, 2, 0, 0)); 
-		listsPanel.add(listCodLiga);
+		JPanel listsPanel = new JPanel(new GridLayout(1, 2, 0, 0));
 		
 		// JLIST DE EQUIPOS
 		JList<String> listEquipos = new JList<>(modelEquipos_Masc);
@@ -493,13 +484,6 @@ public class GestionClasificacion extends JFrame implements ActionListener{
 		// PANEL CABEZERA
 		JPanel headerPanel = new JPanel(new GridLayout(1, 2, 0, 0)); 
 		headerPanel.setBackground(azulSegundo);
-		
-		// CABEZERA COD EQ
-		JLabel headerCodLiga = new JLabel("COD LIGA");
-		headerCodLiga.setForeground(Color.WHITE);
-		headerCodLiga.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerCodLiga.setHorizontalAlignment(SwingConstants.CENTER);
-		headerPanel.add(headerCodLiga);
 		
 		// CABEZERA EQUIPO
 		JLabel headerEquipo = new JLabel("EQUIPO");

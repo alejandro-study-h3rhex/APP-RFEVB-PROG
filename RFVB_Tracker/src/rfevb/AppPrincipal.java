@@ -20,6 +20,7 @@ import javax.swing.JList;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 
 
 
@@ -75,11 +76,141 @@ public class AppPrincipal extends JFrame {
 	private JList<String> listTA;
 	private JList<String> listTC;
 	
+	// -- DLMs --
+	
+	/*EQUIPOS*/
+	private DefaultListModel<String> dlmEquipos;
+	/*JORNADAS*/
+	private DefaultListModel<String> dlmJornadasEqLocal;
+	private DefaultListModel<String> dlmJornadasEqVisitante;
+	private String[] equiposLocales = {
+			// Jornada 1
+			"CV ZARAGOZA",
+			"CV RIVAS",
+			"CV TORRELAVEGA",
+			// Jornada 2
+			"VALLADOLID CV",
+			"CV ZARAGOZA",
+			"CV SAN FERNANDO",
+			// Jornada 3
+			"CV ZARAGOZA",
+			"CV RIVAS",
+			"CV SAN FERNANDO",
+			// Jornada 4
+			"CV ZARAGOZA",
+			"CV PALMA",
+			"CV RIVAS",
+			// Jornada 5
+			"CV ZARAGOZA",
+			"CV TORRELAVEGA",
+			"CV PALMA",
+			// Jornada 6
+			"VALLADOLID CV",
+			"CV RIVAS",
+			"CV PALMA",
+			// Jornada 7
+			"CV ZARAGOZA",
+			"CV PALMA",
+			"VALLADOLID CV",
+			// Jornada 8
+			"CV PALMA",
+			"CV TORRELAVEGA",
+			"VALLADOLID CV",
+			// Jornada 9
+			"CV TORRELAVEGA",
+			"VALLADOLID CV",
+			"CV SAN FERNANDO",
+			// Jornada 10
+			"VALLADOLID CV",
+			"CV SAN FERNANDO",
+			"CV RIVAS"
+		};
+		
+		private String[] equiposVisitantes = {
+			// Jornada 1
+			"CV SAN FERNANDO",
+			"CV PALMA",
+			"VALLADOLID CV",
+			// Jornada 2
+			"CV PALMA",
+			"CV RIVAS",
+			"CV TORRELAVEGA",
+			// Jornada 3
+			"CV PALMA",
+			"CV TORRELAVEGA",
+			"VALLADOLID CV",
+			// Jornada 4
+			"CV TORRELAVEGA",
+			"VALLADOLID CV",
+			"CV SAN FERNANDO",
+			// Jornada 5
+			"VALLADOLID CV",
+			"CV SAN FERNANDO",
+			"CV RIVAS",
+			// Jornada 6
+			"CV ZARAGOZA",
+			"VALLADOLID CV",
+			"CV RIVAS",
+			// Jornada 7
+			"CV SAN FERNANDO",
+			"CV RIVAS",
+			"CV TORRELAVEGA",
+			// Jornada 8
+			"CV ZARAGOZA",
+			"CV RIVAS",
+			"CV SAN FERNANDO",
+			// Jornada 9
+			"CV ZARAGOZA",
+			"CV RIVAS",
+			"CV PALMA",
+			// Jornada 10
+			"CV ZARAGOZA",
+			"CV TORRELAVEGA",
+			"CV PALMA"
+		};
+	/*CLASIFICACIÓN*/
+	private DefaultListModel<Integer> dlmClasificacionPuntos;
+	private DefaultListModel<Integer> dlmClasificacionPartidosJugados;
+	private DefaultListModel<Integer> dlmClasificacionPartidosGanados;
+	private DefaultListModel<Integer> dlmClasificacionPartidosPerdidos;
+	private DefaultListModel<Integer> dlmClasificacionSetsGanados;
+	private DefaultListModel<Integer> dlmClasificacionSetsPerdidos;
+	private DefaultListModel<Integer> dlmClasificacionTantosFavor;
+	private DefaultListModel<Integer> dlmClasificacionTantosContra;
+	
+	// -- DLMs --
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public AppPrincipal(String username) {
+		
+		/*INICIALIZAR DLMs*/
+		
+		/*EQUIPOS*/
+		dlmEquipos = new DefaultListModel<String>();
+		/*JORNADAS*/
+		dlmJornadasEqLocal = new DefaultListModel<String>();
+		dlmJornadasEqVisitante = new DefaultListModel<String>();
+		
+		/*CLASIFICACIÓN*/
+		dlmClasificacionPuntos = new DefaultListModel<Integer>();
+		dlmClasificacionPartidosJugados = new DefaultListModel<Integer>();
+		dlmClasificacionPartidosGanados = new DefaultListModel<Integer>();
+		dlmClasificacionPartidosPerdidos = new DefaultListModel<Integer>();
+		dlmClasificacionSetsGanados = new DefaultListModel<Integer>();
+		dlmClasificacionSetsPerdidos = new DefaultListModel<Integer>();
+		dlmClasificacionTantosFavor = new DefaultListModel<Integer>();
+		dlmClasificacionTantosContra = new DefaultListModel<Integer>();
+		
+		/*LLENAR DLMs y Arrays*/
+		setEquipos(dlmEquipos);
+		setEquiposLocales(dlmJornadasEqLocal, 0, 2);
+		setEquiposVisitantes(dlmJornadasEqVisitante, 0, 2);
+
+		
+		
 		//LOGO Y TITULO
 		setTitle("RFEVB Tracker");
 		// OBTIENE EL RECURSO DE LA DIRECCION RELATIVA
@@ -102,10 +233,6 @@ public class AppPrincipal extends JFrame {
 		scrollPane = new JScrollPane(scrollPanel);
 		panelAnonimo.add(scrollPane, BorderLayout.CENTER);
 		
-		/*SUB PANEL ANONIMOS - VER JORNDAS*/
-		// <-- CORRECCIÓN 4: Estas líneas ya no son necesarias aquí, se movieron arriba.
-		// panelAnonimo.setLayout(new BorderLayout(0, 0));
-		// scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
 		verJornadas = new JPanel();
 		verJornadas.setBorder(new EmptyBorder(5, 5, 5, 5));
 		verJornadas.setBackground(new Color(238, 235, 228));
@@ -186,14 +313,16 @@ public class AppPrincipal extends JFrame {
 		listContainer.add(anonListPanelJorndas, BorderLayout.CENTER);
 		anonListPanelJorndas.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		listEqLocal = new JList<String>();
+		/*JORNADAS - EQ LOCALES*/
+		listEqLocal = new JList<String>(dlmJornadasEqLocal);
 		listEqLocal.setForeground(new Color(50, 50, 50));
 		listEqLocal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listEqLocal.setFixedCellHeight(25);
 		listEqLocal.setBackground(new Color(204, 229, 255));
 		anonListPanelJorndas.add(listEqLocal);
 		
-		listEqVisitante = new JList<String>();
+		/*JORNADAS - EQ VISITANTES*/
+		listEqVisitante = new JList<String>(dlmJornadasEqVisitante);
 		listEqVisitante.setForeground(new Color(50, 50, 50));
 		listEqVisitante.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listEqVisitante.setFixedCellHeight(25);
@@ -218,90 +347,37 @@ public class AppPrincipal extends JFrame {
 		/*CLASIFICACION - CENTRO*/
 		midPanel = new JPanel();
 		verClasificacion.add(midPanel, BorderLayout.CENTER);
-
-		// CAMBIO: Damos un layout a midPanel para que listContainer se expanda
 		midPanel.setLayout(new BorderLayout());
-
+		
 		// CONTENEDOR D ELISTAS Y CAVEZERAS
 		JPanel listContainer = new JPanel(new BorderLayout());
 
-		// ¡¡¡ ELIMINA ESTA LÍNEA !!! ¡Arruina el JScrollPane!
-		// listContainer.setPreferredSize(new Dimension(1500, numRows * rowHeight + headerHeight)); 
-
-		// CAMBIO: Añade listContainer a midPanel para que sea visible
 		midPanel.add(listContainer, BorderLayout.CENTER);
 
 		// PANEL CABEZERA
-		// CAMBIO: (1, 2) es incorrecto. Usa (1, 0) para todas las columnas.
 		JPanel headerPanelClasificacion = new JPanel(new GridLayout(1, 0, 0, 0)); 
-		headerPanelClasificacion.setBackground(azulSegundo); // Asumo que 'azulSegundo' está definida
+		headerPanelClasificacion.setBackground(azulSegundo);
 		listContainer.add(headerPanelClasificacion, BorderLayout.NORTH);
 
-		// CABEZERA EQUIPO
-		JLabel headerEquipo = new JLabel("EQUIPO");
-		headerEquipo.setForeground(Color.WHITE);
-		headerEquipo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerEquipo.setHorizontalAlignment(SwingConstants.CENTER);
-		headerPanelClasificacion.add(headerEquipo);
-
-		JLabel headerPTOS = new JLabel("PTOS");
-		headerPTOS.setHorizontalAlignment(SwingConstants.CENTER);
-		headerPTOS.setForeground(Color.WHITE);
-		headerPTOS.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerPTOS);
-
-		JLabel headerPJ = new JLabel("P.J");
-		headerPJ.setHorizontalAlignment(SwingConstants.CENTER);
-		headerPJ.setForeground(Color.WHITE);
-		headerPJ.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerPJ);
-
-		JLabel headerPG = new JLabel("P.G");
-		headerPG.setHorizontalAlignment(SwingConstants.CENTER);
-		headerPG.setForeground(Color.WHITE);
-		headerPG.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerPG);
-
-		JLabel headerPP = new JLabel("P.P");
-		headerPP.setHorizontalAlignment(SwingConstants.CENTER);
-		headerPP.setForeground(Color.WHITE);
-		headerPP.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerPP);
-
-		JLabel headerSG = new JLabel("S.G");
-		headerSG.setHorizontalAlignment(SwingConstants.CENTER);
-		headerSG.setForeground(Color.WHITE);
-		headerSG.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerSG);
-
-		JLabel headerSP = new JLabel("S.P");
-		headerSP.setHorizontalAlignment(SwingConstants.CENTER);
-		headerSP.setForeground(Color.WHITE);
-		headerSP.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerSP);
-
-		JLabel headerTA = new JLabel("T.A");
-		headerTA.setHorizontalAlignment(SwingConstants.CENTER);
-		headerTA.setForeground(Color.WHITE);
-		headerTA.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerTA);
-
-		JLabel headerTC = new JLabel("T.C");
-		headerTC.setHorizontalAlignment(SwingConstants.CENTER);
-		headerTC.setForeground(Color.WHITE);
-		headerTC.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerTC);		
-		
 		clasificacionListContainer = new JPanel();
 		listContainer.add(clasificacionListContainer, BorderLayout.CENTER);
 		clasificacionListContainer.setLayout(new GridLayout(0, 9, 0, 0));
-		
+	
+		/*JLIST - EQUIPOS*/
+		listEquipos = new JList<String>(dlmEquipos);
 		listEquipos.setForeground(new Color(50, 50, 50));
 		listEquipos.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listEquipos.setFixedCellHeight(25);
 		listEquipos.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listEquipos);
 		
+		JLabel headerEquipo = new JLabel("EQUIPO");
+		headerEquipo.setForeground(Color.WHITE);
+		headerEquipo.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerEquipo.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPanelClasificacion.add(headerEquipo);
+		
+		/*JLIST - PUNTOS*/
 		listPTOS = new JList<String>();
 		listPTOS.setForeground(new Color(50, 50, 50));
 		listPTOS.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -309,6 +385,13 @@ public class AppPrincipal extends JFrame {
 		listPTOS.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listPTOS);
 		
+		JLabel headerPTOS = new JLabel("PTOS");
+		headerPTOS.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPTOS.setForeground(Color.WHITE);
+		headerPTOS.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanelClasificacion.add(headerPTOS);
+		
+		/*JLIST - Partidos Jugados*/
 		listPJ = new JList<String>();
 		listPJ.setForeground(new Color(50, 50, 50));
 		listPJ.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -316,6 +399,15 @@ public class AppPrincipal extends JFrame {
 		listPJ.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listPJ);
 		
+
+		JLabel headerPJ = new JLabel("P.J");
+		headerPJ.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPJ.setForeground(Color.WHITE);
+		headerPJ.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanelClasificacion.add(headerPJ);
+
+		
+		/*JLIST - Partidos Ganados*/
 		listPG = new JList<String>();
 		listPG.setForeground(new Color(50, 50, 50));
 		listPG.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -323,6 +415,13 @@ public class AppPrincipal extends JFrame {
 		listPG.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listPG);
 		
+		JLabel headerPG = new JLabel("P.G");
+		headerPG.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPG.setForeground(Color.WHITE);
+		headerPG.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanelClasificacion.add(headerPG);
+		
+		/*JLIST - Partidos Perdidos*/
 		listPP = new JList<String>();
 		listPP.setForeground(new Color(50, 50, 50));
 		listPP.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -330,6 +429,13 @@ public class AppPrincipal extends JFrame {
 		listPP.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listPP);
 		
+		JLabel headerPP = new JLabel("P.P");
+		headerPP.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPP.setForeground(Color.WHITE);
+		headerPP.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanelClasificacion.add(headerPP);
+		
+		/*JLIST - Sets Ganados*/
 		listSG = new JList<String>();
 		listSG.setForeground(new Color(50, 50, 50));
 		listSG.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -337,6 +443,13 @@ public class AppPrincipal extends JFrame {
 		listSG.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listSG);
 		
+		JLabel headerSG = new JLabel("S.G");
+		headerSG.setHorizontalAlignment(SwingConstants.CENTER);
+		headerSG.setForeground(Color.WHITE);
+		headerSG.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanelClasificacion.add(headerSG);
+	
+		/*JLIST - Sets Perdidos*/
 		listSP = new JList<String>();
 		listSP.setForeground(new Color(50, 50, 50));
 		listSP.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -344,19 +457,40 @@ public class AppPrincipal extends JFrame {
 		listSP.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listSP);
 		
+		JLabel headerSP = new JLabel("S.P");
+		headerSP.setHorizontalAlignment(SwingConstants.CENTER);
+		headerSP.setForeground(Color.WHITE);
+		headerSP.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanelClasificacion.add(headerSP);
+		
+		/*JLIST - Tantos a Favor*/
 		listTA = new JList<String>();
 		listTA.setForeground(new Color(50, 50, 50));
 		listTA.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listTA.setFixedCellHeight(25);
 		listTA.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listTA);
+
+		JLabel headerTA = new JLabel("T.A");
+		headerTA.setHorizontalAlignment(SwingConstants.CENTER);
+		headerTA.setForeground(Color.WHITE);
+		headerTA.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanelClasificacion.add(headerTA);
+
 		
+		/*JLIST - Tantos en Contra*/
 		listTC = new JList<String>();
 		listTC.setForeground(new Color(50, 50, 50));
 		listTC.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listTC.setFixedCellHeight(25);
 		listTC.setBackground(new Color(204, 229, 255));
 		clasificacionListContainer.add(listTC);
+		
+		JLabel headerTC = new JLabel("T.C");
+		headerTC.setHorizontalAlignment(SwingConstants.CENTER);
+		headerTC.setForeground(Color.WHITE);
+		headerTC.setFont(new Font("Tahoma", Font.BOLD, 15));
+		headerPanelClasificacion.add(headerTC);		
 		
 		/*PANEL ARBITRO*/
 		panelArbitro = new JPanel();
@@ -372,6 +506,33 @@ public class AppPrincipal extends JFrame {
 			cardLayoutPrincipal.show(contentPane, "PanelArbitro_");
 		} else {
 			cardLayoutPrincipal.show(contentPane, "PanelAnonimo_");
+		}
+	}
+	
+	private void setEquipos(DefaultListModel<String> dlmEquipos) {
+		String[] equipos = {"CV Zaragoza", "CV San Fernando", "CV Valladolid", "CV Torrelavega", "CV Palma", "CV Rivas"};
+		for(int i = 0; i < equipos.length; i++) {
+			/*
+			  Añades a la dlm en el indice (i) el valor de el array (i)
+			  i = 3 -> dlmEquipos.add(3, "CV Valladolid")
+			 */
+			dlmEquipos.add(i, equipos[i]);
+		}
+	}
+	
+	/*Esta funcion vaciara la dlm y la rellenada con el rango estableciado */
+	private void setEquiposLocales(DefaultListModel<String> dlmEquiposLocales,int minIndex,int maxIndex) {
+		dlmEquiposLocales.clear(); // Vacia el dlm
+		for(int i = minIndex; i <= maxIndex; i++) {
+			dlmEquiposLocales.addElement(equiposLocales[i]);
+		}
+	}
+	
+	/*Esta funcion vaciara la dlm y la rellenada con el rango estableciado */
+	private void setEquiposVisitantes(DefaultListModel<String> dlmEquiposVisitantes,int minIndex,int maxIndex) {
+		dlmEquiposVisitantes.clear(); // Vacia el dlm
+		for(int i = minIndex; i <= maxIndex; i++) {
+			dlmEquiposVisitantes.addElement(equiposVisitantes[i]);
 		}
 	}
 

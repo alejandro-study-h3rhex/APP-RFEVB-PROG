@@ -181,13 +181,18 @@ public class Login extends JFrame implements ActionListener{
 		        
 		       if(username.equals(admin_user) && password.equals(admin_password)) {
 		    	  AppPrincipal appPrincipal = new AppPrincipal(username);
+		    	  this.dispose();
 		    	  appPrincipal.setVisible(true);
 		       } else if(username.equals(arbitro_user) && password.equals(arbitro_password)) {
 		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
 		    	   appPrincipal.setVisible(true);
+		    	   this.dispose();
+
 		       } else if(username.equals(anonimo_user) && password.equals(anonimo_password)) {
 		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
 		    	   appPrincipal.setVisible(true);
+		    	   this.dispose();
+
 		       } else {
 					JOptionPane.showMessageDialog(this, (String)"Error. Usuario o constraseña incorrectos","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		       }
