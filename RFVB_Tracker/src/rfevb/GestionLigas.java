@@ -73,7 +73,7 @@ public class GestionLigas extends JFrame  implements ActionListener{
 		
 		JLabel lbl_titulo_federacion = new JLabel("Real Federacion Española de Voleibol");
 		lbl_titulo_federacion.setFont(new Font("Leelawadee", Font.BOLD, 25));
-		lbl_titulo_federacion.setForeground(new Color(0, 128, 192)); 
+		lbl_titulo_federacion.setForeground(azulPrimero); 
 		northPanel.add(lbl_titulo_federacion);
 		
 		btnVolverPanel = new JButton("Volver");
