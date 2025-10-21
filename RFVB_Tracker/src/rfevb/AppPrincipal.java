@@ -13,7 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -143,6 +145,27 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	
 	/*EQUIPOS*/
 	private DefaultListModel<String> dlmEquipos;
+	// -- MATRICES EQUIPOS --
+	private int[][] matriz_zaragoza = new int[10][10];
+	private int[][] matriz_valladolid = new int[10][10];
+	private int[][] matriz_torrelavega = new int[10][10];
+	private int[][] matriz_rivas = new int[10][10];
+	private int[][] matriz_palma = new int[10][10];
+	private int[][] matriz_sanfernando = new int[10][10];
+	
+	// -- INDICE DE CADA COLUMNA --> MAS FACIL EL ACCESO
+	private final int COL_PJ = 0;       // Partidos Jugados
+	private final int COL_PG = 1;       // Partidos Ganados
+	private final int COL_PP = 2;       // Partidos Perdidos
+	private final int COL_PUNTOS = 3;   // Puntos totales
+	private final int COL_SG = 4;       // Sets Ganados
+	private final int COL_SP = 5;       // Sets Perdidos
+	private final int COL_TA = 6;       // Tantos a Favor
+	private final int COL_TC = 7;       // Tantos en Contra
+	
+	// --- EL PUENTE/DICCIONARIO ---
+    private Map<String, int[][]> mapaMatricesEquipos;
+	
 	/*JORNADAS*/
 	private DefaultListModel<String> dlmJornadasEqLocal;
 	private DefaultListModel<String> dlmJornadasEqVisitante;
@@ -233,7 +256,12 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 			    "CV PALMA"
 		};
 	/*GESTIONAR - RESULTADOS - JORNADAS*/
+	//-- para los 8 datos de resultados de esos 6 equipos --
 	private DefaultListModel<String> dlmJornadasEquipos_resultado;
+	private DefaultListModel<Integer> dlmJornadasPuntos_resultado;
+	private DefaultListModel<Integer> dlmJornadasPartidosJugados_resultado;
+	private DefaultListModel<Integer> dlmJornadasPartidosGanados_resultado;
+	private DefaultListModel<Integer> dlmJornadasPartidosPerdidos_resultado;
 	private DefaultListModel<Integer> dlmJornadasSetsGanados_resultado;
 	private DefaultListModel<Integer> dlmJornadasSetsPerdidos_resultado;
 	private DefaultListModel<Integer> dlmJornadasTantosFavor_resultado;
@@ -260,6 +288,17 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	 * Create the frame.
 	 */
 	public AppPrincipal(String username_param) {
+		// *GRACIAS A ESTE DICCIONARIO PODEMOS FACILMENTE USAR EL NOMBRE DE EL EQUIPO PARA ENCONTRAR SU MATRIZ* //
+	    mapaMatricesEquipos = new HashMap<>();
+	    
+	    // Conectamos el String "CV ZARAGOZA" con la variable matriz_zaragoza
+	    mapaMatricesEquipos.put("CV ZARAGOZA", matriz_zaragoza);
+	    mapaMatricesEquipos.put("VALLADOLID CV", matriz_valladolid);
+	    mapaMatricesEquipos.put("CV TORRELAVEGA", matriz_torrelavega);
+	    mapaMatricesEquipos.put("CV RIVAS", matriz_rivas);
+	    mapaMatricesEquipos.put("CV PALMA", matriz_palma);
+	    mapaMatricesEquipos.put("CV SAN FERNANDO", matriz_sanfernando);
+		
 		// pasa el parametro recibido a una variable local
 		username = username_param;
 		
@@ -273,6 +312,10 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		dlmJornadasEquipos_resultado = new DefaultListModel<String>();
 		dcbmNumeroJornada = new DefaultComboBoxModel<String>();
 		// -- JORNADAS - RESULTADOS
+		dlmJornadasPuntos_resultado = new DefaultListModel<Integer>();
+		dlmJornadasPartidosJugados_resultado = new DefaultListModel<Integer>();
+		dlmJornadasPartidosGanados_resultado = new DefaultListModel<Integer>();
+		dlmJornadasPartidosPerdidos_resultado = new DefaultListModel<Integer>();
 	    dlmJornadasSetsGanados_resultado = new DefaultListModel<Integer>();
 	    dlmJornadasSetsPerdidos_resultado = new DefaultListModel<Integer>();
 	    dlmJornadasTantosFavor_resultado = new DefaultListModel<Integer>();
@@ -341,7 +384,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		        // Comprobamos si el evento es de un ítem que acaba de ser SELECCIONADO
 		        if (e.getStateChange() == ItemEvent.SELECTED) {
 		        	/*CAMBIA EN ANONIMO*/
-		        	cambiarJornada(comboBoxJornadas, dlmJornadasEqLocal, dlmJornadasEqVisitante, headerNJornadas);
+		        	cambiarJornada(comboBoxJornadas, headerNJornadas);
 		        }
 		    }
 		});
@@ -624,7 +667,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		        
 		        // Comprobamos si el evento es de un ítem que acaba de ser SELECCIONADO
 		        if (e.getStateChange() == ItemEvent.SELECTED) {
-		        	cambiarJornada(comboBoxGestionarJornadas, dlmJornadasEqLocal, dlmJornadasEqVisitante, headerNJornadas_1);
+		        	cambiarJornada(comboBoxGestionarJornadas, headerNJornadas_1);
 		        	unirEquiposLocalesVisitantes();
 		        }
 		    }
@@ -986,7 +1029,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblheaderPTOS_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPTOS_resultados);
 		
-		listPTOS_resultadosJornadas = new JList<Integer>(dlmClasificacionPuntos);
+		listPTOS_resultadosJornadas = new JList<Integer>(dlmJornadasPuntos_resultado);
 		listPTOS_resultadosJornadas.addListSelectionListener(this);
 		listPTOS_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPTOS_resultadosJornadas.setForeground(new Color(50, 50, 50));
@@ -1002,7 +1045,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblheaderPJ_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPJ_resultados);
 		
-		listPJ_resultadosJornadas = new JList<Integer>(dlmClasificacionPartidosJugados);
+		listPJ_resultadosJornadas = new JList<Integer>(dlmJornadasPartidosJugados_resultado);
 		listPJ_resultadosJornadas.addListSelectionListener(this);
 		listPJ_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPJ_resultadosJornadas.setForeground(new Color(50, 50, 50));
@@ -1019,7 +1062,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblheaderPG_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPG_resultados);
 		
-		listPG_resultadosJornadas = new JList<Integer>(dlmClasificacionPartidosGanados);
+		listPG_resultadosJornadas = new JList<Integer>(dlmJornadasPartidosGanados_resultado);
 		listPG_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPG_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listPG_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -1036,7 +1079,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblHeaderPP_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblHeaderPP_resultados);
 		
-		listPP_resultadosJornadas = new JList<Integer>(dlmClasificacionPartidosPerdidos);
+		listPP_resultadosJornadas = new JList<Integer>(dlmJornadasPartidosPerdidos_resultado);
 		listPP_resultadosJornadas.addListSelectionListener(this);
 		listPP_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPP_resultadosJornadas.setForeground(new Color(50, 50, 50));
@@ -1123,14 +1166,13 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setTitle(this.getTitle() + " - GESTIÓN ARBITRO");
 			cardLayoutPrincipal.show(contentPane, "PanelArbitro_");
-			cambiarJornada(comboBoxGestionarJornadas, dlmJornadasEqLocal, dlmJornadasEqVisitante, headerNJornadas_1);
+			cambiarJornada(comboBoxGestionarJornadas, headerNJornadas_1);
         	unirEquiposLocalesVisitantes();
         	definirDatosResultadosJornadasPorDefecto();
-        	
 		} else {
 			cardLayoutPrincipal.show(contentPane, "PanelAnonimo_");
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        	cambiarJornada(comboBoxJornadas, dlmJornadasEqLocal, dlmJornadasEqVisitante, headerNJornadas);
+        	cambiarJornada(comboBoxJornadas, headerNJornadas);
 		}
 	}
 	
@@ -1183,18 +1225,69 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	 * minIndex(2) -> 2 * 3
 	 **/
 	
-	/*Este metodo cambia la apariencia de las jornadas al cambiar entre ellas*/
-	private void cambiarJornada(JComboBox<String>  comboBox, DefaultListModel<String> dlmEqLocal, DefaultListModel<String> dlmEqVisitante, JLabel nJornada){
-	     int indiceSeleccionado = comboBox.getSelectedIndex(); // Ej: 0 para Jornada 1, 1 para Jornada 2
-	     
-	     // Calcula los índices correctos para los arrays
-	     int minIndex = indiceSeleccionado * 3; // Ej: 0*3=0, 1*3=3
-	     int maxIndex = minIndex + 3;          // Ej: 0+3=3, 3+3=6
-	     
-	     setEquiposLocales(dlmEqLocal, minIndex, maxIndex);
-	     setEquiposVisitantes(dlmEqVisitante, minIndex, maxIndex);
-	     nJornada.setText("Nº " + Integer.toString(indiceSeleccionado+1));
-	};
+	/**
+	 * Este método cambia la apariencia de las jornadas al cambiar entre ellas.
+	 * Rellena los 6 equipos y busca en las matrices sus resultados para
+	 * rellenar las 8 listas de datos (Puntos, PJ, PG, etc.), asegurando
+	 * que todas las listas estén sincronizadas con 6 elementos.
+	 */
+	private void cambiarJornada(JComboBox<String> comboBox, JLabel nJornada) {
+	    
+	    // 1. OBTIENE LA JORNADA SELECCIONADA (0 para Jornada 1, 1 para Jornada 2, etc.)
+	    int jornadaIndex = comboBox.getSelectedIndex();
+	    
+	    // 2. CALCULA EL RANGO PARA TUS ARRAYS DE EQUIPOS
+	    int minIndex = jornadaIndex * 3;
+	    int maxIndex = minIndex + 3;
+	    
+	    // 3. RELLENA LAS LISTAS TEMPORALES DE LOCAL/VISITANTE
+	    // (Estos métodos usan las variables de clase dlmJornadasEqLocal y dlmJornadasEqVisitante)
+	    setEquiposLocales(dlmJornadasEqLocal, minIndex, maxIndex);
+	    setEquiposVisitantes(dlmJornadasEqVisitante, minIndex, maxIndex);
+	    
+	    // 4. UNE LOS 6 EQUIPOS EN LA LISTA PRINCIPAL
+	    // (Esto limpia dlmJornadasEquipos_resultado y añade los 6 equipos)
+	    unirEquiposLocalesVisitantes();
+	    
+	    // 5. LIMPIA TODAS LAS LISTAS DE DATOS (PUNTOS, PJ, PG...)
+	    dlmJornadasPuntos_resultado.clear();
+	    dlmJornadasPartidosJugados_resultado.clear();
+	    dlmJornadasPartidosGanados_resultado.clear();
+	    dlmJornadasPartidosPerdidos_resultado.clear();
+	    dlmJornadasSetsGanados_resultado.clear();
+	    dlmJornadasSetsPerdidos_resultado.clear();
+	    dlmJornadasTantosFavor_resultado.clear();
+	    dlmJornadasTantosContra_resultado.clear();
+	    
+	    // 6. RELLENA LAS LISTAS DE DATOS USANDO LAS MATRICES
+	    // Este bucle se ejecuta 6 veces (una por cada equipo en la lista)
+	    for (int i = 0; i < dlmJornadasEquipos_resultado.getSize(); i++) {
+	        
+	        // A. Obtiene el nombre del equipo (en el índice 0, 1, 2, 3, 4, 5)
+	        String nombreEquipo = dlmJornadasEquipos_resultado.getElementAt(i);
+	        
+	        // B. Obtiene la matriz de ese equipo usando el 'Map'
+	        int[][] matrizDelEquipo = getMatrizPorNombre(nombreEquipo);
+	        
+	        // C. Obtiene la FILA de datos para esa JORNADA
+	        // (matrizDelEquipo[jornadaIndex] te da la fila: int[10])
+	        int[] datosFila = matrizDelEquipo[jornadaIndex];
+	        
+	        // D. Añade los datos de esa fila a las listas DLM
+	        // (Usando las constantes COL_... que definimos)
+	        dlmJornadasPuntos_resultado.addElement(datosFila[COL_PUNTOS]);
+	        dlmJornadasPartidosJugados_resultado.addElement(datosFila[COL_PJ]);
+	        dlmJornadasPartidosGanados_resultado.addElement(datosFila[COL_PG]);
+	        dlmJornadasPartidosPerdidos_resultado.addElement(datosFila[COL_PP]);
+	        dlmJornadasSetsGanados_resultado.addElement(datosFila[COL_SG]);
+	        dlmJornadasSetsPerdidos_resultado.addElement(datosFila[COL_SP]);
+	        dlmJornadasTantosFavor_resultado.addElement(datosFila[COL_TA]);
+	        dlmJornadasTantosContra_resultado.addElement(datosFila[COL_TC]);
+	    }
+	    
+	    // 7. ACTUALIZA LA ETIQUETA
+	    nJornada.setText("Nº " + Integer.toString(jornadaIndex + 1));
+	}
 	
 	/*Este metodo se encarga de hacer una lista modelo para la gestion en jornadas es decir muestra los equipos que juegan esa jornada en una unica lista*/
 	private void unirEquiposLocalesVisitantes() {
@@ -1210,40 +1303,234 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		}
 	}
 
-	/*POR DEFECTO TODOS LOS RESULTADOS ESTAN EN 0*/
+	/*POR DEFECTO TODOS LOS RESULTADOS DE LA TEMPORADA EN CADA JORNADA*/
 	private void definirDatosResultadosJornadasPorDefecto() {
-	    // Define la cantidad de '0' a añadir (asumo 6 por los equipos de la jornada)
-	    int cantidadDeCeros = 6;
+	    
+	    // Variables de ayuda para que el código sea más limpio
+	    int j; // Índice de la jornada (fila de la matriz)
+	    int[][] matLocal; // Matriz del equipo local
+	    int[][] matVisit; // Matriz del equipo visitante
 
-	    // 1. Agrupa todas las listas de tipo <Integer> en un array
-	    List<DefaultListModel<Integer>> listasDeResultados = Arrays.asList(
-	    	dlmClasificacionPartidosJugados,
-	    	dlmClasificacionPartidosPerdidos,
-	    	dlmClasificacionPartidosGanados,
-	    	dlmClasificacionPuntos,
-	        dlmJornadasSetsGanados_resultado,
-	        dlmJornadasSetsPerdidos_resultado,
-	        dlmJornadasTantosFavor_resultado,
-	        dlmJornadasTantosContra_resultado
-	    );
+	    // --- JORNADA 1 (j=0) ---
+	    j = 0;
+	    
+	    // Zaragoza (3) vs SanFernando (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
+	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 55;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 55; matVisit[j][COL_TC] = 75;
+	    
+	    // Valladolid (3) vs Rivas (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("VALLADOLID CV");
+	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 55;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 55; matVisit[j][COL_TC] = 75;
 
-	    // 2. Recorre el array de listas
-	    for (DefaultListModel<Integer> dlm : listasDeResultados) {
-	        
-	        // 3. Limpia la lista actual
-	        dlm.clear();
-	        
-	        // 4. Añade la cantidad de ceros (0) necesaria a esa lista
-	        for (int i = 0; i < cantidadDeCeros; i++) {
-	            dlm.addElement(0); // Añade el NÚMERO 0
-	        }
-	    }
+	    // Torrelavega (3) vs Palma (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
+	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 52;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 52; matVisit[j][COL_TC] = 75;
+	    
+	    // --- JORNADA 2 (j=1) ---
+	    j = 1;
+	    
+	    // Zaragoza (3) vs Rivas (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
+	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 48;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 48; matVisit[j][COL_TC] = 75;
+
+	    // SanFernando (3) vs Palma (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
+	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 54;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 54; matVisit[j][COL_TC] = 75;
+	    
+	    // Valladolid (3) vs Torrelavega (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("VALLADOLID CV");
+	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 61;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 61; matVisit[j][COL_TC] = 75;
+	    
+	    // --- JORNADA 3 (j=2) ---
+	    j = 2;
+	    
+	    // Zaragoza (3) vs Palma (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
+	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 53;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 53; matVisit[j][COL_TC] = 75;
+	    
+	    // Rivas (0) vs Torrelavega (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV RIVAS");
+	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 55; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 55;
+
+	    // SanFernando (3) vs Valladolid (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
+	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 63;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 63; matVisit[j][COL_TC] = 75;
+
+	    // --- JORNADA 4 (j=3) ---
+	    j = 3;
+	    
+	    // Zaragoza (3) vs Torrelavega (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
+	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 57;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 57; matVisit[j][COL_TC] = 75;
+
+	    // Palma (0) vs Valladolid (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV PALMA");
+	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 54; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 54;
+	    
+	    // Rivas (0) vs SanFernando (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV RIVAS");
+	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 52; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 52;
+
+	    // --- JORNADA 5 (j=4) ---
+	    j = 4;
+	    
+	    // Zaragoza (3) vs Valladolid (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
+	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 61;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 61; matVisit[j][COL_TC] = 75;
+	    
+	    // Torrelavega (0) vs SanFernando (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
+	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 57; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 57;
+	    
+	    // Palma (3) vs Rivas (0) -> Puntos: 3-0
+	    matLocal = getMatrizPorNombre("CV PALMA");
+	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 3; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 55;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 0; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 55; matVisit[j][COL_TC] = 75;
+	    
+	    // --- JORNADA 6 (j=5) ---
+	    j = 5;
+	    
+	    // SanFernando (0) vs Zaragoza (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
+	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 60; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 60;
+	    
+	    // Rivas (0) vs Valladolid (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV RIVAS");
+	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 54; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 54;
+
+	    // Palma (0) vs Torrelavega (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV PALMA");
+	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 52; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 52;
+	    
+	    // --- JORNADA 7 (j=6) ---
+	    j = 6;
+	    
+	    // Rivas (0) vs Zaragoza (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV RIVAS");
+	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 51; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 51;
+
+	    // Palma (0) vs SanFernando (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV PALMA");
+	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 52; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 52;
+	    
+	    // Torrelavega (0) vs Valladolid (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
+	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 57; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 57;
+
+	    // --- JORNADA 8 (j=7) ---
+	    j = 7;
+	    
+	    // Palma (2) vs Zaragoza (3) -> Puntos: 1-2
+	    matLocal = getMatrizPorNombre("CV PALMA");
+	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 2; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 107; matLocal[j][COL_TC] = 110;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 2; matVisit[j][COL_TA] = 110; matVisit[j][COL_TC] = 107;
+
+	    // Torrelavega (0) vs Rivas (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
+	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 55; matLocal[j][COL_TC] = 75;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 55;
+	    
+	    // Valladolid (2) vs SanFernando (3) -> Puntos: 1-2
+	    matLocal = getMatrizPorNombre("VALLADOLID CV");
+	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 2; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 106; matLocal[j][COL_TC] = 110;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 2; matVisit[j][COL_TA] = 110; matVisit[j][COL_TC] = 106;
+	    
+	    // --- JORNADA 9 (j=8) ---
+	    j = 8;
+	    
+	    // Torrelavega (1) vs Zaragoza (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
+	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 88; matLocal[j][COL_TC] = 98;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 98; matVisit[j][COL_TC] = 88;
+
+	    // Valladolid (3) vs Palma (2) -> Puntos: 2-1
+	    matLocal = getMatrizPorNombre("VALLADOLID CV");
+	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 107; matLocal[j][COL_TC] = 106;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 106; matVisit[j][COL_TC] = 107;
+	    
+	    // SanFernando (3) vs Rivas (2) -> Puntos: 2-1
+	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
+	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 107; matLocal[j][COL_TC] = 106;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 106; matVisit[j][COL_TC] = 107;
+	    
+	    // --- JORNADA 10 (j=9) ---
+	    j = 9;
+	    
+	    // Valladolid (1) vs Zaragoza (3) -> Puntos: 0-3
+	    matLocal = getMatrizPorNombre("VALLADOLID CV");
+	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 0; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 86; matLocal[j][COL_TC] = 98;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 3; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 98; matVisit[j][COL_TC] = 86;
+	    
+	    // SanFernando (2) vs Torrelavega (3) -> Puntos: 1-2
+	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
+	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 2; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 105; matLocal[j][COL_TC] = 108;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 2; matVisit[j][COL_TA] = 108; matVisit[j][COL_TC] = 105;
+	    
+	    // Rivas (2) vs Palma (3) -> Puntos: 1-2
+	    matLocal = getMatrizPorNombre("CV RIVAS");
+	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 2; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 108; matLocal[j][COL_TC] = 108;
+	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 2; matVisit[j][COL_TA] = 108; matVisit[j][COL_TC] = 108;
+	}
+	
+	
+	/*OBTENER MATRIZ USANDO EL NOMBRE DE EL EQUIPO*/
+	private int[][] getMatrizPorNombre(String nombreEquipo) {
+	    // .get(nombreEquipo) busca la clave en el Map y devuelve el valor asociado
+	    return mapaMatricesEquipos.get(nombreEquipo);
 	}
 	
 	// -- EVENTOS --
 	
-	/*BORRAR*/
-	private void borrarResultadoSelecciondo();
 	
 	//*ACTION LISTENER*//
 	@Override
@@ -1294,14 +1581,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 			/*CAMBIAR TXT FIELDS*/
 			
 			txtEquipos_resultadosJornadas.setText(dlmJornadasEquipos_resultado.get(index));
-			txtPtos_resultadosJornadas.setText(Integer.toString(dlmClasificacionPuntos.get(index)));
-			txtPJ_resultadosJornadas.setText(Integer.toString(dlmClasificacionPartidosJugados.get(index)));
-			txtPG_resultadosJornadas.setText(Integer.toString(dlmClasificacionPartidosGanados.get(index)));
-			txtPP_resultadosJornadas.setText(Integer.toString(dlmClasificacionPartidosPerdidos.get(index)));
-			txtSG_resultadosJornadas.setText(Integer.toString(dlmJornadasSetsGanados_resultado.get(index)));
-			txtSP_resultadosJornadas.setText(Integer.toString(dlmJornadasSetsPerdidos_resultado.get(index)));
-			txtTA_resultadosJornadas.setText(Integer.toString(dlmJornadasTantosFavor_resultado.get(index)));
-			txtTC_resultadosJornadas.setText(Integer.toString(dlmJornadasTantosContra_resultado.get(index)));
+			txtPtos_resultadosJornadas.setText(Integer.toString(dlmJornadasPuntos_resultado.get(index)));
+		    txtPJ_resultadosJornadas.setText(Integer.toString(dlmJornadasPartidosJugados_resultado.get(index)));
+		    txtPG_resultadosJornadas.setText(Integer.toString(dlmJornadasPartidosGanados_resultado.get(index)));
+		    txtPP_resultadosJornadas.setText(Integer.toString(dlmJornadasPartidosPerdidos_resultado.get(index)));
+		    txtSG_resultadosJornadas.setText(Integer.toString(dlmJornadasSetsGanados_resultado.get(index)));
+		    txtSP_resultadosJornadas.setText(Integer.toString(dlmJornadasSetsPerdidos_resultado.get(index)));
+		    txtTA_resultadosJornadas.setText(Integer.toString(dlmJornadasTantosFavor_resultado.get(index)));
+		    txtTC_resultadosJornadas.setText(Integer.toString(dlmJornadasTantosContra_resultado.get(index)));
 		}	
 	}
 }
