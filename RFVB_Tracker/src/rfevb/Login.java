@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -61,6 +62,7 @@ public class Login extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					// No hay una instancia aun
 					Login frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -183,6 +185,7 @@ public class Login extends JFrame implements ActionListener{
 		    	  AppPrincipal appPrincipal = new AppPrincipal(username);
 		    	  this.dispose();
 		    	  appPrincipal.setVisible(true);
+
 		       } else if(username.equals(arbitro_user) && password.equals(arbitro_password)) {
 		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
 		    	   appPrincipal.setVisible(true);
@@ -192,7 +195,6 @@ public class Login extends JFrame implements ActionListener{
 		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
 		    	   appPrincipal.setVisible(true);
 		    	   this.dispose();
-
 		       } else {
 					JOptionPane.showMessageDialog(this, (String)"Error. Usuario o constraseña incorrectos","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
 		       }

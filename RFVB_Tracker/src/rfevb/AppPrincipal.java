@@ -3,10 +3,17 @@ package rfevb;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.CardLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Arrays;
+import java.util.List;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -27,10 +34,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import java.awt.Component;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 
 
-public class AppPrincipal extends JFrame {
+public class AppPrincipal extends JFrame implements ActionListener, ListSelectionListener{
+	private String username;
 	
 	// COLORES
 	Color azulPrimero = new Color(0, 128, 192); 
@@ -46,7 +55,7 @@ public class AppPrincipal extends JFrame {
 	
 	JPanel panelArbitro;
 	JPanel panelAdmin;
-	private JButton CerrarSesion;
+	
 	
 	// -- ANON --
 	JPanel panelAnonimo;
@@ -54,6 +63,7 @@ public class AppPrincipal extends JFrame {
 	private JPanel midPanel;
 	private JScrollPane scrollPaneAnonimo;
 	private JPanel scrollPanelAnonimo;
+	private JButton btnCerrarSesion_ANON;
 
 
 	// -- JORNDAS ANON --
@@ -94,7 +104,7 @@ public class AppPrincipal extends JFrame {
 	private JPanel gestionarClasifiacion;
 	private JPanel northPanelGestionarJornadas;
 	private JComboBox<String> comboBoxGestionarJornadas;
-	private JButton btnCerrarSesionArbitros;
+	private JButton btnCerrarSesion_ARBITRO;
 	private JPanel panelGestionarJornadas;
 	private JLabel lblGestionarJornadas;
 	private JPanel panelListasGestionarJornadas;
@@ -109,15 +119,14 @@ public class AppPrincipal extends JFrame {
 	private JList<String> listEqVisitanteGestionar;
 	/*RESULTADOS*/
 	private JList<String> listEquipos_resultadosJornadas;
-	private JList<String> listPTOS_resultadosJornadas;
-	private JList<String> listPJ_resultadosJornadas;
-	private JList<String> listPG_resultadosJornadas;
-	private JList<String> listPP_resultadosJornadas;
-	private JList<String> listSG_resultadosJornadas;
-	private JList<String> listSP_resultadosJornadas;
-	private JList<String> listTA_resultadosJornadas;
-	private JList<String> listTC_resultadosJornadas;
-	private JTextField textField;
+	private JList<Integer> listPTOS_resultadosJornadas;
+	private JList<Integer> listPJ_resultadosJornadas;
+	private JList<Integer> listPG_resultadosJornadas;
+	private JList<Integer> listPP_resultadosJornadas;
+	private JList<Integer> listSG_resultadosJornadas;
+	private JList<Integer> listSP_resultadosJornadas;
+	private JList<Integer> listTA_resultadosJornadas;
+	private JList<Integer> listTC_resultadosJornadas;
 	private JTextField txtPtos_resultadosJornadas;
 	private JTextField txtPJ_resultadosJornadas;
 	private JTextField txtPG_resultadosJornadas;
@@ -225,10 +234,6 @@ public class AppPrincipal extends JFrame {
 		};
 	/*GESTIONAR - RESULTADOS - JORNADAS*/
 	private DefaultListModel<String> dlmJornadasEquipos_resultado;
-	private DefaultListModel<Integer> dlmJornadasPuntos_resultado;
-	private DefaultListModel<Integer> dlmJornadasPartidosJugados_resultado;
-	private DefaultListModel<Integer> dlmJornadasPartidosGanados_resultado;
-	private DefaultListModel<Integer> dlmJornadasPartidosPerdidos_resultado;
 	private DefaultListModel<Integer> dlmJornadasSetsGanados_resultado;
 	private DefaultListModel<Integer> dlmJornadasSetsPerdidos_resultado;
 	private DefaultListModel<Integer> dlmJornadasTantosFavor_resultado;
@@ -245,6 +250,8 @@ public class AppPrincipal extends JFrame {
 	private DefaultListModel<Integer> dlmClasificacionTantosFavor;
 	private DefaultListModel<Integer> dlmClasificacionTantosContra;
 	private JPanel panelInputDatosJornadas;
+	private JLabel lbl_Equipos_resultadosJornadas;
+	private JTextField txtEquipos_resultadosJornadas;
 	
 	// -- DLMs --
 	
@@ -252,7 +259,9 @@ public class AppPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AppPrincipal(String username) {
+	public AppPrincipal(String username_param) {
+		// pasa el parametro recibido a una variable local
+		username = username_param;
 		
 		/*INICIALIZAR DLMs*/
 		
@@ -263,6 +272,11 @@ public class AppPrincipal extends JFrame {
 		dlmJornadasEqVisitante = new DefaultListModel<String>();
 		dlmJornadasEquipos_resultado = new DefaultListModel<String>();
 		dcbmNumeroJornada = new DefaultComboBoxModel<String>();
+		// -- JORNADAS - RESULTADOS
+	    dlmJornadasSetsGanados_resultado = new DefaultListModel<Integer>();
+	    dlmJornadasSetsPerdidos_resultado = new DefaultListModel<Integer>();
+	    dlmJornadasTantosFavor_resultado = new DefaultListModel<Integer>();
+	    dlmJornadasTantosContra_resultado = new DefaultListModel<Integer>();
 		
 		/*CLASIFICACIÓN*/
 		dlmClasificacionPuntos = new DefaultListModel<Integer>();
@@ -282,7 +296,6 @@ public class AppPrincipal extends JFrame {
 		/*SET NUMERO JORNDAS*/
 		setNumeroJorndas(dcbmNumeroJornada, 10);
 
-		
 		
 		//LOGO Y TITULO
 		setTitle("RFEVB Tracker");
@@ -334,9 +347,10 @@ public class AppPrincipal extends JFrame {
 		});
 		northPanelJornadas.add(comboBoxJornadas);
 		
-		CerrarSesion = new JButton("Cerrar Sesion");
-		CerrarSesion.setFont(new Font("Calibri", Font.PLAIN, 20));
-		northPanelJornadas.add(CerrarSesion);
+		btnCerrarSesion_ANON = new JButton("Cerrar Sesion");
+		btnCerrarSesion_ANON.setFont(new Font("Calibri", Font.PLAIN, 20));
+		btnCerrarSesion_ANON.addActionListener(this);
+		northPanelJornadas.add(btnCerrarSesion_ANON);
 			
 		panelVerJornadas = new JPanel();
 		panelVerJornadas.setBackground(new Color(238, 235, 228));
@@ -617,9 +631,10 @@ public class AppPrincipal extends JFrame {
 		});
 		northPanelGestionarJornadas.add(comboBoxGestionarJornadas);
 		
-		btnCerrarSesionArbitros = new JButton("Cerrar Sesion");
-		btnCerrarSesionArbitros.setFont(new Font("Calibri", Font.PLAIN, 20));
-		northPanelGestionarJornadas.add(btnCerrarSesionArbitros);
+		btnCerrarSesion_ARBITRO = new JButton("Cerrar Sesion");
+		btnCerrarSesion_ARBITRO.setFont(new Font("Calibri", Font.PLAIN, 20));
+		btnCerrarSesion_ARBITRO.addActionListener(this);
+		northPanelGestionarJornadas.add(btnCerrarSesion_ARBITRO);
 		
 		panelGestionarJornadas = new JPanel();
 		panelGestionarJornadas.setBackground(new Color(238, 235, 228));
@@ -690,6 +705,7 @@ public class AppPrincipal extends JFrame {
 		arbitroListPanelJornadas.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		listEqLocalGestionar = new JList<String>(dlmJornadasEqLocal);
+		listEqLocalGestionar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listEqLocalGestionar.setForeground(new Color(50, 50, 50));
 		listEqLocalGestionar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listEqLocalGestionar.setFixedCellHeight(25);
@@ -697,6 +713,7 @@ public class AppPrincipal extends JFrame {
 		arbitroListPanelJornadas.add(listEqLocalGestionar);
 		
 		listEqVisitanteGestionar = new JList<String>(dlmJornadasEqVisitante);
+		listEqVisitanteGestionar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listEqVisitanteGestionar.setForeground(new Color(50, 50, 50));
 		listEqVisitanteGestionar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listEqVisitanteGestionar.setFixedCellHeight(25);
@@ -704,37 +721,41 @@ public class AppPrincipal extends JFrame {
 		arbitroListPanelJornadas.add(listEqVisitanteGestionar);
 		
 		JPanel panelListasGestionarResultadosJornadas = new JPanel();
+		panelListasGestionarResultadosJornadas.setAlignmentY(0.2f);
+		panelListasGestionarResultadosJornadas.setAlignmentX(0.2f);
 		panelGestionarJornadas.add(panelListasGestionarResultadosJornadas);
 		
 		/*PANEL INTRODUCIR DATOS JORNADAS*/
 		panelInputDatosJornadas = new JPanel();
 		panelListasGestionarResultadosJornadas.add(panelInputDatosJornadas);
 		GridBagLayout gbl_panelInputDatosJornadas = new GridBagLayout();
-		gbl_panelInputDatosJornadas.columnWidths = new int[] {40, 20};
-		gbl_panelInputDatosJornadas.rowHeights = new int[] {30, 40};
-		gbl_panelInputDatosJornadas.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+		gbl_panelInputDatosJornadas.columnWidths = new int[] {40, 0, 20};
+		gbl_panelInputDatosJornadas.rowHeights = new int[] {30, 20};
+		gbl_panelInputDatosJornadas.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		gbl_panelInputDatosJornadas.rowWeights = new double[]{0.0, 0.0};
 		panelInputDatosJornadas.setLayout(gbl_panelInputDatosJornadas);
 		
-		JLabel lbl_Equipo_input = new JLabel("EQUIPO:");
-		lbl_Equipo_input.setForeground(new Color(51, 153, 204));
-		lbl_Equipo_input.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_Equipo_input.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_Equipo_input = new GridBagConstraints();
-		gbc_lbl_Equipo_input.anchor = GridBagConstraints.WEST;
-		gbc_lbl_Equipo_input.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_Equipo_input.gridx = 0;
-		gbc_lbl_Equipo_input.gridy = 0;
-		panelInputDatosJornadas.add(lbl_Equipo_input, gbc_lbl_Equipo_input);
+		lbl_Equipos_resultadosJornadas = new JLabel("EQUIPOS:");
+		lbl_Equipos_resultadosJornadas.setForeground(new Color(51, 153, 204));
+		lbl_Equipos_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lbl_Equipos_resultadosJornadas.setBackground(new Color(217, 217, 217));
+		GridBagConstraints gbc_lbl_Equipos_resultadosJornadas = new GridBagConstraints();
+		gbc_lbl_Equipos_resultadosJornadas.anchor = GridBagConstraints.EAST;
+		gbc_lbl_Equipos_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_Equipos_resultadosJornadas.gridx = 0;
+		gbc_lbl_Equipos_resultadosJornadas.gridy = 0;
+		panelInputDatosJornadas.add(lbl_Equipos_resultadosJornadas, gbc_lbl_Equipos_resultadosJornadas);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.anchor = GridBagConstraints.WEST;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 0;
-		panelInputDatosJornadas.add(textField, gbc_textField);
+		txtEquipos_resultadosJornadas = new JTextField();
+		txtEquipos_resultadosJornadas.setEditable(false);
+		txtEquipos_resultadosJornadas.setEnabled(false);
+		txtEquipos_resultadosJornadas.setColumns(10);
+		GridBagConstraints gbc_txtEquipos_resultadosJornadas = new GridBagConstraints();
+		gbc_txtEquipos_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
+		gbc_txtEquipos_resultadosJornadas.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtEquipos_resultadosJornadas.gridx = 1;
+		gbc_txtEquipos_resultadosJornadas.gridy = 0;
+		panelInputDatosJornadas.add(txtEquipos_resultadosJornadas, gbc_txtEquipos_resultadosJornadas);
 		
 		JLabel lbl_Ptos_resultadosJornadas = new JLabel("PTOS:");
 		lbl_Ptos_resultadosJornadas.setForeground(new Color(51, 153, 204));
@@ -743,7 +764,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_lbl_Ptos_resultadosJornadas = new GridBagConstraints();
 		gbc_lbl_Ptos_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_lbl_Ptos_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_Ptos_resultadosJornadas.gridx = 2;
+		gbc_lbl_Ptos_resultadosJornadas.gridx = 3;
 		gbc_lbl_Ptos_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(lbl_Ptos_resultadosJornadas, gbc_lbl_Ptos_resultadosJornadas);
 		
@@ -752,7 +773,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_txtPtos_resultadosJornadas = new GridBagConstraints();
 		gbc_txtPtos_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_txtPtos_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPtos_resultadosJornadas.gridx = 3;
+		gbc_txtPtos_resultadosJornadas.gridx = 4;
 		gbc_txtPtos_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(txtPtos_resultadosJornadas, gbc_txtPtos_resultadosJornadas);
 		
@@ -763,7 +784,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_lbl_PJ_resultadosJornadas = new GridBagConstraints();
 		gbc_lbl_PJ_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_lbl_PJ_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_PJ_resultadosJornadas.gridx = 4;
+		gbc_lbl_PJ_resultadosJornadas.gridx = 5;
 		gbc_lbl_PJ_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(lbl_PJ_resultadosJornadas, gbc_lbl_PJ_resultadosJornadas);
 		
@@ -772,7 +793,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_txtPJ_resultadosJornadas = new GridBagConstraints();
 		gbc_txtPJ_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_txtPJ_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPJ_resultadosJornadas.gridx = 5;
+		gbc_txtPJ_resultadosJornadas.gridx = 6;
 		gbc_txtPJ_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(txtPJ_resultadosJornadas, gbc_txtPJ_resultadosJornadas);
 		
@@ -783,7 +804,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_lbl_PG_resultadosJornadas = new GridBagConstraints();
 		gbc_lbl_PG_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_lbl_PG_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_PG_resultadosJornadas.gridx = 6;
+		gbc_lbl_PG_resultadosJornadas.gridx = 8;
 		gbc_lbl_PG_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(lbl_PG_resultadosJornadas, gbc_lbl_PG_resultadosJornadas);
 		
@@ -792,7 +813,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_txtPG_resultadosJornadas = new GridBagConstraints();
 		gbc_txtPG_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_txtPG_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPG_resultadosJornadas.gridx = 7;
+		gbc_txtPG_resultadosJornadas.gridx = 9;
 		gbc_txtPG_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(txtPG_resultadosJornadas, gbc_txtPG_resultadosJornadas);
 		
@@ -803,7 +824,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_lbl_PP_resultadosJornadas = new GridBagConstraints();
 		gbc_lbl_PP_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_lbl_PP_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_PP_resultadosJornadas.gridx = 8;
+		gbc_lbl_PP_resultadosJornadas.gridx = 10;
 		gbc_lbl_PP_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(lbl_PP_resultadosJornadas, gbc_lbl_PP_resultadosJornadas);
 		
@@ -812,7 +833,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_txtPP_resultadosJornadas = new GridBagConstraints();
 		gbc_txtPP_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_txtPP_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPP_resultadosJornadas.gridx = 9;
+		gbc_txtPP_resultadosJornadas.gridx = 11;
 		gbc_txtPP_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(txtPP_resultadosJornadas, gbc_txtPP_resultadosJornadas);
 		
@@ -821,9 +842,8 @@ public class AppPrincipal extends JFrame {
 		lbl_SG_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lbl_SG_resultadosJornadas.setBackground(new Color(217, 217, 217));
 		GridBagConstraints gbc_lbl_SG_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_SG_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_lbl_SG_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_SG_resultadosJornadas.gridx = 10;
+		gbc_lbl_SG_resultadosJornadas.gridx = 12;
 		gbc_lbl_SG_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(lbl_SG_resultadosJornadas, gbc_lbl_SG_resultadosJornadas);
 		
@@ -832,7 +852,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_txtSG_resultadosJornadas = new GridBagConstraints();
 		gbc_txtSG_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_txtSG_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtSG_resultadosJornadas.gridx = 11;
+		gbc_txtSG_resultadosJornadas.gridx = 13;
 		gbc_txtSG_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(txtSG_resultadosJornadas, gbc_txtSG_resultadosJornadas);
 		
@@ -843,7 +863,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_lbl_SP_resultadosJornadas = new GridBagConstraints();
 		gbc_lbl_SP_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_lbl_SP_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_SP_resultadosJornadas.gridx = 12;
+		gbc_lbl_SP_resultadosJornadas.gridx = 15;
 		gbc_lbl_SP_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(lbl_SP_resultadosJornadas, gbc_lbl_SP_resultadosJornadas);
 		
@@ -852,7 +872,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_txtSP_resultadosJornadas = new GridBagConstraints();
 		gbc_txtSP_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_txtSP_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtSP_resultadosJornadas.gridx = 13;
+		gbc_txtSP_resultadosJornadas.gridx = 16;
 		gbc_txtSP_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(txtSP_resultadosJornadas, gbc_txtSP_resultadosJornadas);
 		
@@ -863,7 +883,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_lbl_TA_resultadosJornadas = new GridBagConstraints();
 		gbc_lbl_TA_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_lbl_TA_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_TA_resultadosJornadas.gridx = 14;
+		gbc_lbl_TA_resultadosJornadas.gridx = 17;
 		gbc_lbl_TA_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(lbl_TA_resultadosJornadas, gbc_lbl_TA_resultadosJornadas);
 		
@@ -872,7 +892,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_txtTA_resultadosJornadas = new GridBagConstraints();
 		gbc_txtTA_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_txtTA_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtTA_resultadosJornadas.gridx = 15;
+		gbc_txtTA_resultadosJornadas.gridx = 18;
 		gbc_txtTA_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(txtTA_resultadosJornadas, gbc_txtTA_resultadosJornadas);
 		
@@ -883,7 +903,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_lbl_TC_resultadosJornadas = new GridBagConstraints();
 		gbc_lbl_TC_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_lbl_TC_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_TC_resultadosJornadas.gridx = 16;
+		gbc_lbl_TC_resultadosJornadas.gridx = 19;
 		gbc_lbl_TC_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(lbl_TC_resultadosJornadas, gbc_lbl_TC_resultadosJornadas);
 		
@@ -892,18 +912,19 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_txtTC_resultadosJornadas = new GridBagConstraints();
 		gbc_txtTC_resultadosJornadas.anchor = GridBagConstraints.WEST;
 		gbc_txtTC_resultadosJornadas.insets = new Insets(0, 0, 5, 0);
-		gbc_txtTC_resultadosJornadas.gridx = 17;
+		gbc_txtTC_resultadosJornadas.gridx = 20;
 		gbc_txtTC_resultadosJornadas.gridy = 0;
 		panelInputDatosJornadas.add(txtTC_resultadosJornadas, gbc_txtTC_resultadosJornadas);
 		
 		btnInsertar_resultadosJornadas = new JButton("Insertar");
-		btnInsertar_resultadosJornadas.setForeground(new Color(51, 153, 204));
+		btnInsertar_resultadosJornadas.setForeground(azulSegundo);
 		btnInsertar_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnInsertar_resultadosJornadas.setBackground(new Color(253, 253, 150));
+		btnInsertar_resultadosJornadas.setBackground(amarilloPrimero);
+		
 		GridBagConstraints gbc_btnInsertar_resultadosJornadas = new GridBagConstraints();
 		gbc_btnInsertar_resultadosJornadas.anchor = GridBagConstraints.NORTHWEST;
 		gbc_btnInsertar_resultadosJornadas.insets = new Insets(0, 0, 0, 5);
-		gbc_btnInsertar_resultadosJornadas.gridx = 5;
+		gbc_btnInsertar_resultadosJornadas.gridx = 9;
 		gbc_btnInsertar_resultadosJornadas.gridy = 1;
 		panelInputDatosJornadas.add(btnInsertar_resultadosJornadas, gbc_btnInsertar_resultadosJornadas);
 		
@@ -914,7 +935,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_btnBorrar_resultadosJornadas = new GridBagConstraints();
 		gbc_btnBorrar_resultadosJornadas.anchor = GridBagConstraints.NORTHWEST;
 		gbc_btnBorrar_resultadosJornadas.insets = new Insets(0, 0, 0, 5);
-		gbc_btnBorrar_resultadosJornadas.gridx = 7;
+		gbc_btnBorrar_resultadosJornadas.gridx = 11;
 		gbc_btnBorrar_resultadosJornadas.gridy = 1;
 		panelInputDatosJornadas.add(btnBorrar_resultadosJornadas, gbc_btnBorrar_resultadosJornadas);
 		
@@ -925,7 +946,7 @@ public class AppPrincipal extends JFrame {
 		GridBagConstraints gbc_btnLimpiar_resultadosJornadas = new GridBagConstraints();
 		gbc_btnLimpiar_resultadosJornadas.insets = new Insets(0, 0, 0, 5);
 		gbc_btnLimpiar_resultadosJornadas.anchor = GridBagConstraints.NORTHWEST;
-		gbc_btnLimpiar_resultadosJornadas.gridx = 9;
+		gbc_btnLimpiar_resultadosJornadas.gridx = 12;
 		gbc_btnLimpiar_resultadosJornadas.gridy = 1;
 		panelInputDatosJornadas.add(btnLimpiar_resultadosJornadas, gbc_btnLimpiar_resultadosJornadas);
 		
@@ -950,6 +971,8 @@ public class AppPrincipal extends JFrame {
 		panelGestionarResultadosJornadasHeader.add(lblheaderEquipo_restultados);
 
 		listEquipos_resultadosJornadas = new JList<String>(dlmJornadasEquipos_resultado);
+		listEquipos_resultadosJornadas.addListSelectionListener(this);
+		listEquipos_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listEquipos_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listEquipos_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listEquipos_resultadosJornadas.setFixedCellHeight(25);
@@ -963,7 +986,9 @@ public class AppPrincipal extends JFrame {
 		lblheaderPTOS_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPTOS_resultados);
 		
-		listPTOS_resultadosJornadas = new JList<String>();
+		listPTOS_resultadosJornadas = new JList<Integer>(dlmClasificacionPuntos);
+		listPTOS_resultadosJornadas.addListSelectionListener(this);
+		listPTOS_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPTOS_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listPTOS_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listPTOS_resultadosJornadas.setFixedCellHeight(25);
@@ -977,7 +1002,9 @@ public class AppPrincipal extends JFrame {
 		lblheaderPJ_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPJ_resultados);
 		
-		listPJ_resultadosJornadas = new JList<String>();
+		listPJ_resultadosJornadas = new JList<Integer>(dlmClasificacionPartidosJugados);
+		listPJ_resultadosJornadas.addListSelectionListener(this);
+		listPJ_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPJ_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listPJ_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listPJ_resultadosJornadas.setFixedCellHeight(25);
@@ -992,11 +1019,13 @@ public class AppPrincipal extends JFrame {
 		lblheaderPG_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPG_resultados);
 		
-		listPG_resultadosJornadas = new JList<String>();
+		listPG_resultadosJornadas = new JList<Integer>(dlmClasificacionPartidosGanados);
+		listPG_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPG_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listPG_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listPG_resultadosJornadas.setFixedCellHeight(25);
 		listPG_resultadosJornadas.setBackground(new Color(204, 229, 255));
+		listPG_resultadosJornadas.addListSelectionListener(this);
 		panelResultadosListas.add(listPG_resultadosJornadas);
 		
 		
@@ -1007,7 +1036,9 @@ public class AppPrincipal extends JFrame {
 		lblHeaderPP_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblHeaderPP_resultados);
 		
-		listPP_resultadosJornadas = new JList<String>();
+		listPP_resultadosJornadas = new JList<Integer>(dlmClasificacionPartidosPerdidos);
+		listPP_resultadosJornadas.addListSelectionListener(this);
+		listPP_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPP_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listPP_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listPP_resultadosJornadas.setFixedCellHeight(25);
@@ -1021,7 +1052,9 @@ public class AppPrincipal extends JFrame {
 		lblHeaderSG.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblHeaderSG);
 		
-		listSG_resultadosJornadas = new JList<String>();
+		listSG_resultadosJornadas = new JList<Integer>(dlmJornadasSetsGanados_resultado);
+		listSG_resultadosJornadas.addListSelectionListener(this);
+		listSG_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSG_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listSG_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listSG_resultadosJornadas.setFixedCellHeight(25);
@@ -1035,7 +1068,9 @@ public class AppPrincipal extends JFrame {
 		lblHeaderSP_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblHeaderSP_resultados);
 		
-		listSP_resultadosJornadas = new JList<String>();
+		listSP_resultadosJornadas = new JList<Integer>(dlmJornadasSetsPerdidos_resultado);
+		listSP_resultadosJornadas.addListSelectionListener(this);
+		listSP_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSP_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listSP_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listSP_resultadosJornadas.setFixedCellHeight(25);
@@ -1049,7 +1084,9 @@ public class AppPrincipal extends JFrame {
 		lblHeaderTA_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblHeaderTA_resultados);
 		
-		listTA_resultadosJornadas = new JList<String>();
+		listTA_resultadosJornadas = new JList<Integer>(dlmJornadasTantosFavor_resultado);
+		listTA_resultadosJornadas.addListSelectionListener(this);
+		listTA_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listTA_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listTA_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listTA_resultadosJornadas.setFixedCellHeight(25);
@@ -1063,7 +1100,9 @@ public class AppPrincipal extends JFrame {
 		lblHeaderTC_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblHeaderTC_resultados);
 		
-		listTC_resultadosJornadas = new JList<String>();
+		listTC_resultadosJornadas = new JList<Integer>(dlmJornadasTantosContra_resultado);
+		listTC_resultadosJornadas.addListSelectionListener(this);
+		listTC_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listTC_resultadosJornadas.setForeground(new Color(50, 50, 50));
 		listTC_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listTC_resultadosJornadas.setFixedCellHeight(25);
@@ -1080,18 +1119,22 @@ public class AppPrincipal extends JFrame {
 		/*GESTION USUARIOS*/
 		if(username.equals(Login.admin_user)) {
 			cardLayoutPrincipal.show(contentPane, "PanelAdmin_");
-		} else if (username.equals(Login.arbitro_user)){
+		} else if (username_param.equals(Login.arbitro_user)){
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			this.setTitle(this.getTitle() + " - GESTIÓN ARBITRO");
 			cardLayoutPrincipal.show(contentPane, "PanelArbitro_");
 			cambiarJornada(comboBoxGestionarJornadas, dlmJornadasEqLocal, dlmJornadasEqVisitante, headerNJornadas_1);
         	unirEquiposLocalesVisitantes();
+        	definirDatosResultadosJornadasPorDefecto();
         	
-			
 		} else {
 			cardLayoutPrincipal.show(contentPane, "PanelAnonimo_");
+			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         	cambiarJornada(comboBoxJornadas, dlmJornadasEqLocal, dlmJornadasEqVisitante, headerNJornadas);
 		}
 	}
+	
+	// -- METODOS (FUNCIONES) PRIVADAS --
 	
 	private void setEquipos(DefaultListModel<String> dlmEquipos) {
 		String[] equipos = {"CV Zaragoza", "CV San Fernando", "CV Valladolid", "CV Torrelavega", "CV Palma", "CV Rivas"};
@@ -1153,6 +1196,7 @@ public class AppPrincipal extends JFrame {
 	     nJornada.setText("Nº " + Integer.toString(indiceSeleccionado+1));
 	};
 	
+	/*Este metodo se encarga de hacer una lista modelo para la gestion en jornadas es decir muestra los equipos que juegan esa jornada en una unica lista*/
 	private void unirEquiposLocalesVisitantes() {
 		// Primero vaciamos la lista
 		dlmJornadasEquipos_resultado.clear();
@@ -1165,6 +1209,99 @@ public class AppPrincipal extends JFrame {
 			dlmJornadasEquipos_resultado.addElement(dlmJornadasEqVisitante.getElementAt(i));
 		}
 	}
+
+	/*POR DEFECTO TODOS LOS RESULTADOS ESTAN EN 0*/
+	private void definirDatosResultadosJornadasPorDefecto() {
+	    // Define la cantidad de '0' a añadir (asumo 6 por los equipos de la jornada)
+	    int cantidadDeCeros = 6;
+
+	    // 1. Agrupa todas las listas de tipo <Integer> en un array
+	    List<DefaultListModel<Integer>> listasDeResultados = Arrays.asList(
+	    	dlmClasificacionPartidosJugados,
+	    	dlmClasificacionPartidosPerdidos,
+	    	dlmClasificacionPartidosGanados,
+	    	dlmClasificacionPuntos,
+	        dlmJornadasSetsGanados_resultado,
+	        dlmJornadasSetsPerdidos_resultado,
+	        dlmJornadasTantosFavor_resultado,
+	        dlmJornadasTantosContra_resultado
+	    );
+
+	    // 2. Recorre el array de listas
+	    for (DefaultListModel<Integer> dlm : listasDeResultados) {
+	        
+	        // 3. Limpia la lista actual
+	        dlm.clear();
+	        
+	        // 4. Añade la cantidad de ceros (0) necesaria a esa lista
+	        for (int i = 0; i < cantidadDeCeros; i++) {
+	            dlm.addElement(0); // Añade el NÚMERO 0
+	        }
+	    }
+	}
+	
+	// -- EVENTOS --
+	
+	/*BORRAR*/
+	private void borrarResultadoSelecciondo();
+	
+	//*ACTION LISTENER*//
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		Object o = ae.getSource(); // Obtiene la fuente de el evento ( quien lo invoca)
+		
+		// BOTON CERRAR SESION
+		if(o == btnCerrarSesion_ANON || o == btnCerrarSesion_ARBITRO) {
+			Login login = new Login();
+			login.setVisible(true);
+			this.dispose();	
+		}
+		
+		// SOLO EL ARBITRO PUEDE EJECTUTAR ESTOS EVENTOS
+		if(o == btnInsertar_resultadosJornadas && username.equals(Login.arbitro_user)) {
+		}
+		
+		if(o == btnBorrar_resultadosJornadas && username.equals(Login.arbitro_user)) {
+			
+		}
+		
+		if(o == btnLimpiar_resultadosJornadas && username.equals(Login.arbitro_user)) {
+		
+		}
+		
+	}
+	
 	
 
+	/*CUANDO SE SLEECCIONA UNA LISTA*/
+	@Override
+	public void valueChanged(ListSelectionEvent lse) {
+		Object o = lse.getSource();
+		int index;
+		index = ((JList<?>)o).getSelectedIndex();
+		if(index >= 0) {
+			/*SELECCIONAR EL RESTO DE LISTAS DE LAS JORNADAS*/
+			listEquipos_resultadosJornadas.setSelectedIndex(index);
+			listPTOS_resultadosJornadas.setSelectedIndex(index);
+			listPJ_resultadosJornadas.setSelectedIndex(index);
+			listPG_resultadosJornadas.setSelectedIndex(index);
+			listPP_resultadosJornadas.setSelectedIndex(index);
+			listSG_resultadosJornadas.setSelectedIndex(index);
+			listSP_resultadosJornadas.setSelectedIndex(index);
+			listTA_resultadosJornadas.setSelectedIndex(index);
+			listTC_resultadosJornadas.setSelectedIndex(index);
+			
+			/*CAMBIAR TXT FIELDS*/
+			
+			txtEquipos_resultadosJornadas.setText(dlmJornadasEquipos_resultado.get(index));
+			txtPtos_resultadosJornadas.setText(Integer.toString(dlmClasificacionPuntos.get(index)));
+			txtPJ_resultadosJornadas.setText(Integer.toString(dlmClasificacionPartidosJugados.get(index)));
+			txtPG_resultadosJornadas.setText(Integer.toString(dlmClasificacionPartidosGanados.get(index)));
+			txtPP_resultadosJornadas.setText(Integer.toString(dlmClasificacionPartidosPerdidos.get(index)));
+			txtSG_resultadosJornadas.setText(Integer.toString(dlmJornadasSetsGanados_resultado.get(index)));
+			txtSP_resultadosJornadas.setText(Integer.toString(dlmJornadasSetsPerdidos_resultado.get(index)));
+			txtTA_resultadosJornadas.setText(Integer.toString(dlmJornadasTantosFavor_resultado.get(index)));
+			txtTC_resultadosJornadas.setText(Integer.toString(dlmJornadasTantosContra_resultado.get(index)));
+		}	
+	}
 }
