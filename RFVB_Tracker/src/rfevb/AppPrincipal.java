@@ -34,7 +34,6 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
-import java.awt.Component;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
@@ -103,7 +102,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JPanel scrollPanelArbitro;
 
 	private JPanel gestionarJornadas;
-	private JPanel gestionarClasifiacion;
 	private JPanel northPanelGestionarJornadas;
 	private JComboBox<String> comboBoxGestionarJornadas;
 	private JButton btnCerrarSesion_ARBITRO;
@@ -120,8 +118,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JList<String> listEqLocalGestionar;
 	private JList<String> listEqVisitanteGestionar;
 	/*RESULTADOS*/
-	private JList<String> listEquipos_resultadosJornadas;
-	private JList<Integer> listPTOS_resultadosJornadas;
+	private JList<String> listEquipos_resultadosClasifiacion;
+	private JList<Integer> listPTOS_resultadosClasifiacion;
 	private JList<Integer> listPJ_resultadosJornadas;
 	private JList<Integer> listPG_resultadosJornadas;
 	private JList<Integer> listPP_resultadosJornadas;
@@ -283,6 +281,29 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JPanel panelInputDatosJornadas;
 	private JLabel lbl_Equipos_resultadosJornadas;
 	private JTextField txtEquipos_resultadosJornadas;
+	private JPanel gestionarClasificacion;
+	private JPanel panelGestionarClasificacionHeader;
+	private JLabel lblheaderEquipo_restultados_1;
+	private JLabel lblheaderPTOS_resultadosClasificacion;
+	private JLabel lblheaderPJ_resultadosClasificacion;
+	private JLabel lblheaderPG_resultadosClasificacion;
+	private JLabel lblHeaderPP_resultadosClasificacion;
+	private JLabel lblHeaderSG_1;
+	private JLabel lblHeaderSP_resultadosClasificacion;
+	private JLabel lblHeaderTA_resultadosClasificacion;
+	private JLabel lblHeaderTC_resultadosClasificacion;
+	private JPanel panelGestionClasificacionListas;
+	private JList<String> listEquipos__resultadosClasificacion;
+	private JList<Integer> listPJ__resultadosClasificacion;
+	private JList<Integer> listPJ_resultadosClasifiacion;
+	private JList<Integer> listPG__resultadosClasificacion;
+	private JList<Integer> listPP__resultadosClasificacion;
+	private JList<Integer> listSG__resultadosClasificacion;
+	private JList<Integer> listSP__resultadosClasificacion;
+	private JList<Integer> listTA__resultadosClasificacion;
+	private JList<Integer> listTC__resultadosClasificacion;
+	private JList<Integer> listPuntos__resultadosClasificacion;
+	private JLabel lblGestionarClasificacion;
 	
 	// -- DLMs --
 	
@@ -688,9 +709,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelGestionarJornadas.setLayout(new BoxLayout(panelGestionarJornadas, BoxLayout.Y_AXIS));
 		
 		lblGestionarJornadas = new JLabel("GESTIONAR JORNADAS");
-		lblGestionarJornadas.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblGestionarJornadas.setAlignmentY(0.0f);
-		lblGestionarJornadas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGestionarJornadas.setForeground(new Color(0, 128, 192));
 		lblGestionarJornadas.setFont(new Font("Leelawadee", Font.BOLD, 25));
 		panelGestionarJornadas.add(lblGestionarJornadas);
@@ -1020,14 +1039,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblheaderEquipo_restultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderEquipo_restultados);
 
-		listEquipos_resultadosJornadas = new JList<String>(dlmJornadasEquipos_resultado);
-		listEquipos_resultadosJornadas.addListSelectionListener(this);
-		listEquipos_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listEquipos_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listEquipos_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listEquipos_resultadosJornadas.setFixedCellHeight(25);
-		listEquipos_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listEquipos_resultadosJornadas);
+		listEquipos_resultadosClasifiacion = new JList<String>(dlmJornadasEquipos_resultado);
+		listEquipos_resultadosClasifiacion.addListSelectionListener(this);
+		listEquipos_resultadosClasifiacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listEquipos_resultadosClasifiacion.setForeground(new Color(50, 50, 50));
+		listEquipos_resultadosClasifiacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listEquipos_resultadosClasifiacion.setFixedCellHeight(25);
+		listEquipos_resultadosClasifiacion.setBackground(new Color(204, 229, 255));
+		panelResultadosListas.add(listEquipos_resultadosClasifiacion);
 		
 		/*PUNTOS*/
 		JLabel lblheaderPTOS_resultados = new JLabel("PTOS");
@@ -1036,30 +1055,30 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblheaderPTOS_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPTOS_resultados);
 		
-		listPTOS_resultadosJornadas = new JList<Integer>(dlmJornadasPuntos_resultado);
-		listPTOS_resultadosJornadas.addListSelectionListener(this);
-		listPTOS_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listPTOS_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listPTOS_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPTOS_resultadosJornadas.setFixedCellHeight(25);
-		listPTOS_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listPTOS_resultadosJornadas);
+		listPTOS_resultadosClasifiacion = new JList<Integer>(dlmJornadasPuntos_resultado);
+		listPTOS_resultadosClasifiacion.addListSelectionListener(this);
+		listPTOS_resultadosClasifiacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPTOS_resultadosClasifiacion.setForeground(new Color(50, 50, 50));
+		listPTOS_resultadosClasifiacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPTOS_resultadosClasifiacion.setFixedCellHeight(25);
+		listPTOS_resultadosClasifiacion.setBackground(new Color(204, 229, 255));
+		panelResultadosListas.add(listPTOS_resultadosClasifiacion);
 		
 		/*PARTIDOS JUGADOS*/
-		JLabel lblheaderPJ_resultados = new JLabel("P.J");
-		lblheaderPJ_resultados.setHorizontalAlignment(SwingConstants.LEFT);
-		lblheaderPJ_resultados.setForeground(Color.WHITE);
-		lblheaderPJ_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblheaderPJ_resultados);
+		JLabel lblheaderPJ_resultadosClasifiacion = new JLabel("P.J");
+		lblheaderPJ_resultadosClasifiacion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblheaderPJ_resultadosClasifiacion.setForeground(Color.WHITE);
+		lblheaderPJ_resultadosClasifiacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarResultadosJornadasHeader.add(lblheaderPJ_resultadosClasifiacion);
 		
-		listPJ_resultadosJornadas = new JList<Integer>(dlmJornadasPartidosJugados_resultado);
-		listPJ_resultadosJornadas.addListSelectionListener(this);
-		listPJ_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listPJ_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listPJ_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPJ_resultadosJornadas.setFixedCellHeight(25);
-		listPJ_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listPJ_resultadosJornadas);
+		listPJ_resultadosClasifiacion = new JList<Integer>(dlmJornadasPartidosJugados_resultado);
+		listPJ_resultadosClasifiacion.addListSelectionListener(this);
+		listPJ_resultadosClasifiacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPJ_resultadosClasifiacion.setForeground(new Color(50, 50, 50));
+		listPJ_resultadosClasifiacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPJ_resultadosClasifiacion.setFixedCellHeight(25);
+		listPJ_resultadosClasifiacion.setBackground(new Color(204, 229, 255));
+		panelResultadosListas.add(listPJ_resultadosClasifiacion);
 		
 		
 		/*PARTIDOS GANADOS*/
@@ -1159,8 +1178,169 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listTC_resultadosJornadas.setBackground(new Color(204, 229, 255));
 		panelResultadosListas.add(listTC_resultadosJornadas);
 		
-		gestionarClasifiacion = new JPanel();
-		scrollPanelArbitro.add(gestionarClasifiacion);
+		lblGestionarClasificacion = new JLabel("Gestionar Clasificacion");
+		lblGestionarClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGestionarClasificacion.setFont(new Font("Leelawadee", Font.BOLD, 25));
+		lblGestionarClasificacion.setForeground(azulPrimero);
+		panelListasGestionarResultadosJornadas.add(lblGestionarClasificacion);
+		
+		/*GESTIONAR CLASIFICACION*/
+		gestionarClasificacion = new JPanel();
+		scrollPanelArbitro.add(gestionarClasificacion);
+		gestionarClasificacion.setLayout(new BoxLayout(gestionarClasificacion, BoxLayout.Y_AXIS));
+		
+		panelGestionarClasificacionHeader = new JPanel();
+		panelGestionarClasificacionHeader.setBackground(new Color(0, 128, 192));
+		gestionarClasificacion.add(panelGestionarClasificacionHeader);
+		panelGestionarClasificacionHeader.setLayout(new GridLayout(1, 1, 0, 0));
+		
+		panelGestionClasificacionListas = new JPanel();
+		gestionarClasificacion.add(panelGestionClasificacionListas);
+		panelGestionClasificacionListas.setLayout(new GridLayout(0, 9, 0, 0));
+		
+		/*CLASIFIACION EQUIPOS*/
+		listEquipos__resultadosClasificacion = new JList<String>(dlmEquipos);
+		listEquipos__resultadosClasificacion.setEnabled(false);
+		listEquipos__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listEquipos__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listEquipos__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listEquipos__resultadosClasificacion.setFixedCellHeight(25);
+		listEquipos__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listEquipos__resultadosClasificacion);
+
+		lblheaderEquipo_restultados_1 = new JLabel("EQUIPO");
+		lblheaderEquipo_restultados_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblheaderEquipo_restultados_1.setForeground(Color.WHITE);
+		lblheaderEquipo_restultados_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblheaderEquipo_restultados_1);
+		
+		/*CLASIFIACION PUNTOS*/
+		listPuntos__resultadosClasificacion = new JList<Integer>(dlmClasificacionPuntos);
+		listPuntos__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPuntos__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listPuntos__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPuntos__resultadosClasificacion.setFixedCellHeight(25);
+		listPuntos__resultadosClasificacion.setEnabled(false);
+		listPuntos__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listPuntos__resultadosClasificacion);
+		
+		lblheaderPTOS_resultadosClasificacion = new JLabel("PTOS");
+		lblheaderPTOS_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblheaderPTOS_resultadosClasificacion.setForeground(Color.WHITE);
+		lblheaderPTOS_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblheaderPTOS_resultadosClasificacion);
+		
+		/*CLASIFIACION PARTIDOS JUGADOS*/
+		listPJ__resultadosClasificacion = new JList<Integer>(dlmClasificacionPartidosJugados);
+		listPJ__resultadosClasificacion.setEnabled(false);
+		listPJ__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPJ__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listPJ__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPJ__resultadosClasificacion.setFixedCellHeight(25);
+		listPJ__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listPJ__resultadosClasificacion);
+		
+		lblheaderPJ_resultadosClasificacion = new JLabel("P.J");
+		lblheaderPJ_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblheaderPJ_resultadosClasificacion.setForeground(Color.WHITE);
+		lblheaderPJ_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblheaderPJ_resultadosClasificacion);
+		
+		/*CLASIFIACION PARTIDOS GANADOS*/
+		listPG__resultadosClasificacion = new JList<Integer>(dlmClasificacionPartidosGanados);
+		listPG__resultadosClasificacion.setEnabled(false);
+		listPG__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPG__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listPG__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPG__resultadosClasificacion.setFixedCellHeight(25);
+		listPG__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listPG__resultadosClasificacion);
+		
+		lblheaderPG_resultadosClasificacion = new JLabel("P.G");
+		lblheaderPG_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblheaderPG_resultadosClasificacion.setForeground(Color.WHITE);
+		lblheaderPG_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblheaderPG_resultadosClasificacion);
+		
+		/*CLASIFIACION PARTIDOS PERDIDOS*/
+		listPP__resultadosClasificacion = new JList<Integer>(dlmClasificacionPartidosPerdidos);
+		listPP__resultadosClasificacion.setEnabled(false);
+		listPP__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPP__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listPP__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPP__resultadosClasificacion.setFixedCellHeight(25);
+		listPP__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listPP__resultadosClasificacion);
+		
+		lblHeaderPP_resultadosClasificacion = new JLabel("P.P");
+		lblHeaderPP_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHeaderPP_resultadosClasificacion.setForeground(Color.WHITE);
+		lblHeaderPP_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblHeaderPP_resultadosClasificacion);
+		
+		/*CLASIFIACION SETS GANADOS*/
+		listSG__resultadosClasificacion = new JList<Integer>(dlmClasificacionSetsGanados);
+		listSG__resultadosClasificacion.setEnabled(false);
+		listSG__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSG__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listSG__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listSG__resultadosClasificacion.setFixedCellHeight(25);
+		listSG__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listSG__resultadosClasificacion);
+		
+		lblHeaderSG_1 = new JLabel("S.G");
+		lblHeaderSG_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHeaderSG_1.setForeground(Color.WHITE);
+		lblHeaderSG_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblHeaderSG_1);
+		
+		/*CLASIFIACION SETS PERDIDOS*/
+		listSP__resultadosClasificacion = new JList<Integer>(dlmClasificacionSetsPerdidos);
+		listSP__resultadosClasificacion.setEnabled(false);
+		listSP__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSP__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listSP__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listSP__resultadosClasificacion.setFixedCellHeight(25);
+		listSP__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listSP__resultadosClasificacion);
+		
+		lblHeaderSP_resultadosClasificacion = new JLabel("S.P");
+		lblHeaderSP_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHeaderSP_resultadosClasificacion.setForeground(Color.WHITE);
+		lblHeaderSP_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblHeaderSP_resultadosClasificacion);
+		
+		/*CLASIFIACION TANTOS A FAVOR*/
+		listTA__resultadosClasificacion = new JList<Integer>(dlmClasificacionTantosFavor);
+		listTA__resultadosClasificacion.setEnabled(false);
+		listTA__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listTA__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listTA__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listTA__resultadosClasificacion.setFixedCellHeight(25);
+		listTA__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listTA__resultadosClasificacion);
+		
+		lblHeaderTA_resultadosClasificacion = new JLabel("T.A");
+		lblHeaderTA_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHeaderTA_resultadosClasificacion.setForeground(Color.WHITE);
+		lblHeaderTA_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblHeaderTA_resultadosClasificacion);
+		
+		/*CLASIFIACION TANTOS EN CONTRA*/
+		listTC__resultadosClasificacion = new JList<Integer>(dlmClasificacionTantosContra);
+		listTC__resultadosClasificacion.setEnabled(false);
+		listTC__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listTC__resultadosClasificacion.setForeground(new Color(50, 50, 50));
+		listTC__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listTC__resultadosClasificacion.setFixedCellHeight(25);
+		listTC__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		panelGestionClasificacionListas.add(listTC__resultadosClasificacion);
+		
+		lblHeaderTC_resultadosClasificacion = new JLabel("T.C");
+		lblHeaderTC_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblHeaderTC_resultadosClasificacion.setForeground(Color.WHITE);
+		lblHeaderTC_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panelGestionarClasificacionHeader.add(lblHeaderTC_resultadosClasificacion);
 		
 		/*PANEL ADMIN*/
 		panelAdmin = new JPanel();
@@ -1567,6 +1747,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV PALMA"));
 	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV SAN FERNANDO"));
 	    
+	    /*
 	    System.out.println("--- DEBUG: RECALCULANDO TOTALES ---");
 	    System.out.println("  CV ZARAGOZA: " + matriz_zaragoza[ROW_TOTAL][COL_PUNTOS] + " puntos.");
 	    System.out.println("  CV TORRELAVEGA: " + matriz_torrelavega[ROW_TOTAL][COL_PUNTOS] + " puntos.");
@@ -1575,6 +1756,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    System.out.println("  CV SAN FERNANDO: " + matriz_sanfernando[ROW_TOTAL][COL_PUNTOS] + " puntos.");
 	    System.out.println("  CV RIVAS: " + matriz_rivas[ROW_TOTAL][COL_PUNTOS] + " puntos.");
 	    System.out.println("--- DEBUG: CÁLCULO DE TOTALES FINALIZADO ---");
+		*/
 	}
 	
 	/*OBTENER MATRIZ USANDO EL NOMBRE DE EL EQUIPO*/
@@ -1584,12 +1766,13 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	}
 	
  	
-	// -------------------------------------------------------------------------------------------------------------------------------------------------------//		        	cambiarJornada(comboBoxGestionarJornadas, headerNJornadas_1);
-
+	// -------------------------------------------------------------------------------------------------------------------------------------------------------//		        
+	
+	
 	
 	// -- EVENTOS --
     private void insertarResultadosJornada() {
-        int seleccion = listEquipos_resultadosJornadas.getSelectedIndex();
+        int seleccion = listEquipos_resultadosClasifiacion.getSelectedIndex();
 
     // 1 - Comprobamos que todos los campos estén llenos
         if(
@@ -1691,7 +1874,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     }
     
     private void borrarSeleccionadoJornada(){
-        int seleccion = listEquipos_resultadosJornadas.getSelectedIndex();
+        int seleccion = listEquipos_resultadosClasifiacion.getSelectedIndex();
         System.out.println("Seleccionado: " + dlmJornadasEquipos_resultado.get(seleccion));
         if(seleccion >= 0 ){
         	dlmJornadasPuntos_resultado.set(seleccion, 0);
@@ -1792,6 +1975,10 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
         }
     }
     
+    private void actualizarClasifiacion() {
+    	
+    }
+    
     //*ACTION LISTENER*//
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -1819,8 +2006,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		
 	}
 	
-	
-
 	/*CUANDO SE SLEECCIONA UNA LISTA*/
 	@Override
 	public void valueChanged(ListSelectionEvent lse) {
@@ -1829,8 +2014,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		index = ((JList<?>)o).getSelectedIndex();
 		if(index >= 0) {
 			/*SELECCIONAR EL RESTO DE LISTAS DE LAS JORNADAS*/
-			listEquipos_resultadosJornadas.setSelectedIndex(index);
-			listPTOS_resultadosJornadas.setSelectedIndex(index);
+			listEquipos_resultadosClasifiacion.setSelectedIndex(index);
+			listPTOS_resultadosClasifiacion.setSelectedIndex(index);
 			listPJ_resultadosJornadas.setSelectedIndex(index);
 			listPG_resultadosJornadas.setSelectedIndex(index);
 			listPP_resultadosJornadas.setSelectedIndex(index);
