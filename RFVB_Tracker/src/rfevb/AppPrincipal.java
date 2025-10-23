@@ -118,8 +118,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JList<String> listEqLocalGestionar;
 	private JList<String> listEqVisitanteGestionar;
 	/*RESULTADOS*/
-	private JList<String> listEquipos_resultadosClasifiacion;
-	private JList<Integer> listPTOS_resultadosClasifiacion;
+	private JList<String> listEquipos_resultadosJornadas;
+	private JList<Integer> listPTOS_resultadosJornadas;
 	private JList<Integer> listPJ_resultadosJornadas;
 	private JList<Integer> listPG_resultadosJornadas;
 	private JList<Integer> listPP_resultadosJornadas;
@@ -138,6 +138,33 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JButton btnInsertar_resultadosJornadas;
 	private JButton btnBorrar_resultadosJornadas;
 	private JButton btnLimpiar_resultadosJornadas;
+
+	// -- CLASIFICACION - ARBITRO //
+	private JPanel panelInputDatosJornadas;
+	private JLabel lbl_Equipos_resultadosJornadas;
+	private JTextField txtEquipos_resultadosJornadas;
+	private JPanel gestionarClasificacion;
+	private JPanel panelGestionarClasificacionHeader;
+	private JLabel lblheaderEquipo_restultados_1;
+	private JLabel lblheaderPTOS_resultadosClasificacion;
+	private JLabel lblheaderPJ_resultadosClasificacion;
+	private JLabel lblheaderPG_resultadosClasificacion;
+	private JLabel lblHeaderPP_resultadosClasificacion;
+	private JLabel lblHeaderSG_1;
+	private JLabel lblHeaderSP_resultadosClasificacion;
+	private JLabel lblHeaderTA_resultadosClasificacion;
+	private JLabel lblHeaderTC_resultadosClasificacion;
+	private JPanel panelGestionClasificacionListas;
+	private JList<String> listEquipos__resultadosClasificacion;
+	private JList<Integer> listPJ__resultadosClasificacion;
+	private JList<Integer> listPG__resultadosClasificacion;
+	private JList<Integer> listPP__resultadosClasificacion;
+	private JList<Integer> listSG__resultadosClasificacion;
+	private JList<Integer> listSP__resultadosClasificacion;
+	private JList<Integer> listTA__resultadosClasificacion;
+	private JList<Integer> listTC__resultadosClasificacion;
+	private JList<Integer> listPuntos__resultadosClasificacion;
+	private JLabel lblGestionarClasificacion;
 	
 	// -- DLMs --
 	
@@ -278,32 +305,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private DefaultListModel<Integer> dlmClasificacionSetsPerdidos;
 	private DefaultListModel<Integer> dlmClasificacionTantosFavor;
 	private DefaultListModel<Integer> dlmClasificacionTantosContra;
-	private JPanel panelInputDatosJornadas;
-	private JLabel lbl_Equipos_resultadosJornadas;
-	private JTextField txtEquipos_resultadosJornadas;
-	private JPanel gestionarClasificacion;
-	private JPanel panelGestionarClasificacionHeader;
-	private JLabel lblheaderEquipo_restultados_1;
-	private JLabel lblheaderPTOS_resultadosClasificacion;
-	private JLabel lblheaderPJ_resultadosClasificacion;
-	private JLabel lblheaderPG_resultadosClasificacion;
-	private JLabel lblHeaderPP_resultadosClasificacion;
-	private JLabel lblHeaderSG_1;
-	private JLabel lblHeaderSP_resultadosClasificacion;
-	private JLabel lblHeaderTA_resultadosClasificacion;
-	private JLabel lblHeaderTC_resultadosClasificacion;
-	private JPanel panelGestionClasificacionListas;
-	private JList<String> listEquipos__resultadosClasificacion;
-	private JList<Integer> listPJ__resultadosClasificacion;
-	private JList<Integer> listPJ_resultadosClasifiacion;
-	private JList<Integer> listPG__resultadosClasificacion;
-	private JList<Integer> listPP__resultadosClasificacion;
-	private JList<Integer> listSG__resultadosClasificacion;
-	private JList<Integer> listSP__resultadosClasificacion;
-	private JList<Integer> listTA__resultadosClasificacion;
-	private JList<Integer> listTC__resultadosClasificacion;
-	private JList<Integer> listPuntos__resultadosClasificacion;
-	private JLabel lblGestionarClasificacion;
+
 	
 	// -- DLMs --
 	
@@ -665,7 +667,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		headerPanelClasificacion.add(headerTC);
 		
 		/*PANEL ARBITRO*/
-		
 		panelArbitro = new JPanel();
 		contentPane.add(panelArbitro, "PanelArbitro_");
 		panelArbitro.setLayout(new BorderLayout(0, 0));
@@ -1039,14 +1040,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblheaderEquipo_restultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderEquipo_restultados);
 
-		listEquipos_resultadosClasifiacion = new JList<String>(dlmJornadasEquipos_resultado);
-		listEquipos_resultadosClasifiacion.addListSelectionListener(this);
-		listEquipos_resultadosClasifiacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listEquipos_resultadosClasifiacion.setForeground(new Color(50, 50, 50));
-		listEquipos_resultadosClasifiacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listEquipos_resultadosClasifiacion.setFixedCellHeight(25);
-		listEquipos_resultadosClasifiacion.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listEquipos_resultadosClasifiacion);
+		listEquipos_resultadosJornadas = new JList<String>(dlmJornadasEquipos_resultado);
+		listEquipos_resultadosJornadas.addListSelectionListener(this);
+		listEquipos_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listEquipos_resultadosJornadas.setForeground(new Color(50, 50, 50));
+		listEquipos_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listEquipos_resultadosJornadas.setFixedCellHeight(25);
+		listEquipos_resultadosJornadas.setBackground(new Color(204, 229, 255));
+		panelResultadosListas.add(listEquipos_resultadosJornadas);
 		
 		/*PUNTOS*/
 		JLabel lblheaderPTOS_resultados = new JLabel("PTOS");
@@ -1055,14 +1056,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblheaderPTOS_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPTOS_resultados);
 		
-		listPTOS_resultadosClasifiacion = new JList<Integer>(dlmJornadasPuntos_resultado);
-		listPTOS_resultadosClasifiacion.addListSelectionListener(this);
-		listPTOS_resultadosClasifiacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listPTOS_resultadosClasifiacion.setForeground(new Color(50, 50, 50));
-		listPTOS_resultadosClasifiacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPTOS_resultadosClasifiacion.setFixedCellHeight(25);
-		listPTOS_resultadosClasifiacion.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listPTOS_resultadosClasifiacion);
+		listPTOS_resultadosJornadas = new JList<Integer>(dlmJornadasPuntos_resultado);
+		listPTOS_resultadosJornadas.addListSelectionListener(this);
+		listPTOS_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPTOS_resultadosJornadas.setForeground(new Color(50, 50, 50));
+		listPTOS_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPTOS_resultadosJornadas.setFixedCellHeight(25);
+		listPTOS_resultadosJornadas.setBackground(new Color(204, 229, 255));
+		panelResultadosListas.add(listPTOS_resultadosJornadas);
 		
 		/*PARTIDOS JUGADOS*/
 		JLabel lblheaderPJ_resultadosClasifiacion = new JLabel("P.J");
@@ -1071,14 +1072,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblheaderPJ_resultadosClasifiacion.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarResultadosJornadasHeader.add(lblheaderPJ_resultadosClasifiacion);
 		
-		listPJ_resultadosClasifiacion = new JList<Integer>(dlmJornadasPartidosJugados_resultado);
-		listPJ_resultadosClasifiacion.addListSelectionListener(this);
-		listPJ_resultadosClasifiacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listPJ_resultadosClasifiacion.setForeground(new Color(50, 50, 50));
-		listPJ_resultadosClasifiacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPJ_resultadosClasifiacion.setFixedCellHeight(25);
-		listPJ_resultadosClasifiacion.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listPJ_resultadosClasifiacion);
+		listPJ_resultadosJornadas = new JList<Integer>(dlmJornadasPartidosJugados_resultado);
+		listPJ_resultadosJornadas.addListSelectionListener(this);
+		listPJ_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listPJ_resultadosJornadas.setForeground(new Color(50, 50, 50));
+		listPJ_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPJ_resultadosJornadas.setFixedCellHeight(25);
+		listPJ_resultadosJornadas.setBackground(new Color(204, 229, 255));
+		panelResultadosListas.add(listPJ_resultadosJornadas);
 		
 		
 		/*PARTIDOS GANADOS*/
@@ -1355,8 +1356,10 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 			cardLayoutPrincipal.show(contentPane, "PanelArbitro_");
 			//ESTABLECEMOS LOS DATOS DE LAS JORNADAS
 			definirDatosResultadosJornadasPorDefecto();
-			//ORDENA LAS JORNADAS
+			//ACTUALIZAR LAS JORNADAS
 			cambiarJornada(comboBoxGestionarJornadas, headerNJornadas_1);
+			//ACTUALIZAR CLASIFICACIÓN
+			actualizarPosicionClasifiacion();
 		} else {
 			cardLayoutPrincipal.show(contentPane, "PanelAnonimo_");
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -1367,11 +1370,12 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	// -- METODOS (FUNCIONES) PRIVADAS --
 	
 	private void setEquipos(DefaultListModel<String> dlmEquipos) {
-		String[] equipos = {"CV Zaragoza", "CV San Fernando", "CV Valladolid", "CV Torrelavega", "CV Palma", "CV Rivas"};
+		//String[] equipos = {"CV Zaragoza", "CV San Fernando", "VALLADOLID CV ", "CV Torrelavega", "CV Palma", "CV Rivas"};
+		String[] equipos = {"CV ZARAGOZA", "CV SAN FERNANDO", "VALLADOLID CV ", "CV TORRELAVEGA", "CV PALMA", "CV RIVAS"};
 		for(int i = 0; i < equipos.length; i++) {
 			/*
 			  Añades a la dlm en el indice (i) el valor de el array (i)
-			  i = 3 -> dlmEquipos.add(3, "CV Valladolid")
+			  i = 3 -> dlmEquipos.add(3, "VALLADOLID CV ")
 			 */
 			dlmEquipos.add(i, equipos[i]);
 		}
@@ -1455,7 +1459,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	        String nombreEquipo = dlmJornadasEquipos_resultado.getElementAt(i);
 	        
 	        // B. Obtiene la matriz de ese equipo usando el 'Map'
-	        int[][] matrizDelEquipo = getMatrizPorNombre(nombreEquipo);
+	        int[][] matrizDelEquipo = obtenterMatrizPorNombreEquipo(nombreEquipo);
 	        
 	        // C. Obtiene la FILA de datos para esa JORNADA
 	        // (matrizDelEquipo[jornadaIndex] te da la fila: int[10])
@@ -1503,22 +1507,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 0;
 	    
 	    // Zaragoza (3) vs SanFernando (1) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
-	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
 	    // Resultado: 3 - 1 (25-21, 23-25, 25-19, 25-20)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 98; matLocal[j][COL_TC] = 85;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 85; matVisit[j][COL_TC] = 98;
 	    
 	    // Valladolid (3) vs Rivas (2) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("VALLADOLID CV");
-	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
 	    // Resultado: 3 - 2 (25-18, 20-25, 25-22, 21-25, 15-13)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 106; matLocal[j][COL_TC] = 103;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 103; matVisit[j][COL_TC] = 106;
 
 	    // Torrelavega (0) vs Palma (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
-	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
 	    // Resultado: 0 - 3 (19-25, 21-25, 23-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 63; matLocal[j][COL_TC] = 75;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 63;
@@ -1527,22 +1531,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 1;
 	    
 	    // Zaragoza (3) vs Rivas (0) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
-	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
 	    // Resultado: 3 - 0 (25-16, 25-17, 25-22)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 55;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 55; matVisit[j][COL_TC] = 75;
 
 	    // SanFernando (3) vs Palma (2) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
-	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
 	    // Resultado: 3 - 2 (25-23, 19-25, 25-20, 24-26, 17-15)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 110; matLocal[j][COL_TC] = 109;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 109; matVisit[j][COL_TC] = 110;
 	    
 	    // Valladolid (1) vs Torrelavega (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("VALLADOLID CV");
-	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
 	    // Resultado: 1 - 3 (25-22, 20-25, 18-25, 22-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 97;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 97; matVisit[j][COL_TC] = 85;
@@ -1551,22 +1555,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 2;
 	    
 	    // Zaragoza (3) vs Palma (1) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
-	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
 	    // Resultado: 3 - 1 (25-19, 25-23, 21-25, 25-20)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 96; matLocal[j][COL_TC] = 87;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 87; matVisit[j][COL_TC] = 96;
 	    
 	    // Rivas (2) vs Torrelavega (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV RIVAS");
-	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
 	    // Resultado: 2 - 3 (25-21, 23-25, 25-22, 20-25, 12-15)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 2; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 105; matLocal[j][COL_TC] = 108;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 2; matVisit[j][COL_TA] = 108; matVisit[j][COL_TC] = 105;
 
 	    // SanFernando (0) vs Valladolid (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
-	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
+	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
 	    // Resultado: 0 - 3 (21-25, 17-25, 23-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 61; matLocal[j][COL_TC] = 75;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 61;
@@ -1575,22 +1579,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 3;
 	    
 	    // Zaragoza (3) vs Torrelavega (2) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
-	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
 	    // Resultado: 3 - 2 (25-20, 23-25, 26-24, 22-25, 15-10)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 111; matLocal[j][COL_TC] = 104;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 104; matVisit[j][COL_TC] = 111;
 
 	    // Palma (3) vs Valladolid (0) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV PALMA");
-	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
+	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
 	    // Resultado: 3 - 0 (25-20, 25-18, 25-21)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 59;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 59; matVisit[j][COL_TC] = 75;
 	    
 	    // Rivas (1) vs SanFernando (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV RIVAS");
-	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
 	    // Resultado: 1 - 3 (25-23, 21-25, 19-25, 20-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 98;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 98; matVisit[j][COL_TC] = 85;
@@ -1599,22 +1603,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 4;
 	    
 	    // Zaragoza (3) vs Valladolid (0) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV ZARAGOZA");
-	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
+	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
 	    // Resultado: 3 - 0 (25-17, 25-18, 25-23)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 58;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 58; matVisit[j][COL_TC] = 75;
 	    
 	    // Torrelavega (3) vs SanFernando (1) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
-	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
 	    // Resultado: 3 - 1 (25-22, 25-20, 20-25, 25-23)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 95; matLocal[j][COL_TC] = 90;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 90; matVisit[j][COL_TC] = 95;
 	    
 	    // Palma (3) vs Rivas (1) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV PALMA");
-	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
 	    // Resultado: 3 - 1 (25-23, 21-25, 25-19, 25-22)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 96; matLocal[j][COL_TC] = 89;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 89; matVisit[j][COL_TC] = 96;
@@ -1623,22 +1627,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 5;
 	    
 	    // SanFernando (1) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
-	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
 	    // Resultado: 1 - 3 (25-22, 19-25, 20-25, 21-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 97;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 97; matVisit[j][COL_TC] = 85;
 	    
 	    // Rivas (3) vs Valladolid (0) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV RIVAS");
-	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
+	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
 	    // Resultado: 3 - 0 (25-19, 25-23, 25-21)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 63;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 63; matVisit[j][COL_TC] = 75;
 
 	    // Palma (3) vs Torrelavega (2) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV PALMA");
-	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
 	    // Resultado: 3 - 2 (25-23, 22-25, 25-21, 23-25, 15-11)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 110; matLocal[j][COL_TC] = 105;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 105; matVisit[j][COL_TC] = 110;
@@ -1647,22 +1651,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 6;
 	    
 	    // Rivas (0) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV RIVAS");
-	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
 	    // Resultado: 0 - 3 (18-25, 20-25, 23-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 61; matLocal[j][COL_TC] = 75;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 61;
 
 	    // Palma (3) vs SanFernando (0) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV PALMA");
-	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
 	    // Resultado: 3 - 0 (25-21, 25-17, 25-22)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 60;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 60; matVisit[j][COL_TC] = 75;
 	    
 	    // Torrelavega (3) vs Valladolid (0) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
-	    matVisit = getMatrizPorNombre("VALLADOLID CV");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
+	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
 	    // Resultado: 3 - 0 (25-18, 25-19, 25-23)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 60;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 60; matVisit[j][COL_TC] = 75;
@@ -1671,22 +1675,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 7;
 	    
 	    // Palma (1) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV PALMA");
-	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
 	    // Resultado: 1 - 3 (25-23, 20-25, 19-25, 21-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 98;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 98; matVisit[j][COL_TC] = 85;
 
 	    // Torrelavega (3) vs Rivas (1) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
-	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
 	    // Resultado: 3 - 1 (25-22, 25-18, 23-25, 25-20)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 98; matLocal[j][COL_TC] = 85;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 85; matVisit[j][COL_TC] = 98;
 	    
 	    // Valladolid (3) vs SanFernando (2) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("VALLADOLID CV");
-	    matVisit = getMatrizPorNombre("CV SAN FERNANDO");
+	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
 	    // Resultado: 3 - 2 (25-21, 23-25, 25-23, 22-25, 15-13)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 110; matLocal[j][COL_TC] = 107;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 107; matVisit[j][COL_TC] = 110;
@@ -1695,22 +1699,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 8;
 	    
 	    // Torrelavega (0) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV TORRELAVEGA");
-	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
 	    // Resultado: 0 - 3 (21-25, 22-25, 19-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 62; matLocal[j][COL_TC] = 75;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 62;
 
 	    // Valladolid (3) vs Palma (1) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("VALLADOLID CV");
-	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
 	    // Resultado: 3 - 1 (25-19, 25-23, 20-25, 25-21)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 95; matLocal[j][COL_TC] = 88;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 88; matVisit[j][COL_TC] = 95;
 	    
 	    // SanFernando (3) vs Rivas (2) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
-	    matVisit = getMatrizPorNombre("CV RIVAS");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
 	    // Resultado: 3 - 2 (24-26, 25-21, 25-23, 21-25, 15-12)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 110; matLocal[j][COL_TC] = 107;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 107; matVisit[j][COL_TC] = 110;
@@ -1719,22 +1723,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    j = 9;
 	    
 	    // Valladolid (1) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("VALLADOLID CV");
-	    matVisit = getMatrizPorNombre("CV ZARAGOZA");
+	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
 	    // Resultado: 1 - 3 (25-23, 20-25, 18-25, 22-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 98;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 98; matVisit[j][COL_TC] = 85;
 	    
 	    // SanFernando (0) vs Torrelavega (3) -> Puntos: 1-2
-	    matLocal = getMatrizPorNombre("CV SAN FERNANDO");
-	    matVisit = getMatrizPorNombre("CV TORRELAVEGA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
 	    // Resultado: 0 - 3 (19-25, 22-25, 21-25)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 62; matLocal[j][COL_TC] = 75;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 62;
 	    
 	    // Rivas (3) vs Palma (2) -> Puntos: 2-1
-	    matLocal = getMatrizPorNombre("CV RIVAS");
-	    matVisit = getMatrizPorNombre("CV PALMA");
+	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
+	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
 	    // Resultado: 3 - 2 (25-20, 23-25, 25-22, 21-25, 15-10)
 	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 109; matLocal[j][COL_TC] = 102;
 	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 102; matVisit[j][COL_TC] = 109;
@@ -1747,22 +1751,26 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV PALMA"));
 	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV SAN FERNANDO"));
 	    
-	    /*
-	    System.out.println("--- DEBUG: RECALCULANDO TOTALES ---");
-	    System.out.println("  CV ZARAGOZA: " + matriz_zaragoza[ROW_TOTAL][COL_PUNTOS] + " puntos.");
-	    System.out.println("  CV TORRELAVEGA: " + matriz_torrelavega[ROW_TOTAL][COL_PUNTOS] + " puntos.");
-	    System.out.println("  CV PALMA: " + matriz_palma[ROW_TOTAL][COL_PUNTOS] + " puntos.");
-	    System.out.println("  VALLADOLID CV: " + matriz_valladolid[ROW_TOTAL][COL_PUNTOS] + " puntos.");
-	    System.out.println("  CV SAN FERNANDO: " + matriz_sanfernando[ROW_TOTAL][COL_PUNTOS] + " puntos.");
-	    System.out.println("  CV RIVAS: " + matriz_rivas[ROW_TOTAL][COL_PUNTOS] + " puntos.");
-	    System.out.println("--- DEBUG: CÁLCULO DE TOTALES FINALIZADO ---");
-		*/
+	    int totalEquipos = 6;
+	    
+	    //AÑADIR INDICES A DLM CLASIFIACION -> PARA PODER ACTUALIZAR DATOS
+	    for(int d = 0; d < totalEquipos; d++) {
+	    	dlmClasificacionPuntos.add(d, 0); 
+    		dlmClasificacionPartidosJugados.add(d, 0); 
+    		dlmClasificacionPartidosGanados.add(d, 0); 
+    		dlmClasificacionPartidosPerdidos.add(d, 0); 
+    		dlmClasificacionSetsGanados.add(d, 0); 
+    		dlmClasificacionSetsPerdidos.add(d, 0); 
+    		dlmClasificacionTantosFavor.add(d, 0); 
+    		dlmClasificacionTantosContra.add(d, 0);
+    	}
+	    
 	}
 	
 	/*OBTENER MATRIZ USANDO EL NOMBRE DE EL EQUIPO*/
-	private int[][] getMatrizPorNombre(String nombreEquipo) {
+	private int[][] obtenterMatrizPorNombreEquipo(String nombreEquipo) {
 	    // .get(nombreEquipo) busca la clave en el Map y devuelve el valor asociado
-	    return mapaMatricesEquipos.get(nombreEquipo);
+	    return mapaMatricesEquipos.get(nombreEquipo.toUpperCase());
 	}
 	
  	
@@ -1772,7 +1780,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	
 	// -- EVENTOS --
     private void insertarResultadosJornada() {
-        int seleccion = listEquipos_resultadosClasifiacion.getSelectedIndex();
+        int seleccion = listEquipos_resultadosJornadas.getSelectedIndex();
 
     // 1 - Comprobamos que todos los campos estén llenos
         if(
@@ -1874,7 +1882,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     }
     
     private void borrarSeleccionadoJornada(){
-        int seleccion = listEquipos_resultadosClasifiacion.getSelectedIndex();
+        int seleccion = listEquipos_resultadosJornadas.getSelectedIndex();
         System.out.println("Seleccionado: " + dlmJornadasEquipos_resultado.get(seleccion));
         if(seleccion >= 0 ){
         	dlmJornadasPuntos_resultado.set(seleccion, 0);
@@ -1926,7 +1934,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	        
 	        // 1. Obtiene la matriz para el equipo 'i'
 	        String nombreEquipo = dlmJornadasEquipos_resultado.get(i);
-	        int[][] matrizDelEquipo = getMatrizPorNombre(nombreEquipo);
+	        int[][] matrizDelEquipo = obtenterMatrizPorNombreEquipo(nombreEquipo);
 	        
 	        // 2. Sincroniza los datos de la jornada actual
 	        //    (Le pasamos la matriz, la jornada a escribir y el índice 'i' de dónde leer los DLM)
@@ -1975,8 +1983,167 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
         }
     }
     
-    private void actualizarClasifiacion() {
+    // Este metodo se encarga de insertar los datos de forma ordenada en las dlms
+    private void actualizarPosicionClasifiacion() {
+    	String[] equipos = {
+    		    "CV ZARAGOZA", 
+    		    "CV SAN FERNANDO", 
+    		    "VALLADOLID CV", 
+    		    "CV TORRELAVEGA", 
+    		    "CV PALMA", 
+    		    "CV RIVAS"
+    	};
     	
+    	String[] ordenEquipos = new String[equipos.length];
+    	//Llenar de vacios el array ordenEquipos para poder actualizar la posición
+    	for(int i = 0; i < ordenEquipos.length; i++) {
+    		ordenEquipos[i] = "";
+    	}
+    	
+    	//Actualiza los datos del array ordenEquipos con los nombres de los equipos en orden
+    	for(int p = 0; p < equipos.length; p++) {
+    		int posicion_final = obtenerIndiceEqClasificacion(equipos[p], equipos);
+    		ordenEquipos[posicion_final] = equipos[p];
+    	}
+    		
+    	// Actualizar posicion dlms
+    	for(int d = 0; d < ordenEquipos.length; d++) {
+    		//Obtiene la matriz de el equipo
+    		int[][] matrizEquipo = obtenterMatrizPorNombreEquipo(ordenEquipos[d]);
+    		//Establece los resultados de la temporada en variables
+    		int ptos = matrizEquipo[ROW_TOTAL][COL_PUNTOS];
+    		System.out.printf("PUNTOS PARA : %s son %d\n", ordenEquipos[d], ptos);
+    		int pj = matrizEquipo[ROW_TOTAL][COL_PJ];
+	        int pg = matrizEquipo[ROW_TOTAL][COL_PG];
+	        int pp = matrizEquipo[ROW_TOTAL][COL_PP];
+	        int sg = matrizEquipo[ROW_TOTAL][COL_SG];
+	        int sp = matrizEquipo[ROW_TOTAL][COL_SP];
+	        int ta = matrizEquipo[ROW_TOTAL][COL_TA];
+	        int tc = matrizEquipo[ROW_TOTAL][COL_TC];
+
+    		dlmEquipos.set(d, ordenEquipos[d]); 
+    		dlmClasificacionPuntos.set(d, ptos); 
+    		dlmClasificacionPartidosJugados.set(d, pj);
+    		dlmClasificacionPartidosGanados.set(d, pg);
+    		dlmClasificacionPartidosPerdidos.set(d, pp);
+    		dlmClasificacionSetsGanados.set(d, sg);
+    		dlmClasificacionSetsPerdidos.set(d, sp);
+    		dlmClasificacionTantosFavor.set(d, ta);
+    		dlmClasificacionTantosContra.set(d, tc);
+    	}
+    }
+    
+    // Este metodo se enc
+    private int obtenerIndiceEqClasificacion(String NOMBRE_EQUIPO, String[] ARRAY_EQUIPOS) {
+        // 1. Obtene los resultados del equipo principal
+        // (Asumo que tu método se llama 'obtenterMatrizPorNombreEquipo' como escribiste)
+    	int[][] matrizEquipo = obtenterMatrizPorNombreEquipo(NOMBRE_EQUIPO);
+    	
+    	if (matrizEquipo == null) {
+            System.out.println("ERROR CRÍTICO: No se pudo encontrar la matriz para '" + NOMBRE_EQUIPO + "'.");
+            System.out.println("Revisa que ese nombre exista EXACTAMENTE en 'mapaMatricesEquipos'.");
+            return -1; // Devolvemos -1 (o 0) para indicar un error y salir
+        }
+        // Almacenamos el total de stats que ha obtenido el equipo
+        int ptos = matrizEquipo[ROW_TOTAL][COL_PUNTOS];
+        int pg = matrizEquipo[ROW_TOTAL][COL_PG];
+        int sg = matrizEquipo[ROW_TOTAL][COL_SG];
+        int sp = matrizEquipo[ROW_TOTAL][COL_SP];
+        int ta = matrizEquipo[ROW_TOTAL][COL_TA];
+        int tc = matrizEquipo[ROW_TOTAL][COL_TC];
+
+        // 2. ESTE SERA EL VALOR QUE VAMOS A RETORNAR
+        //    Es un contador de cuántos equipos son MEJORES que el nuestro.
+        int posicion = 0;
+    	  
+        // 3. Iterar por TODOS los equipos
+        //    (Asumo que dlmEquipos contiene los 6 nombres de equipo)
+        for(int i = 0; i < ARRAY_EQUIPOS.length; i++) {
+            String nombreOtroEquipo = ARRAY_EQUIPOS[i];
+            
+            // 4. COMPROBAR QUE NO ESTAMOS MIRANDO EL MISMO EQUIPO
+            if(NOMBRE_EQUIPO.equals(nombreOtroEquipo)){
+                continue; // Saltamos esta iteración, no nos comparamos con nosotros mismos
+            }
+    		  
+            // 5. Obtener stats del OTRO equipo
+            int[][] matrizOtroEquipo = obtenterMatrizPorNombreEquipo(nombreOtroEquipo);
+            if(matrizOtroEquipo == null) {
+            	 System.out.printf("ERROR CRÍTICO: No se pudo encontrar el equipo %s con la que comparamos el equipo %s\n", NOMBRE_EQUIPO, nombreOtroEquipo);
+                 System.out.println("Revisa que ese nombre exista EXACTAMENTE en 'mapaMatricesEquipos'.");
+            }
+            
+            int ptosOtro = matrizOtroEquipo[ROW_TOTAL][COL_PUNTOS];
+            int pgOtro = matrizOtroEquipo[ROW_TOTAL][COL_PG];
+            int sgOtro = matrizOtroEquipo[ROW_TOTAL][COL_SG];
+            int spOtro = matrizOtroEquipo[ROW_TOTAL][COL_SP];
+            int taOtro = matrizOtroEquipo[ROW_TOTAL][COL_TA];
+            int tcOtro = matrizOtroEquipo[ROW_TOTAL][COL_TC];
+
+            // 6. LÓGICA DE COMPARACIÓN JERÁRQUICA
+            //    ¿Es el 'otro' equipo MEJOR que el nuestro?
+    		
+            
+            // Criterio 1: Puntos
+            if (ptosOtro > ptos) {
+                posicion++; // El otro es mejor, sumamos 1
+                continue; // y pasamos al siguiente equipo
+            } else if (ptosOtro < ptos) {
+                continue; // El otro es peor, pasamos al siguiente equipo
+            }
+            
+            // Si llegamos aquí, los PUNTOS son iguales. Pasamos al Criterio 2:
+            
+            // Criterio 2: Partidos Ganados
+            if (pgOtro > pg) {
+                posicion++;
+                continue;
+            } else if (pgOtro < pg) {
+                continue;
+            }
+            
+            // Si llegamos aquí, PUNTOS y PG son iguales. Criterio 3:
+            
+            // Criterio 3: Sets Ganados
+            if (sgOtro > sg) {
+                posicion++;
+                continue;
+            } else if (sgOtro < sg) {
+                continue;
+            }
+            
+            // Criterio 4: Sets Perdidos (OJO: Menos es mejor)
+            if (spOtro < sp) {
+                posicion++;
+                continue;
+            } else if (spOtro > sp) {
+                continue;
+            }
+            
+            // Criterio 5: Tantos a Favor
+            if (taOtro > ta) {
+                posicion++;
+                continue;
+            } else if (taOtro < ta) {
+                continue;
+            }
+
+            // Criterio 6: Tantos en Contra (OJO: Menos es mejor)
+            if (tcOtro < tc) {
+                posicion++;
+                continue;
+            } else if (tcOtro > tc) {
+                continue;
+            }
+            
+            // Criterio 7: Desempate final (si todo es idéntico)
+            // Por "orden de aparición" (alfabético).
+            if (nombreOtroEquipo.compareTo(NOMBRE_EQUIPO) < 0) {
+                posicion++;
+            }
+        }
+    	   
+        return posicion; // Devuelve el número de equipos que quedaron por encima
     }
     
     //*ACTION LISTENER*//
@@ -2014,8 +2181,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		index = ((JList<?>)o).getSelectedIndex();
 		if(index >= 0) {
 			/*SELECCIONAR EL RESTO DE LISTAS DE LAS JORNADAS*/
-			listEquipos_resultadosClasifiacion.setSelectedIndex(index);
-			listPTOS_resultadosClasifiacion.setSelectedIndex(index);
+			listEquipos_resultadosJornadas.setSelectedIndex(index);
+			listPTOS_resultadosJornadas.setSelectedIndex(index);
 			listPJ_resultadosJornadas.setSelectedIndex(index);
 			listPG_resultadosJornadas.setSelectedIndex(index);
 			listPP_resultadosJornadas.setSelectedIndex(index);
