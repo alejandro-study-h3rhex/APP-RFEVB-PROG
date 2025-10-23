@@ -1879,6 +1879,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
         dlmJornadasTantosFavor_resultado.set(seleccion,ta);
         dlmJornadasTantosContra_resultado.set(seleccion,tc);
         actualizarDatosMatrizJornadas();
+        actualizarPosicionClasifiacion();
     }
     
     private void borrarSeleccionadoJornada(){
@@ -1894,6 +1895,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             dlmJornadasTantosFavor_resultado.set(seleccion, 0);
             dlmJornadasTantosContra_resultado.set(seleccion, 0);
             actualizarDatosMatrizJornadas();
+            actualizarPosicionClasifiacion();
         }
     }
     
@@ -1912,6 +1914,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             dlmJornadasTantosFavor_resultado.set(i, 0);
             dlmJornadasTantosContra_resultado.set(i, 0);
             actualizarDatosMatrizJornadas();
+            actualizarPosicionClasifiacion();
         }
     }
 
