@@ -305,7 +305,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private DefaultListModel<Integer> dlmClasificacionTantosContra;
 	private JPanel panelTitulo;
 	private JLabel lblGestionarJornadas;
-	private JPanel panel;
+	private JPanel panelTiutlo_Clasificacion_Arbitro;
 	private JLabel lblClasifiacin;
 
 	
@@ -1184,14 +1184,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listTC_resultadosJornadas.setBackground(new Color(204, 229, 255));
 		panelResultadosListas.add(listTC_resultadosJornadas);
 		
-		panel = new JPanel();
-		panelListasGestionarResultadosJornadas.add(panel);
+		panelTiutlo_Clasificacion_Arbitro = new JPanel();
+		panelListasGestionarResultadosJornadas.add(panelTiutlo_Clasificacion_Arbitro);
 		
 		lblClasifiacin = new JLabel("CLASIFIACIÓN");
 		lblClasifiacin.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblClasifiacin.setForeground(new Color(0, 128, 192));
 		lblClasifiacin.setFont(new Font("Leelawadee", Font.BOLD, 25));
-		panel.add(lblClasifiacin);
+		panelTiutlo_Clasificacion_Arbitro.add(lblClasifiacin);
 		
 		/*GESTIONAR CLASIFICACION*/
 		gestionarClasificacion = new JPanel();
@@ -1814,6 +1814,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             return; // Salimos del método si hay algún campo vacío
         }
         
+        
         // Casteamos los valores de los txtFields para poder usarlos despues
         int puntos = Integer.parseInt(txtPtos_resultadosJornadas.getText());
         int pj = Integer.parseInt(txtPJ_resultadosJornadas.getText());
@@ -1870,16 +1871,88 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             return;
         }
         
-        // 7 - Si se gana un partido, los puntos deben ser 2; si no, 1
+//      Si se gana (PG=1), los puntos son 2. Si se pierde (PG=0), los puntos son 1.
         if ((pg == 1 && puntos != 2) || (pg == 0 && puntos != 1)) {
             JOptionPane.showMessageDialog(this,
-                "Error. Los puntos no coinciden con el resultado del partido",
+                "Error. Los puntos no coinciden con el resultado del partido (PG=1 -> 2pts, PG=0 -> 1pt).",
                 "Error al Insertar",
                 JOptionPane.ERROR_MESSAGE,
                 null
             );
             return;
         }
+        
+        // 8 - Validar Sets vs. Resultado
+        //    Si se gana (PG=1), los sets ganados (SG) deben ser 3.
+        if (pg == 1 && sg != 3) {
+        	JOptionPane.showMessageDialog(this,
+                    "Error. Si se gana el partido (PG=1), los sets ganados (SG) deben ser 3.",
+                    "Error al Insertar",
+                    JOptionPane.ERROR_MESSAGE,
+                    null
+                );
+            return;
+        }
+        
+        //    Si se pierde (PG=0), los sets ganados (SG) no pueden ser 3.
+        if (pg == 0 && sg >= 3) {
+        	JOptionPane.showMessageDialog(this,
+                    "Error. Si se pierde el partido (PG=0), los sets ganados (SG) no pueden ser 3.",
+                    "Error al Insertar",
+                    JOptionPane.ERROR_MESSAGE,
+                    null
+                );
+            return;
+        }
+
+        // 9 - Minimo tantos si ganas 65
+        //    Si se gana (PG=1), los tantos a favor (TA) deben ser 65 o más.
+        //    (Un 3-0 requiere 75+ puntos, un 3-1 90+, y un 3-2 justo 65+ (ej. 25-23, 25-23, 15-10 = 65)).
+        if (pg == 1 && ta < 65) {
+        	JOptionPane.showMessageDialog(this,
+                    "Error. Si se gana el partido (PG=1), los tantos a favor (TA) deben ser como mínimo 65.",
+                    "Error al Insertar",
+                    JOptionPane.ERROR_MESSAGE,
+                    null
+                );
+            return;
+        }
+        
+     // Comprobar que no haya mas de 3 partidos ganados en la jornada
+        int totalPartidosGanados = 0;
+        for(int i = 0; i < dlmJornadasPartidosGanados_resultado.getSize(); i++) {
+            // Sumamos el valor (0 o 1) de cada equipo al total
+            totalPartidosGanados += dlmJornadasPartidosGanados_resultado.getElementAt(i);
+        }
+
+        // Al salir del bucle, comprobamos la suma total
+        if (totalPartidosGanados > 3) {
+            JOptionPane.showMessageDialog(this,
+                    "Error. La suma total de partidos ganados (" + totalPartidosGanados + ") no puede ser mayor a 3.",
+                    "Error de Lógica",
+                    JOptionPane.ERROR_MESSAGE,
+                    null
+            );
+            return; // Salimos del método si la lógica es incorrecta
+        }
+
+        // Comprobar que la suma de perdidos sea 3
+        int totalPartidosPerdidos = 0;
+        for(int i = 0; i < dlmJornadasPartidosPerdidos_resultado.getSize(); i++) {
+            totalPartidosPerdidos += dlmJornadasPartidosPerdidos_resultado.getElementAt(i);
+        }
+
+        if (totalPartidosPerdidos > 3) {
+            JOptionPane.showMessageDialog(this,
+                    "Error. La suma total de partidos perdidos (" + totalPartidosPerdidos + ") no puede ser mayor a 3.",
+                    "Error de Lógica",
+                    JOptionPane.ERROR_MESSAGE,
+                    null
+            );
+            return; 
+        }
+        
+        
         
         // Añadimos los valores a los DefaultListModel correspondientes
         dlmJornadasPuntos_resultado.set(seleccion,puntos);
