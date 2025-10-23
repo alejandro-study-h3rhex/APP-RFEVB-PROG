@@ -88,14 +88,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JLabel lblClasificacion;
 	private JPanel clasificacionListContainer;
 	private JList<String> listEquipos;
-	private JList<String> listPTOS;
-	private JList<String> listPJ;
-	private JList<String> listPG;
-	private JList<String> listPP;
-	private JList<String> listSG;
-	private JList<String> listSP;
-	private JList<String> listTA;
-	private JList<String> listTC;
+	private JList<Integer> listPTOS;
+	private JList<Integer> listPJ;
+	private JList<Integer> listPG;
+	private JList<Integer> listPP;
+	private JList<Integer> listSG;
+	private JList<Integer> listSP;
+	private JList<Integer> listTA;
+	private JList<Integer> listTC;
 	
 	// -- ARBITRO --
 	private JScrollPane scrollPaneArbitro;
@@ -548,11 +548,11 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		JLabel headerEquipo = new JLabel("EQUIPO");
 		headerEquipo.setForeground(Color.WHITE);
 		headerEquipo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerEquipo.setHorizontalAlignment(SwingConstants.CENTER);
+		headerEquipo.setHorizontalAlignment(SwingConstants.LEFT);
 		headerPanelClasificacion.add(headerEquipo);
 		
 		/*JLIST - PUNTOS*/
-		listPTOS = new JList<String>();
+		listPTOS = new JList<Integer>(dlmClasificacionPuntos);
 		listPTOS.setForeground(new Color(50, 50, 50));
 		listPTOS.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listPTOS.setFixedCellHeight(25);
@@ -560,13 +560,13 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		clasificacionListContainer.add(listPTOS);
 		
 		JLabel headerPTOS = new JLabel("PTOS");
-		headerPTOS.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPTOS.setHorizontalAlignment(SwingConstants.LEFT);
 		headerPTOS.setForeground(Color.WHITE);
 		headerPTOS.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanelClasificacion.add(headerPTOS);
 		
 		/*JLIST - Partidos Jugados*/
-		listPJ = new JList<String>();
+		listPJ = new JList<Integer>(dlmClasificacionPartidosJugados);
 		listPJ.setForeground(new Color(50, 50, 50));
 		listPJ.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listPJ.setFixedCellHeight(25);
@@ -575,14 +575,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		
 
 		JLabel headerPJ = new JLabel("P.J");
-		headerPJ.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPJ.setHorizontalAlignment(SwingConstants.LEFT);
 		headerPJ.setForeground(Color.WHITE);
 		headerPJ.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanelClasificacion.add(headerPJ);
 
 		
 		/*JLIST - Partidos Ganados*/
-		listPG = new JList<String>();
+		listPG = new JList<Integer>(dlmClasificacionPartidosGanados);
 		listPG.setForeground(new Color(50, 50, 50));
 		listPG.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listPG.setFixedCellHeight(25);
@@ -590,13 +590,13 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		clasificacionListContainer.add(listPG);
 		
 		JLabel headerPG = new JLabel("P.G");
-		headerPG.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPG.setHorizontalAlignment(SwingConstants.LEFT);
 		headerPG.setForeground(Color.WHITE);
 		headerPG.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanelClasificacion.add(headerPG);
 		
 		/*JLIST - Partidos Perdidos*/
-		listPP = new JList<String>();
+		listPP = new JList<Integer>(dlmClasificacionPartidosPerdidos);
 		listPP.setForeground(new Color(50, 50, 50));
 		listPP.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listPP.setFixedCellHeight(25);
@@ -604,13 +604,13 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		clasificacionListContainer.add(listPP);
 		
 		JLabel headerPP = new JLabel("P.P");
-		headerPP.setHorizontalAlignment(SwingConstants.CENTER);
+		headerPP.setHorizontalAlignment(SwingConstants.LEFT);
 		headerPP.setForeground(Color.WHITE);
 		headerPP.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanelClasificacion.add(headerPP);
 		
 		/*JLIST - Sets Ganados*/
-		listSG = new JList<String>();
+		listSG = new JList<Integer>(dlmClasificacionSetsGanados);
 		listSG.setForeground(new Color(50, 50, 50));
 		listSG.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listSG.setFixedCellHeight(25);
@@ -618,13 +618,13 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		clasificacionListContainer.add(listSG);
 		
 		JLabel headerSG = new JLabel("S.G");
-		headerSG.setHorizontalAlignment(SwingConstants.CENTER);
+		headerSG.setHorizontalAlignment(SwingConstants.LEFT);
 		headerSG.setForeground(Color.WHITE);
 		headerSG.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanelClasificacion.add(headerSG);
 	
 		/*JLIST - Sets Perdidos*/
-		listSP = new JList<String>();
+		listSP = new JList<Integer>(dlmClasificacionSetsPerdidos);
 		listSP.setForeground(new Color(50, 50, 50));
 		listSP.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listSP.setFixedCellHeight(25);
@@ -632,13 +632,13 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		clasificacionListContainer.add(listSP);
 		
 		JLabel headerSP = new JLabel("S.P");
-		headerSP.setHorizontalAlignment(SwingConstants.CENTER);
+		headerSP.setHorizontalAlignment(SwingConstants.LEFT);
 		headerSP.setForeground(Color.WHITE);
 		headerSP.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanelClasificacion.add(headerSP);
 		
 		/*JLIST - Tantos a Favor*/
-		listTA = new JList<String>();
+		listTA = new JList<Integer>(dlmClasificacionTantosFavor);
 		listTA.setForeground(new Color(50, 50, 50));
 		listTA.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listTA.setFixedCellHeight(25);
@@ -646,14 +646,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		clasificacionListContainer.add(listTA);
 
 		JLabel headerTA = new JLabel("T.A");
-		headerTA.setHorizontalAlignment(SwingConstants.CENTER);
+		headerTA.setHorizontalAlignment(SwingConstants.LEFT);
 		headerTA.setForeground(Color.WHITE);
 		headerTA.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanelClasificacion.add(headerTA);
 
 		
 		/*JLIST - Tantos en Contra*/
-		listTC = new JList<String>();
+		listTC = new JList<Integer>(dlmClasificacionTantosContra);
 		listTC.setForeground(new Color(50, 50, 50));
 		listTC.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listTC.setFixedCellHeight(25);
@@ -661,7 +661,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		clasificacionListContainer.add(listTC);
 		
 		JLabel headerTC = new JLabel("T.C");
-		headerTC.setHorizontalAlignment(SwingConstants.CENTER);
+		headerTC.setHorizontalAlignment(SwingConstants.LEFT);
 		headerTC.setForeground(Color.WHITE);
 		headerTC.setFont(new Font("Tahoma", Font.BOLD, 15));
 		headerPanelClasificacion.add(headerTC);
@@ -1343,11 +1343,9 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblHeaderTC_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelGestionarClasificacionHeader.add(lblHeaderTC_resultadosClasificacion);
 		
-		/*PANEL ADMIN*/
-		panelAdmin = new JPanel();
-		contentPane.add(panelAdmin, "PanelAdmin_");
-		
-		/*GESTION USUARIOS*/
+// ----------------------------------- GESTION USUARIOS ------------------------------------ //  
+	    
+	    /*GESTION USUARIOS*/
 		if(username.equals(Login.admin_user)) {
 			cardLayoutPrincipal.show(contentPane, "PanelAdmin_");
 		} else if (username_param.equals(Login.arbitro_user)){
@@ -1363,8 +1361,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		} else {
 			cardLayoutPrincipal.show(contentPane, "PanelAnonimo_");
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        	cambiarJornada(comboBoxJornadas, headerNJornadas);
+			//ESTABLECEMOS LOS DATOS DE LAS JORNADAS
+			definirDatosResultadosJornadasPorDefecto();
+			//ACTUALIZAR LAS JORNADAS
+			cambiarJornada(comboBoxGestionarJornadas, headerNJornadas_1);
+			//ACTUALIZAR CLASIFICACIÓN
+			actualizarPosicionClasifiacion();
 		}
+		
 	}
 	
 	// -- METODOS (FUNCIONES) PRIVADAS --
@@ -1778,7 +1782,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	
 	
 	
-	// -- EVENTOS --
+	// -- EVENTO --
     private void insertarResultadosJornada() {
         int seleccion = listEquipos_resultadosJornadas.getSelectedIndex();
 
@@ -1924,11 +1928,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
      * Sincroniza los datos de los DLM (la vista) con la matriz (el modelo)
      * para la jornada seleccionada y recalcula la fila total de CADA equipo.
      */
-    /**
- * Sincroniza los datos de los DLM (la vista) con la matriz (el modelo)
- * para la jornada seleccionada y recalcula la fila total de CADA equipo.
- * * Este método ORQUESTA las tareas, llamando a helpers para cada equipo.
- */
 	private void actualizarDatosMatrizJornadas() {
 	    int jornadaIndex = comboBoxGestionarJornadas.getSelectedIndex();
 	    
@@ -1964,6 +1963,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
         datosFilaJornada[COL_TC]     = dlmJornadasTantosContra_resultado.get(dlmIndex);
     }
     
+    /*CALCULA EL TOTAL DE CADA PARAMETRO DE LA CLASIFICACION DE CADA EQUIPO --> Necesario para actualizar la clasificacion*/
     private void recalcularTotalParaEquipo(int[][] matrizDelEquipo) {
         // Obtiene la fila total de la matriz de este equipo
         int[] datosFilaTotal = matrizDelEquipo[ROW_TOTAL];
@@ -1985,6 +1985,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             }
         }
     }
+    
+    /*ORDENAR CLASIFICACION -> INSERCCIÓN DE DATOS*/
     
     // Este metodo se encarga de insertar los datos de forma ordenada en las dlms
     private void actualizarPosicionClasifiacion() {
@@ -2015,7 +2017,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     		int[][] matrizEquipo = obtenterMatrizPorNombreEquipo(ordenEquipos[d]);
     		//Establece los resultados de la temporada en variables
     		int ptos = matrizEquipo[ROW_TOTAL][COL_PUNTOS];
-    		System.out.printf("PUNTOS PARA : %s son %d\n", ordenEquipos[d], ptos);
     		int pj = matrizEquipo[ROW_TOTAL][COL_PJ];
 	        int pg = matrizEquipo[ROW_TOTAL][COL_PG];
 	        int pp = matrizEquipo[ROW_TOTAL][COL_PP];
@@ -2148,6 +2149,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     	   
         return posicion; // Devuelve el número de equipos que quedaron por encima
     }
+        
+// ---------------------- EVENT LISTENERS ------------------------------------ //    
     
     //*ACTION LISTENER*//
 	@Override
