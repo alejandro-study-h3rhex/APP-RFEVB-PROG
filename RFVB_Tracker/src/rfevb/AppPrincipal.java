@@ -106,7 +106,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JComboBox<String> comboBoxGestionarJornadas;
 	private JButton btnCerrarSesion_ARBITRO;
 	private JPanel panelGestionarJornadas;
-	private JLabel lblGestionarJornadas;
 	private JPanel panelListasGestionarJornadas;
 	private JPanel listContainerGestionarJornadas;
 	private JPanel headerPanelGestionarJornadas;
@@ -164,7 +163,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JList<Integer> listTA__resultadosClasificacion;
 	private JList<Integer> listTC__resultadosClasificacion;
 	private JList<Integer> listPuntos__resultadosClasificacion;
-	private JLabel lblGestionarClasificacion;
 	
 	// -- DLMs --
 	
@@ -305,6 +303,10 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private DefaultListModel<Integer> dlmClasificacionSetsPerdidos;
 	private DefaultListModel<Integer> dlmClasificacionTantosFavor;
 	private DefaultListModel<Integer> dlmClasificacionTantosContra;
+	private JPanel panelTitulo;
+	private JLabel lblGestionarJornadas;
+	private JPanel panel;
+	private JLabel lblClasifiacin;
 
 	
 	// -- DLMs --
@@ -709,11 +711,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		gestionarJornadas.add(panelGestionarJornadas, BorderLayout.CENTER);
 		panelGestionarJornadas.setLayout(new BoxLayout(panelGestionarJornadas, BoxLayout.Y_AXIS));
 		
-		lblGestionarJornadas = new JLabel("GESTIONAR JORNADAS");
-		lblGestionarJornadas.setAlignmentY(0.0f);
+		panelTitulo = new JPanel();
+		panelGestionarJornadas.add(panelTitulo);
+		
+		lblGestionarJornadas = new JLabel("GESTIONAR RESULTADOS JORNADAS");
+		lblGestionarJornadas.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblGestionarJornadas.setForeground(new Color(0, 128, 192));
 		lblGestionarJornadas.setFont(new Font("Leelawadee", Font.BOLD, 25));
-		panelGestionarJornadas.add(lblGestionarJornadas);
+		panelTitulo.add(lblGestionarJornadas);
 		
 		panelListasGestionarJornadas = new JPanel();
 		panelGestionarJornadas.add(panelListasGestionarJornadas);
@@ -1179,11 +1184,14 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listTC_resultadosJornadas.setBackground(new Color(204, 229, 255));
 		panelResultadosListas.add(listTC_resultadosJornadas);
 		
-		lblGestionarClasificacion = new JLabel("Gestionar Clasificacion");
-		lblGestionarClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGestionarClasificacion.setFont(new Font("Leelawadee", Font.BOLD, 25));
-		lblGestionarClasificacion.setForeground(azulPrimero);
-		panelListasGestionarResultadosJornadas.add(lblGestionarClasificacion);
+		panel = new JPanel();
+		panelListasGestionarResultadosJornadas.add(panel);
+		
+		lblClasifiacin = new JLabel("CLASIFIACIÓN");
+		lblClasifiacin.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblClasifiacin.setForeground(new Color(0, 128, 192));
+		lblClasifiacin.setFont(new Font("Leelawadee", Font.BOLD, 25));
+		panel.add(lblClasifiacin);
 		
 		/*GESTIONAR CLASIFICACION*/
 		gestionarClasificacion = new JPanel();
