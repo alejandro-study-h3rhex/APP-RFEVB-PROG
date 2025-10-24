@@ -36,21 +36,8 @@ public class Login extends JFrame implements ActionListener{
 	
 	/*USUARIOS Y CONTRASEÑAS*/
 	
-	/*
-	 	CREDENCIALES REALES
-	  	
-	  	private String admin_user = "admin_rfvb";
-		private String admin_password = "RFVB@4dm1n*25";
-		
-		private String arbitro_user = "arbitro_rfvb";
-		private String arbitro_password ="Jorn4da#Delg";
-		
-	*/
-	// Estas son claves que usamos para simplificar tareas en las etapas de desarrollo
-	public static String admin_user = "admin";
-	private  String admin_password = "admin";
-	public static String arbitro_user = "arbitro";
-	private String arbitro_password ="arbitro";
+	public static String arbitro_user = "arbitro_rfvb";
+	private String arbitro_password ="Jorn4da";
 	public static String anonimo_user = "anonimo";
 	private String anonimo_password = "anonimo";
 	
@@ -181,12 +168,7 @@ public class Login extends JFrame implements ActionListener{
 		        String username = new String(txtUsernameValue.getText());
 		        String password = new String(txtPasswordValue.getPassword());
 		        
-		       if(username.equals(admin_user) && password.equals(admin_password)) {
-		    	  AppPrincipal appPrincipal = new AppPrincipal(username);
-		    	  this.dispose();
-		    	  appPrincipal.setVisible(true);
-
-		       } else if(username.equals(arbitro_user) && password.equals(arbitro_password)) {
+		       if(username.equals(arbitro_user) && password.equals(arbitro_password)) {
 		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
 		    	   appPrincipal.setVisible(true);
 		    	   this.dispose();

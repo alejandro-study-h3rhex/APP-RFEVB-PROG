@@ -191,6 +191,16 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	
 	// --- EL PUENTE/DICCIONARIO ---
     private Map<String, int[][]> mapaMatricesEquipos;
+    
+    // --- LISTA EQUIPOS -------
+    String[] equipos = {
+		    "CV ZARAGOZA", 
+		    "CV SAN FERNANDO", 
+		    "VALLADOLID CV", 
+		    "CV TORRELAVEGA", 
+		    "CV PALMA", 
+		    "CV RIVAS"
+	};
 	
 	/*JORNADAS*/
 	private DefaultListModel<String> dlmJornadasEqLocal;
@@ -1354,9 +1364,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 // ----------------------------------- GESTION USUARIOS ------------------------------------ //  
 	    
 	    /*GESTION USUARIOS*/
-		if(username.equals(Login.admin_user)) {
-			cardLayoutPrincipal.show(contentPane, "PanelAdmin_");
-		} else if (username_param.equals(Login.arbitro_user)){
+		
+		if (username_param.equals(Login.arbitro_user)){
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setTitle(this.getTitle() + " - GESTIÓN ARBITRO");
 			cardLayoutPrincipal.show(contentPane, "PanelArbitro_");
@@ -1382,8 +1391,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	// -- METODOS (FUNCIONES) PRIVADAS --
 	
 	private void setEquipos(DefaultListModel<String> dlmEquipos) {
-		//String[] equipos = {"CV Zaragoza", "CV San Fernando", "VALLADOLID CV ", "CV Torrelavega", "CV Palma", "CV Rivas"};
-		String[] equipos = {"CV ZARAGOZA", "CV SAN FERNANDO", "VALLADOLID CV ", "CV TORRELAVEGA", "CV PALMA", "CV RIVAS"};
 		for(int i = 0; i < equipos.length; i++) {
 			/*
 			  Añades a la dlm en el indice (i) el valor de el array (i)
@@ -1850,7 +1857,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
         
        
         // 4 - Comprobar suma sets no sea mayor a 5)
-        if(sg+sp > 5) {
+        if(sg+sp > 5 ) {
         	JOptionPane.showMessageDialog(this,
                     "Error. La suma de los sets no puede ser mayor a 5",
                     "Error al Insertar",
@@ -1894,16 +1901,40 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             return;
         }
         
-        //    Si se pierde (PG=0), los sets ganados (SG) no pueden ser 3.
-        if (pg == 0 && sg >= 3) {
-        	JOptionPane.showMessageDialog(this,
-                    "Error. Si se pierde el partido (PG=0), los sets ganados (SG) no pueden ser 3.",
-                    "Error al Insertar",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-                );
-            return;
-        }
+     // Regla 1: Si se perdió (PG=0), es un error si SG es 3 o más.
+     // Regla 2: Si se perdió (PG=0), es un error si SP es menor que 3.
+
+     if (pg == 0) {
+         if (sg >= 3) {
+             JOptionPane.showMessageDialog(this,
+                     "Error. Si se perdió el partido (PG=0), los sets ganados (SG) no pueden ser 3 o más.",
+                     "Error al Insertar",
+                     JOptionPane.ERROR_MESSAGE,
+                     null
+                 );
+             return;
+         }
+         
+         if (sp < 3) {
+             JOptionPane.showMessageDialog(this,
+                     "Error. Si se perdió el partido (PG=0), los sets perdidos (SP) deben ser 3 como mínimo.",
+                     "Error al Insertar",
+                     JOptionPane.ERROR_MESSAGE,
+                     null
+                 );
+             return;
+         }
+         
+         if(tc < 65) {
+        	  JOptionPane.showMessageDialog(this,
+                      "Error. Si se perdió el partido (PG=0), los tantos en contra (TC) deben ser 65 como mínimo.",
+                      "Error al Insertar",
+                      JOptionPane.ERROR_MESSAGE,
+                      null
+                  );
+              return;
+         }
+     }
 
         // 9 - Minimo tantos si ganas 65
         //    Si se gana (PG=1), los tantos a favor (TA) deben ser 65 o más.
@@ -1924,8 +1955,11 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             // Sumamos el valor (0 o 1) de cada equipo al total
             totalPartidosGanados += dlmJornadasPartidosGanados_resultado.getElementAt(i);
         }
-
+        totalPartidosGanados += pg; // añade el nuevo partido
+        System.out.println("Total partidos ganados: " + totalPartidosGanados);
+        
         // Al salir del bucle, comprobamos la suma total
+        // La condición de error es: si el total es MAYOR a 3 (es decir, >= 4)
         if (totalPartidosGanados > 3) {
             JOptionPane.showMessageDialog(this,
                     "Error. La suma total de partidos ganados (" + totalPartidosGanados + ") no puede ser mayor a 3.",
@@ -1936,13 +1970,16 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             return; // Salimos del método si la lógica es incorrecta
         }
 
-        // Comprobar que la suma de perdidos sea 3
+        // Comprobar que no haya mas de 3 partidos perdidos en la jornada
         int totalPartidosPerdidos = 0;
         for(int i = 0; i < dlmJornadasPartidosPerdidos_resultado.getSize(); i++) {
             totalPartidosPerdidos += dlmJornadasPartidosPerdidos_resultado.getElementAt(i);
         }
+        totalPartidosPerdidos += pp; // añade el nuevo partido
+        System.out.println("Total partidos perdidos: " + totalPartidosPerdidos);
 
-        if (totalPartidosPerdidos > 3) {
+        // La condición de error es: si el total es MAYOR a 3 (es decir, >= 4)
+        if (totalPartidosPerdidos >= 4) {
             JOptionPane.showMessageDialog(this,
                     "Error. La suma total de partidos perdidos (" + totalPartidosPerdidos + ") no puede ser mayor a 3.",
                     "Error de Lógica",
@@ -1951,8 +1988,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             );
             return; 
         }
-        
-        
         
         // Añadimos los valores a los DefaultListModel correspondientes
         dlmJornadasPuntos_resultado.set(seleccion,puntos);
@@ -1965,6 +2000,15 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
         dlmJornadasTantosContra_resultado.set(seleccion,tc);
         actualizarDatosMatrizJornadas();
         actualizarPosicionClasifiacion();
+        
+        
+          JOptionPane.showMessageDialog(this,
+        	    "¡Resultado de la jornada actualizado correctamente!",
+        	    "Actualización Exitosa",
+        	    JOptionPane.INFORMATION_MESSAGE, // Usa INFORMATION_MESSAGE para un icono de éxito/información
+        	    null
+        	);
+         
     }
     
     private void borrarSeleccionadoJornada(){
@@ -2070,16 +2114,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     /*ORDENAR CLASIFICACION -> INSERCCIÓN DE DATOS*/
     
     // Este metodo se encarga de insertar los datos de forma ordenada en las dlms
-    private void actualizarPosicionClasifiacion() {
-    	String[] equipos = {
-    		    "CV ZARAGOZA", 
-    		    "CV SAN FERNANDO", 
-    		    "VALLADOLID CV", 
-    		    "CV TORRELAVEGA", 
-    		    "CV PALMA", 
-    		    "CV RIVAS"
-    	};
-    	
+    private void actualizarPosicionClasifiacion() {    	
     	String[] ordenEquipos = new String[equipos.length];
     	//Llenar de vacios el array ordenEquipos para poder actualizar la posición
     	for(int i = 0; i < ordenEquipos.length; i++) {
