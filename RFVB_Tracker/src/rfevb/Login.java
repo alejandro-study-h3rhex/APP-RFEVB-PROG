@@ -36,8 +36,11 @@ public class Login extends JFrame implements ActionListener{
 	
 	/*USUARIOS Y CONTRASEÑAS*/
 	
-	public static String arbitro_user = "arbitro_rfvb";
-	private String arbitro_password ="Jorn4da";
+	//public static String arbitro_user = "arbitro_rfvb";
+	//private String arbitro_password ="Jorn4da";
+	
+	public static String arbitro_user = "arbitro";
+	private String arbitro_password ="arbitro";
 	public static String anonimo_user = "anonimo";
 	private String anonimo_password = "anonimo";
 	
