@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Toolkit;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -34,27 +36,10 @@ public class Login extends JFrame implements ActionListener{
 	
 	/*USUARIOS Y CONTRASEÑAS*/
 	
-	/*
-	 	CREDENCIALES REALES
-	  	
-	  	private String admin_user = "admin_rfvb";
-		private String admin_password = "RFVB@4dm1n*25";
-		
-		private String arbitro_user = "arbitro_rfvb";
-		private String arbitro_password ="Jorn4da#Delg";
-		
-	*/
-	// Estas son claves que usamos para simplificar tareas en las etapas de desarrollo
-	private String admin_user = "admin";
-	private String admin_password = "admin";
-	private String arbitro_user = "arbitro";
-	private String arbitro_password ="arbitro";
-	
-	private String anonimo_user = "anonimo";
+	public static String arbitro_user = "arbitro_rfvb";
+	private String arbitro_password ="Jorn4da";
+	private static String anonimo_user = "anonimo";
 	private String anonimo_password = "anonimo";
-	
-	
-
 	
 
 	/**
@@ -64,6 +49,7 @@ public class Login extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					// No hay una instancia aun
 					Login frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -98,7 +84,7 @@ public class Login extends JFrame implements ActionListener{
 		lbl_Icono.setIcon(new ImageIcon(Login.class.getResource("assets/favicon/icono-federacion.png")));
 		northPanel.add(lbl_Icono);
 		
-		JLabel lbl_titulo_federacion = new JLabel("Real Federacion Española de Voleibol");
+		JLabel lbl_titulo_federacion = new JLabel("Real Federación Española de Voleibol");
 		lbl_titulo_federacion.setForeground(new Color(0, 128, 192));
 		lbl_titulo_federacion.setFont(new Font("Leelawadee", lbl_titulo_federacion.getFont().getStyle() | Font.BOLD, 25));
 		northPanel.add(lbl_titulo_federacion);
@@ -171,7 +157,6 @@ public class Login extends JFrame implements ActionListener{
 	}
 
 	
-	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		Object o = ae.getSource();
@@ -183,40 +168,18 @@ public class Login extends JFrame implements ActionListener{
 		        String username = new String(txtUsernameValue.getText());
 		        String password = new String(txtPasswordValue.getPassword());
 		        
-		        /*Comprobamos que el usuario sea correcto, con uso de el metodo:
-		         * equals que es el metodo que usa Java para comparar Strings*/
-		        if(username.equals(admin_user)) {
-		        	if(password.equals(admin_password)) {
-		        		/*Abre el panel admin y cierra la ventana de login*/
-		        		PanelAdmin panelAdmin = new PanelAdmin();
-		        		panelAdmin.setVisible(true);
-		        		this.dispose();
-		        		//System.out.println("Bienvenido admin");
-		        	} else {
-						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
-		        	}
-		        } else if(username.equals(arbitro_user)){
-		        	if(password.equals(arbitro_password)) {
-		        		PanelArbitro panelArbitro = new PanelArbitro();
-		        		panelArbitro.setVisible(true);
-		        		this.dispose();
-			        	//System.out.println("Bienvenido delegado");
-		        	} else {
-						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
-		        	}
-		        } else if(username.equals(anonimo_user)) {
-		        	if(password.equals(anonimo_password)) {
-		        		PanelAnonimos panelAnonimos = new PanelAnonimos();
-		        		panelAnonimos.setVisible(true);
-		        		this.dispose();
-		        		//System.out.println("Bienvenido anonimo");
-		        	} else {
-						JOptionPane.showMessageDialog(this, (String)"Error. Contraseña incorrecta","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
-		        	}
-		        } else {
-					JOptionPane.showMessageDialog(this, (String)"Error. Usuario incorrecto","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
-		        	//System.out.println("Usuario incorrecto");
-		        }
+		       if(username.equals(arbitro_user) && password.equals(arbitro_password)) {
+		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
+		    	   appPrincipal.setVisible(true);
+		    	   this.dispose();
+
+		       } else if(username.equals(anonimo_user) && password.equals(anonimo_password)) {
+		    	   AppPrincipal appPrincipal = new AppPrincipal(username);
+		    	   appPrincipal.setVisible(true);
+		    	   this.dispose();
+		       } else {
+					JOptionPane.showMessageDialog(this, (String)"Error. Usuario o constraseña incorrectos","Error al inciar sesion",JOptionPane.ERROR_MESSAGE,null);
+		       }
 		        
 		  } else if(o == txtUsernameValue) {
 			  txtPasswordValue.requestFocus();
@@ -224,5 +187,6 @@ public class Login extends JFrame implements ActionListener{
 		  else {
 		        System.out.println("Error. No se ha reconocido el evento");
 		  }
-		}
 	}
+
+}
