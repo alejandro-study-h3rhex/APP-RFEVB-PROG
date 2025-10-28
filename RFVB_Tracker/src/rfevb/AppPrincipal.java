@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import java.awt.CardLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -20,8 +19,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import java.awt.LayoutManager;
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -34,8 +31,11 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import javax.swing.JTextField;
 
 
 
@@ -54,95 +54,18 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	JPanel panelArbitro;
-	JPanel panelAdmin;
+	JPanel panelPrincipal;
 	
-	
-	// -- ANON --
-	JPanel panelAnonimo;
-	private JPanel panelListasVerJornadas;
-	private JPanel midPanel;
-	private JScrollPane scrollPaneAnonimo;
-	private JPanel scrollPanelAnonimo;
-	private JButton btnCerrarSesion_ANON;
+	private JScrollPane scrollPane;
+	private JPanel scrollPanel;
 
-
-	// -- JORNDAS ANON --
-	private JComboBox<String> comboBoxJornadas;
-	private JPanel verJornadas;
+	private JPanel Jornadas;
 	private JPanel northPanelJornadas;
-	private JPanel panelVerJornadas;
-	private JLabel lblVerEquipos;
-	private JPanel listContainerVerJornadas;
-	private JPanel headerPanelJornadas;
-	private JLabel headerNJornadas;
-	private JLabel headerEqLocal;
-	private JLabel headerEqVisitante;
-	private JPanel anonListPanelJorndas;
-	private JList<String> listEqLocal;
-	private JList<String> listEqVisitante;
-	
-	// -- CLASIFICACIÓN ANON --
-	private JPanel verClasificacion;
-	private JPanel northPanelClasificacion;
-	private JLabel lblClasificacion;
-	private JPanel clasificacionListContainer;
-	private JList<String> listEquipos;
-	private JList<Integer> listPTOS;
-	private JList<Integer> listPJ;
-	private JList<Integer> listPG;
-	private JList<Integer> listPP;
-	private JList<Integer> listSG;
-	private JList<Integer> listSP;
-	private JList<Integer> listTA;
-	private JList<Integer> listTC;
-	
-	// -- ARBITRO --
-	private JScrollPane scrollPaneArbitro;
-	private JPanel scrollPanelArbitro;
-
-	private JPanel gestionarJornadas;
-	private JPanel northPanelGestionarJornadas;
-	private JComboBox<String> comboBoxGestionarJornadas;
-	private JButton btnCerrarSesion_ARBITRO;
-	private JPanel panelGestionarJornadas;
-	private JPanel panelListasGestionarJornadas;
-	private JPanel listContainerGestionarJornadas;
-	private JPanel headerPanelGestionarJornadas;
-	private JLabel headerNJornadas_1;
-	private JLabel headerEqLocal_1;
-	private JLabel headerEqVisitante_1;
-	private JPanel arbitroListPanelJornadas;
-	/*EQUIPOS JORNADAS*/
-	private JList<String> listEqLocalGestionar;
-	private JList<String> listEqVisitanteGestionar;
-	/*RESULTADOS*/
-	private JList<String> listEquipos_resultadosJornadas;
-	private JList<Integer> listPTOS_resultadosJornadas;
-	private JList<Integer> listPJ_resultadosJornadas;
-	private JList<Integer> listPG_resultadosJornadas;
-	private JList<Integer> listPP_resultadosJornadas;
-	private JList<Integer> listSG_resultadosJornadas;
-	private JList<Integer> listSP_resultadosJornadas;
-	private JList<Integer> listTA_resultadosJornadas;
-	private JList<Integer> listTC_resultadosJornadas;
-	private JTextField txtPtos_resultadosJornadas;
-	private JTextField txtPJ_resultadosJornadas;
-	private JTextField txtPG_resultadosJornadas;
-	private JTextField txtPP_resultadosJornadas;
-	private JTextField txtSG_resultadosJornadas;
-	private JTextField txtSP_resultadosJornadas;
-	private JTextField txtTA_resultadosJornadas;
-	private JTextField txtTC_resultadosJornadas;
-	private JButton btnInsertar_resultadosJornadas;
-	private JButton btnBorrar_resultadosJornadas;
-	private JButton btnLimpiar_resultadosJornadas;
-
-	// -- CLASIFICACION - ARBITRO //
-	private JPanel panelInputDatosJornadas;
-	private JLabel lbl_Equipos_resultadosJornadas;
-	private JTextField txtEquipos_resultadosJornadas;
-	private JPanel gestionarClasificacion;
+	private JComboBox<String> comboBoxJornadas;
+	private JButton btnCerrarSesion;
+	private JPanel panelJornadas;
+	private JPanel panelListasJornadas;
+	private JPanel Clasificacion;
 	private JPanel panelGestionarClasificacionHeader;
 	private JLabel lblheaderEquipo_restultados_1;
 	private JLabel lblheaderPTOS_resultadosClasificacion;
@@ -163,28 +86,97 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JList<Integer> listTA__resultadosClasificacion;
 	private JList<Integer> listTC__resultadosClasificacion;
 	private JList<Integer> listPuntos__resultadosClasificacion;
+	private JPanel panelTitulo;
+	private JLabel lblGestionarJornadas;
+	private JButton btnSiguienteJornada;
+	private JButton btnAnteriorJornada;
+	private JPanel panelNumeroJornadas;
+	private JPanel panelEqLocales;
+	private JPanel panelEqVisitantes;
+	private JLabel headerNJornadas;
+	private JLabel lblTitleEqLocales;
+	private JLabel lblTitleEqVisitante;
+	private JPanel panelListContainerVisitantes;
+	private JPanel panelListContainerLocales;
+	private JList<String> listNombreEquiposLocal;
+	private JList<Integer> listSetsLocales;
+	private JList<Integer> listS1TL;
+	private JList<Integer> listS2TL;
+	private JList<Integer> listS3TL;
+	private JList<Integer> listS4TL;
+	private JList<Integer> listS5TL;
+	private JList<String> listNombreEquiposVisitantes;
+	private JList<Integer> listSetsVisitantes;
+	private JList<Integer> listS1TV;
+	private JList<Integer> listS2TV;
+	private JList<Integer> listS3TV;
+	private JList<Integer> listS4TV;
+	private JList<Integer> listS5TV;
+	private JPanel panelTxtJornadasContainer;
+	private JPanel panelBtnContainer;
+	private JButton btnGuardarCambios_resultadosJornadas;
+	private JButton btnBorrar_resultadosJornadas;
+	private JButton btnLimpiar_resultadosJornadas;
+	private JPanel txtLocales;
+	private JPanel txtVisitantes;
+	private JLabel lblEquipoLocal_ResultadoPartido;
+	private JLabel lblEquipoVisitante_ResultadoPartido;
+	private JPanel localesInput;
+	private JLabel lblSetsTotales;
+	private JTextField txtSestL;
+	private JLabel lblS1Ta;
+	private JTextField txtS1TaL;
+	private JLabel lblS2Ta;
+	private JTextField txtS2TaL;
+	private JLabel lblS3Ta;
+	private JTextField txtS3TaL;
+	private JLabel lblS4Ta;
+	private JTextField txtS4TaL;
+	private JLabel lblS5Ta;
+	private JTextField txtS5TaL;
+	private JPanel visitantesInput;
+	private JLabel lblSetsTotalesV;
+	private JTextField txtSetsV;
+	private JLabel lblS1TaV;
+	private JTextField txtS1TavV;
+	private JLabel lblS2TaV;
+	private JTextField txtS2TaV;
+	private JLabel lblS3TaV;
+	private JTextField txtS3TaV;
+	private JLabel lblS4TaV;
+	private JTextField txtS4TaV;
+	private JLabel lblS5TaV;
+	private JTextField txtS5TaV;
+
 	
 	// -- DLMs --
 	
 	/*EQUIPOS*/
 	private DefaultListModel<String> dlmEquipos;
 	// -- MATRICES EQUIPOS --
-	private int[][] matriz_zaragoza = new int[11][8];
-	private int[][] matriz_valladolid = new int[11][8];
-	private int[][] matriz_torrelavega = new int[11][8];
-	private int[][] matriz_rivas = new int[11][8];
-	private int[][] matriz_palma = new int[11][8];
-	private int[][] matriz_sanfernando = new int[11][8];
+	private int[][] matriz_zaragoza = new int[11][13];
+	private int[][] matriz_valladolid = new int[11][13];
+	private int[][] matriz_torrelavega = new int[11][13];
+	private int[][] matriz_rivas = new int[11][13];
+	private int[][] matriz_palma = new int[11][13];
+	private int[][] matriz_sanfernando = new int[11][13];
 	
 	// -- INDICE DE CADA COLUMNA --> MAS FACIL EL ACCESO
-	private final int COL_PJ = 0;       // Partidos Jugados
-	private final int COL_PG = 1;       // Partidos Ganados
-	private final int COL_PP = 2;       // Partidos Perdidos
-	private final int COL_PUNTOS = 3;   // Puntos totales
-	private final int COL_SG = 4;       // Sets Ganados
-	private final int COL_SP = 5;       // Sets Perdidos
-	private final int COL_TA = 6;       // Tantos a Favor
-	private final int COL_TC = 7;       // Tantos en Contra
+	private final int COL_PUNTOS = 0;   // Puntos totales
+	private final int COL_SG = 1;       // Sets Ganados
+	private final int COL_SP = 2;       // Sets Perdidos
+	private final int COL_TA = 3;       // Tantos a Favor
+	private final int COL_TC = 4;       // Tantos en Contra
+	private final int COL_S1_TA = 5; 	// Tantos a Favor en SET1
+	private final int COL_S2_TA = 6; 	// Tantos a Favor en SET2
+	private final int COL_S3_TA = 7; 	// Tantos a Favor en SET3
+	private final int COL_S4_TA = 8; 	// Tantos a Favor en SET4
+	private final int COL_S5_TA = 9; 	// Tantos a Favor en SET5
+	private final int COL_PG = 10;		// Partidos ganados
+	private final int COL_PP = 11;		// Partidos pertidos
+	private final int COL_PJ = 12;		// Patidos jugados
+	
+	
 	// -- FILA FINAL --
 	private final int ROW_TOTAL = 10; // Fila con total de los parametros
 	
@@ -205,103 +197,27 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	/*JORNADAS*/
 	private DefaultListModel<String> dlmJornadasEqLocal;
 	private DefaultListModel<String> dlmJornadasEqVisitante;
-	private	DefaultComboBoxModel<String> dcbmNumeroJornada;
-	private String[] equiposLocales = {
-			// Jornada 1
-			"CV ZARAGOZA",
-			"VALLADOLID CV",
-			"CV TORRELAVEGA",
-			// Jornada 2
-			"CV ZARAGOZA",
-			"CV SAN FERNANDO",
-			"VALLADOLID CV",
-			// Jornada 3
-			"CV ZARAGOZA",
-			"CV RIVAS",
-			"CV SAN FERNANDO",
-			// Jornada 4
-			"CV ZARAGOZA",
-			"CV PALMA",
-			"CV RIVAS",
-			// Jornada 5
-			"CV ZARAGOZA",
-			"CV TORRELAVEGA",
-			"CV PALMA",
-			// Jornada 6
-			"CV SAN FERNANDO",
-			"CV RIVAS",
-			"CV PALMA",
-			// Jornada 7
-			"CV RIVAS",
-			"CV PALMA",
-			"CV TORRELAVEGA",
-			// Jornada 8
-			"CV PALMA",
-			"CV TORRELAVEGA",
-			"VALLADOLID CV",
-			// Jornada 9
-			"CV TORRELAVEGA",
-			"VALLADOLID CV",
-			"CV SAN FERNANDO",
-			// Jornada 10
-			"VALLADOLID CV",
-			"CV SAN FERNANDO",
-			"CV RIVAS"
-		};
-		
-		private String[] equiposVisitantes = {
-				// Jornada 1
-			    "CV SAN FERNANDO",
-			    "CV RIVAS",       
-			    "CV PALMA",       
-			    // Jornada 2
-			    "CV RIVAS",
-			    "CV PALMA",        
-			    "CV TORRELAVEGA",
-			    // Jornada 3
-			    "CV PALMA",
-			    "CV TORRELAVEGA",
-			    "VALLADOLID CV",
-			    // Jornada 4
-			    "CV TORRELAVEGA",
-			    "VALLADOLID CV",
-			    "CV SAN FERNANDO",
-			    // Jornada 5
-			    "VALLADOLID CV",
-			    "CV SAN FERNANDO",
-			    "CV RIVAS",
-			    // Jornada 6
-			    "CV ZARAGOZA",
-			    "VALLADOLID CV",
-			    "CV TORRELAVEGA", 
-			    // Jornada 7
-			    "CV ZARAGOZA",   
-			    "CV SAN FERNANDO", 
-			    "VALLADOLID CV",  
-			    // Jornada 8
-			    "CV ZARAGOZA",
-			    "CV RIVAS",
-			    "CV SAN FERNANDO",
-			    // Jornada 9
-			    "CV ZARAGOZA",
-			    "CV PALMA",       
-			    "CV RIVAS",      
-			    // Jornada 10
-			    "CV ZARAGOZA",
-			    "CV TORRELAVEGA",
-			    "CV PALMA"
-		};
+	private	DefaultComboBoxModel<String> dcmJornadas;
+	private String[][] matrizJornadas = new String[30][2]; // COL 0 = LOCAL COL 1 = VISITANTE
+	private int COL_EQUIPOS_LOCALES = 0;
+	private int COL_EQUIPOS_VISITANTES = 1;
+	
 	/*GESTIONAR - RESULTADOS - JORNADAS (ESTAS DLMS SON TEMPORALES SOLO ALMACENAN UNA JORNADA ALA VEZ)*/
-	//-- para los 8 datos de resultados de esos 6 equipos --
-	private DefaultListModel<String> dlmJornadasEquipos_resultado;
-	private DefaultListModel<Integer> dlmJornadasPuntos_resultado;
-	private DefaultListModel<Integer> dlmJornadasPartidosJugados_resultado;
-	private DefaultListModel<Integer> dlmJornadasPartidosGanados_resultado;
-	private DefaultListModel<Integer> dlmJornadasPartidosPerdidos_resultado;
-	private DefaultListModel<Integer> dlmJornadasSetsGanados_resultado;
-	private DefaultListModel<Integer> dlmJornadasSetsPerdidos_resultado;
-	private DefaultListModel<Integer> dlmJornadasTantosFavor_resultado;
-	private DefaultListModel<Integer> dlmJornadasTantosContra_resultado;
+	//-- para los 5 datos de resultados de cada partido --
+	// --LOCALES--
+	private DefaultListModel<Integer>dlmJornadaSetsL;
+	private DefaultListModel<Integer>dlmJornadaS1TAL;
+	private DefaultListModel<Integer>dlmJornadaS2TAL;
+	private DefaultListModel<Integer>dlmJornadaS3TAL;
+	private DefaultListModel<Integer>dlmJornadaS4TAL;
+	private DefaultListModel<Integer>dlmJornadaS5TAL;
+	// --VISITANTES--
+	private DefaultListModel<Integer>dlmJornadaSetsV;
+	private DefaultListModel<Integer>dlmJornadaS1TAV;
+	private DefaultListModel<Integer>dlmJornadaS2TAV;
+	private DefaultListModel<Integer>dlmJornadaS3TAV;
+	private DefaultListModel<Integer>dlmJornadaS4TAV;
+	private DefaultListModel<Integer>dlmJornadaS5TAV;
 		
 		
 	/*CLASIFICACIÓN*/
@@ -313,11 +229,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private DefaultListModel<Integer> dlmClasificacionSetsPerdidos;
 	private DefaultListModel<Integer> dlmClasificacionTantosFavor;
 	private DefaultListModel<Integer> dlmClasificacionTantosContra;
-	private JPanel panelTitulo;
-	private JLabel lblGestionarJornadas;
-	private JPanel panelTiutlo_Clasificacion_Arbitro;
-	private JLabel lblClasifiacin;
-
+	private JPanel panelTituloClasificacion;
+	private JLabel lblClasificacion;
 	
 	// -- DLMs --
 	
@@ -340,24 +253,86 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		// pasa el parametro recibido a una variable local
 		username = username_param;
 		
+		/*INTRODUCIR JORNADAS*/
+		String[] equiposLocales = {
+			    // Jornada 1
+			    "CV ZARAGOZA", "VALLADOLID CV", "CV TORRELAVEGA", 
+			    // Jornada 2
+			    "CV ZARAGOZA", "CV SAN FERNANDO", "VALLADOLID CV", 
+			    // Jornada 3
+			    "CV ZARAGOZA", "CV RIVAS", "CV SAN FERNANDO", 
+			    // Jornada 4
+			    "CV ZARAGOZA", "CV PALMA", "CV RIVAS", 
+			    // Jornada 5
+			    "CV ZARAGOZA", "CV TORRELAVEGA", "CV PALMA", 
+			    // Jornada 6
+			    "CV SAN FERNANDO", "CV RIVAS", "CV PALMA", 
+			    // Jornada 7
+			    "CV RIVAS", "CV PALMA", "CV TORRELAVEGA", 
+			    // Jornada 8
+			    "CV PALMA", "CV TORRELAVEGA", "VALLADOLID CV", 
+			    // Jornada 9
+			    "CV TORRELAVEGA", "VALLADOLID CV", "CV SAN FERNANDO",
+			    // Jornada 10
+			    "VALLADOLID CV", "CV SAN FERNANDO", "CV RIVAS" 
+			};
+		
+		String[] equiposVisitantes = {
+			    // Jornada 1
+			    "CV SAN FERNANDO", "CV RIVAS", "CV PALMA", 
+			    // Jornada 2
+			    "CV RIVAS", "CV PALMA", "CV TORRELAVEGA", 
+			    // Jornada 3
+			    "CV PALMA", "CV TORRELAVEGA", "VALLADOLID CV", 
+			    // Jornada 4
+			    "CV TORRELAVEGA", "VALLADOLID CV", "CV SAN FERNANDO", 
+			    // Jornada 5
+			    "VALLADOLID CV", "CV SAN FERNANDO", "CV RIVAS", 
+			    // Jornada 6
+			    "CV ZARAGOZA", "VALLADOLID CV", "CV TORRELAVEGA", 
+			    // Jornada 7
+			    "CV ZARAGOZA", "CV SAN FERNANDO", "VALLADOLID CV", 
+			    // Jornada 8
+			    "CV ZARAGOZA", "CV RIVAS", "CV SAN FERNANDO", 
+			    // Jornada 9
+			    "CV ZARAGOZA", "CV PALMA", "CV RIVAS",
+			    // Jornada 10
+			    "CV ZARAGOZA", "CV TORRELAVEGA", "CV PALMA"
+			};
+		
+		for (int i = 0; i < matrizJornadas.length; i++) {
+	        // Columna 0: Equipo Local
+	        matrizJornadas[i][COL_EQUIPOS_LOCALES] = equiposLocales[i];
+	        
+	        // Columna 1: Equipo Visitante
+	        matrizJornadas[i][COL_EQUIPOS_VISITANTES] = equiposVisitantes[i];
+	    }
+	    //System.out.println("Matriz Jornadas rellenada con " + matrizJornadas.length + " partidos.");
+		
 		/*INICIALIZAR DLMs*/
+		dcmJornadas = new DefaultComboBoxModel<String>();
 		
 		/*EQUIPOS*/
 		dlmEquipos = new DefaultListModel<String>();
 		/*JORNADAS*/
+		
+	    // Inicialización de dlm LOCALES 
 		dlmJornadasEqLocal = new DefaultListModel<String>();
 		dlmJornadasEqVisitante = new DefaultListModel<String>();
-		dlmJornadasEquipos_resultado = new DefaultListModel<String>();
-		dcbmNumeroJornada = new DefaultComboBoxModel<String>();
-		// -- JORNADAS - RESULTADOS
-		dlmJornadasPuntos_resultado = new DefaultListModel<Integer>();
-		dlmJornadasPartidosJugados_resultado = new DefaultListModel<Integer>();
-		dlmJornadasPartidosGanados_resultado = new DefaultListModel<Integer>();
-		dlmJornadasPartidosPerdidos_resultado = new DefaultListModel<Integer>();
-	    dlmJornadasSetsGanados_resultado = new DefaultListModel<Integer>();
-	    dlmJornadasSetsPerdidos_resultado = new DefaultListModel<Integer>();
-	    dlmJornadasTantosFavor_resultado = new DefaultListModel<Integer>();
-	    dlmJornadasTantosContra_resultado = new DefaultListModel<Integer>();
+		dlmJornadaSetsL = new DefaultListModel<Integer>();
+	    dlmJornadaS1TAL = new DefaultListModel<Integer>();
+	    dlmJornadaS2TAL = new DefaultListModel<Integer>();
+	    dlmJornadaS3TAL = new DefaultListModel<Integer>();
+	    dlmJornadaS4TAL = new DefaultListModel<Integer>();
+	    dlmJornadaS5TAL = new DefaultListModel<Integer>();
+
+	    // Inicialización de dlm VISITANTES 
+	    dlmJornadaSetsV = new DefaultListModel<Integer>();
+	    dlmJornadaS1TAV = new DefaultListModel<Integer>();
+	    dlmJornadaS2TAV = new DefaultListModel<Integer>();
+	    dlmJornadaS3TAV = new DefaultListModel<Integer>();
+	    dlmJornadaS4TAV = new DefaultListModel<Integer>();
+	    dlmJornadaS5TAV = new DefaultListModel<Integer>();
 		
 		/*CLASIFICACIÓN*/
 		dlmClasificacionPuntos = new DefaultListModel<Integer>();
@@ -375,7 +350,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		setEquiposLocales(dlmJornadasEqLocal, 0, 2);
 		setEquiposVisitantes(dlmJornadasEqVisitante, 0, 2);
 		/*SET NUMERO JORNDAS*/
-		setNumeroJorndas(dcbmNumeroJornada, 10);
+		setNumeroJorndas(dcmJornadas, 10);
 
 		
 		//LOGO Y TITULO
@@ -390,31 +365,25 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		CardLayout cardLayoutPrincipal = new CardLayout(0,0);
 		contentPane.setLayout(cardLayoutPrincipal);
 		
-		/*PANEL ANONIMO*/
-		panelAnonimo = new JPanel();
-		contentPane.add(panelAnonimo, "PanelAnonimo_");
-		
-		panelAnonimo.setLayout(new BorderLayout(0, 0));
-		scrollPanelAnonimo = new JPanel();
-		scrollPanelAnonimo.setLayout(new BoxLayout(scrollPanelAnonimo, BoxLayout.Y_AXIS));
-		scrollPaneAnonimo = new JScrollPane(scrollPanelAnonimo);
-		panelAnonimo.add(scrollPaneAnonimo, BorderLayout.CENTER);
-		
-		verJornadas = new JPanel();
-		verJornadas.setBorder(new EmptyBorder(5, 5, 5, 5));
-		verJornadas.setBackground(fondoClaro);
-		scrollPanelAnonimo.add(verJornadas); // <-- Esto está bien
-		verJornadas.setLayout(new BorderLayout(0, 0));
-		
-		/*PANEL NORTE - VER JORNADAS*/
+		/*PANEL ARBITRO*/
+		panelPrincipal = new JPanel();
+		contentPane.add(panelPrincipal, "PanelArbitro_");
+		panelPrincipal.setLayout(new BorderLayout(0, 0));
+
+		scrollPanel = new JPanel();
+		scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
+
+		scrollPane = new JScrollPane(scrollPanel);
+		panelPrincipal.add(scrollPane, BorderLayout.CENTER);
+		Jornadas = new JPanel();
+		scrollPanel.add(Jornadas);
+		Jornadas.setLayout(new BorderLayout(0, 0));
+
 		northPanelJornadas = new JPanel();
-		verJornadas.add(northPanelJornadas, BorderLayout.NORTH);
+		Jornadas.add(northPanelJornadas, BorderLayout.NORTH);
 		
-		/*SELECIONAR JORNDAS*/
-		comboBoxJornadas = new JComboBox<String>(dcbmNumeroJornada);
-		comboBoxJornadas.setSelectedIndex(0);
+		comboBoxJornadas = new JComboBox<String>(dcmJornadas);
 		comboBoxJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		// Asumiendo que 'comboBoxJornadas' ya está inicializado
 		comboBoxJornadas.addItemListener(new ItemListener() {
 		    
 		    @Override
@@ -426,827 +395,545 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		        }
 		    }
 		});
+		
+		btnAnteriorJornada = new JButton("<< Anterior");
+		btnAnteriorJornada.addActionListener(this);
+		northPanelJornadas.add(btnAnteriorJornada);
 		northPanelJornadas.add(comboBoxJornadas);
 		
-		btnCerrarSesion_ANON = new JButton("Cerrar Sesion");
-		btnCerrarSesion_ANON.setFont(new Font("Calibri", Font.PLAIN, 20));
-		btnCerrarSesion_ANON.addActionListener(this);
-		northPanelJornadas.add(btnCerrarSesion_ANON);
-			
-		panelVerJornadas = new JPanel();
-		panelVerJornadas.setBackground(new Color(238, 235, 228));
-		verJornadas.add(panelVerJornadas, BorderLayout.CENTER);
-		panelVerJornadas.setLayout(new BorderLayout(0, 20));
+		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.addActionListener(this);
+		btnCerrarSesion.setFont(new Font("Calibri", Font.PLAIN, 20));
+		btnCerrarSesion.addActionListener(this);
 		
-		lblVerEquipos = new JLabel("JORNADAS");
-		lblVerEquipos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVerEquipos.setForeground(new Color(0, 128, 192));
-		lblVerEquipos.setFont(new Font("Leelawadee", Font.BOLD, 25));
-		panelVerJornadas.add(lblVerEquipos, BorderLayout.NORTH);
+		btnSiguienteJornada = new JButton("Siguiente >>");
+		northPanelJornadas.add(btnSiguienteJornada);
+		northPanelJornadas.add(btnCerrarSesion);
+		btnSiguienteJornada.addActionListener(this);
 		
-		panelListasVerJornadas = new JPanel();
-		panelListasVerJornadas.setBackground(new Color(238, 235, 228));
-		panelVerJornadas.add(panelListasVerJornadas, BorderLayout.SOUTH);
-		
-		listContainerVerJornadas = new JPanel((LayoutManager) null);
-		listContainerVerJornadas.setPreferredSize(new Dimension(500, 180));
-		panelListasVerJornadas.add(listContainerVerJornadas);
-		listContainerVerJornadas.setLayout(new BorderLayout());
-		
-		headerPanelJornadas = new JPanel();
-		headerPanelJornadas.setBackground(new Color(51, 153, 204));
-		listContainerVerJornadas.add(headerPanelJornadas, BorderLayout.NORTH);
-		GridBagLayout gbl_headerPanelJornadas = new GridBagLayout();
-		gbl_headerPanelJornadas.columnWidths = new int[] {51, 0, 30, 30, 30, 30, 30, 30};
-		gbl_headerPanelJornadas.rowHeights = new int[]{19, 0};
-		gbl_headerPanelJornadas.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		gbl_headerPanelJornadas.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		headerPanelJornadas.setLayout(gbl_headerPanelJornadas);
-		
-		headerNJornadas = new JLabel("Nº  ");
-		headerNJornadas.setHorizontalAlignment(SwingConstants.LEFT);
-		headerNJornadas.setForeground(Color.WHITE);
-		headerNJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		GridBagConstraints gbc_headerNJornadas = new GridBagConstraints();
-		gbc_headerNJornadas.insets = new Insets(0, 0, 0, 5);
-		gbc_headerNJornadas.gridx = 0;
-		gbc_headerNJornadas.gridy = 0;
-		headerPanelJornadas.add(headerNJornadas, gbc_headerNJornadas);
-		
-		headerEqLocal = new JLabel("EQUIPO LOCAL");
-		headerEqLocal.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEqLocal.setForeground(Color.WHITE);
-		headerEqLocal.setFont(new Font("Tahoma", Font.BOLD, 15));
-		GridBagConstraints gbc_headerEqLocal = new GridBagConstraints();
-		gbc_headerEqLocal.fill = GridBagConstraints.HORIZONTAL;
-		gbc_headerEqLocal.insets = new Insets(0, 0, 0, 5);
-		gbc_headerEqLocal.gridx = 2;
-		gbc_headerEqLocal.gridy = 0;
-		headerPanelJornadas.add(headerEqLocal, gbc_headerEqLocal);
-		
-		headerEqVisitante = new JLabel("EQUIPO VISITANTE");
-		headerEqVisitante.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEqVisitante.setForeground(Color.WHITE);
-		headerEqVisitante.setFont(new Font("Tahoma", Font.BOLD, 15));
-		GridBagConstraints gbc_headerEqVisitante = new GridBagConstraints();
-		gbc_headerEqVisitante.insets = new Insets(0, 0, 0, 5);
-		gbc_headerEqVisitante.fill = GridBagConstraints.BOTH;
-		gbc_headerEqVisitante.gridx = 7;
-		gbc_headerEqVisitante.gridy = 0;
-		headerPanelJornadas.add(headerEqVisitante, gbc_headerEqVisitante);
-		
-		anonListPanelJorndas = new JPanel();
-		listContainerVerJornadas.add(anonListPanelJorndas, BorderLayout.CENTER);
-		anonListPanelJorndas.setLayout(new GridLayout(0, 2, 0, 0));
-		
-		/*JORNADAS - EQ LOCALES*/
-		listEqLocal = new JList<String>(dlmJornadasEqLocal);
-		listEqLocal.setForeground(new Color(50, 50, 50));
-		listEqLocal.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listEqLocal.setFixedCellHeight(25);
-		listEqLocal.setBackground(new Color(204, 229, 255));
-		anonListPanelJorndas.add(listEqLocal);
-		
-		/*JORNADAS - EQ VISITANTES*/
-		listEqVisitante = new JList<String>(dlmJornadasEqVisitante);
-		listEqVisitante.setForeground(new Color(50, 50, 50));
-		listEqVisitante.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listEqVisitante.setFixedCellHeight(25);
-		listEqVisitante.setBackground(new Color(204, 229, 255));
-		anonListPanelJorndas.add(listEqVisitante);
-		
-		/*SUB PANEL ANONIMOS - VER CLASIFICIÓN*/
-		verClasificacion = new JPanel();
-		scrollPanelAnonimo.add(verClasificacion);
-		verClasificacion.setLayout(new BorderLayout(0, 0));
-		
-		/*CLASIFICACION - NORTE*/
-		northPanelClasificacion = new JPanel();
-		verClasificacion.add(northPanelClasificacion, BorderLayout.NORTH);
-		
-		lblClasificacion = new JLabel("CLASIFICACIÓN");
-		lblClasificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClasificacion.setForeground(new Color(0, 128, 192));
-		lblClasificacion.setFont(new Font("Leelawadee", Font.BOLD, 25));
-		northPanelClasificacion.add(lblClasificacion);
-		
-		/*CLASIFICACION - CENTRO*/
-		midPanel = new JPanel();
-		verClasificacion.add(midPanel, BorderLayout.CENTER);
-		midPanel.setLayout(new BorderLayout());
-		
-		// CONTENEDOR D ELISTAS Y CAVEZERAS
-		JPanel listContainer = new JPanel(new BorderLayout());
-
-		midPanel.add(listContainer, BorderLayout.CENTER);
-
-		// PANEL CABEZERA
-		JPanel headerPanelClasificacion = new JPanel(new GridLayout(1, 0, 0, 0)); 
-		headerPanelClasificacion.setBackground(azulSegundo);
-		listContainer.add(headerPanelClasificacion, BorderLayout.NORTH);
-
-		clasificacionListContainer = new JPanel();
-		listContainer.add(clasificacionListContainer, BorderLayout.CENTER);
-		clasificacionListContainer.setLayout(new GridLayout(0, 9, 0, 0));
-	
-		/*JLIST - EQUIPOS*/
-		listEquipos = new JList<String>(dlmEquipos);
-		listEquipos.setForeground(new Color(50, 50, 50));
-		listEquipos.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listEquipos.setFixedCellHeight(25);
-		listEquipos.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listEquipos);
-		
-		JLabel headerEquipo = new JLabel("EQUIPO");
-		headerEquipo.setForeground(Color.WHITE);
-		headerEquipo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerEquipo.setHorizontalAlignment(SwingConstants.LEFT);
-		headerPanelClasificacion.add(headerEquipo);
-		
-		/*JLIST - PUNTOS*/
-		listPTOS = new JList<Integer>(dlmClasificacionPuntos);
-		listPTOS.setForeground(new Color(50, 50, 50));
-		listPTOS.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPTOS.setFixedCellHeight(25);
-		listPTOS.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listPTOS);
-		
-		JLabel headerPTOS = new JLabel("PTOS");
-		headerPTOS.setHorizontalAlignment(SwingConstants.LEFT);
-		headerPTOS.setForeground(Color.WHITE);
-		headerPTOS.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerPTOS);
-		
-		/*JLIST - Partidos Jugados*/
-		listPJ = new JList<Integer>(dlmClasificacionPartidosJugados);
-		listPJ.setForeground(new Color(50, 50, 50));
-		listPJ.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPJ.setFixedCellHeight(25);
-		listPJ.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listPJ);
-		
-
-		JLabel headerPJ = new JLabel("P.J");
-		headerPJ.setHorizontalAlignment(SwingConstants.LEFT);
-		headerPJ.setForeground(Color.WHITE);
-		headerPJ.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerPJ);
-
-		
-		/*JLIST - Partidos Ganados*/
-		listPG = new JList<Integer>(dlmClasificacionPartidosGanados);
-		listPG.setForeground(new Color(50, 50, 50));
-		listPG.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPG.setFixedCellHeight(25);
-		listPG.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listPG);
-		
-		JLabel headerPG = new JLabel("P.G");
-		headerPG.setHorizontalAlignment(SwingConstants.LEFT);
-		headerPG.setForeground(Color.WHITE);
-		headerPG.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerPG);
-		
-		/*JLIST - Partidos Perdidos*/
-		listPP = new JList<Integer>(dlmClasificacionPartidosPerdidos);
-		listPP.setForeground(new Color(50, 50, 50));
-		listPP.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPP.setFixedCellHeight(25);
-		listPP.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listPP);
-		
-		JLabel headerPP = new JLabel("P.P");
-		headerPP.setHorizontalAlignment(SwingConstants.LEFT);
-		headerPP.setForeground(Color.WHITE);
-		headerPP.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerPP);
-		
-		/*JLIST - Sets Ganados*/
-		listSG = new JList<Integer>(dlmClasificacionSetsGanados);
-		listSG.setForeground(new Color(50, 50, 50));
-		listSG.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listSG.setFixedCellHeight(25);
-		listSG.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listSG);
-		
-		JLabel headerSG = new JLabel("S.G");
-		headerSG.setHorizontalAlignment(SwingConstants.LEFT);
-		headerSG.setForeground(Color.WHITE);
-		headerSG.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerSG);
-	
-		/*JLIST - Sets Perdidos*/
-		listSP = new JList<Integer>(dlmClasificacionSetsPerdidos);
-		listSP.setForeground(new Color(50, 50, 50));
-		listSP.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listSP.setFixedCellHeight(25);
-		listSP.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listSP);
-		
-		JLabel headerSP = new JLabel("S.P");
-		headerSP.setHorizontalAlignment(SwingConstants.LEFT);
-		headerSP.setForeground(Color.WHITE);
-		headerSP.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerSP);
-		
-		/*JLIST - Tantos a Favor*/
-		listTA = new JList<Integer>(dlmClasificacionTantosFavor);
-		listTA.setForeground(new Color(50, 50, 50));
-		listTA.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listTA.setFixedCellHeight(25);
-		listTA.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listTA);
-
-		JLabel headerTA = new JLabel("T.A");
-		headerTA.setHorizontalAlignment(SwingConstants.LEFT);
-		headerTA.setForeground(Color.WHITE);
-		headerTA.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerTA);
-
-		
-		/*JLIST - Tantos en Contra*/
-		listTC = new JList<Integer>(dlmClasificacionTantosContra);
-		listTC.setForeground(new Color(50, 50, 50));
-		listTC.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listTC.setFixedCellHeight(25);
-		listTC.setBackground(new Color(204, 229, 255));
-		clasificacionListContainer.add(listTC);
-		
-		JLabel headerTC = new JLabel("T.C");
-		headerTC.setHorizontalAlignment(SwingConstants.LEFT);
-		headerTC.setForeground(Color.WHITE);
-		headerTC.setFont(new Font("Tahoma", Font.BOLD, 15));
-		headerPanelClasificacion.add(headerTC);
-		
-		/*PANEL ARBITRO*/
-		panelArbitro = new JPanel();
-		contentPane.add(panelArbitro, "PanelArbitro_");
-		panelArbitro.setLayout(new BorderLayout(0, 0));
-
-		scrollPanelArbitro = new JPanel();
-		scrollPanelArbitro.setLayout(new BoxLayout(scrollPanelArbitro, BoxLayout.Y_AXIS));
-
-		scrollPaneArbitro = new JScrollPane(scrollPanelArbitro);
-		panelArbitro.add(scrollPaneArbitro, BorderLayout.CENTER);
-		gestionarJornadas = new JPanel();
-		scrollPanelArbitro.add(gestionarJornadas);
-		gestionarJornadas.setLayout(new BorderLayout(0, 0));
-
-		northPanelGestionarJornadas = new JPanel();
-		gestionarJornadas.add(northPanelGestionarJornadas, BorderLayout.NORTH);
-		
-		comboBoxGestionarJornadas = new JComboBox<String>(dcbmNumeroJornada);
-		comboBoxGestionarJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBoxGestionarJornadas.addItemListener(new ItemListener() {
-		    
-		    @Override
-		    public void itemStateChanged(ItemEvent e) {
-		        
-		        // Comprobamos si el evento es de un ítem que acaba de ser SELECCIONADO
-		        if (e.getStateChange() == ItemEvent.SELECTED) {
-		        	cambiarJornada(comboBoxGestionarJornadas, headerNJornadas_1);
-		        	unirEquiposLocalesVisitantes();
-		        }
-		    }
-		});
-		northPanelGestionarJornadas.add(comboBoxGestionarJornadas);
-		
-		btnCerrarSesion_ARBITRO = new JButton("Cerrar Sesion");
-		btnCerrarSesion_ARBITRO.setFont(new Font("Calibri", Font.PLAIN, 20));
-		btnCerrarSesion_ARBITRO.addActionListener(this);
-		northPanelGestionarJornadas.add(btnCerrarSesion_ARBITRO);
-		
-		panelGestionarJornadas = new JPanel();
-		panelGestionarJornadas.setBackground(new Color(238, 235, 228));
-		gestionarJornadas.add(panelGestionarJornadas, BorderLayout.CENTER);
-		panelGestionarJornadas.setLayout(new BoxLayout(panelGestionarJornadas, BoxLayout.Y_AXIS));
+		panelJornadas = new JPanel();
+		panelJornadas.setBackground(new Color(238, 235, 228));
+		Jornadas.add(panelJornadas, BorderLayout.CENTER);
+		panelJornadas.setLayout(new BoxLayout(panelJornadas, BoxLayout.Y_AXIS));
 		
 		panelTitulo = new JPanel();
-		panelGestionarJornadas.add(panelTitulo);
+		panelJornadas.add(panelTitulo);
 		
-		lblGestionarJornadas = new JLabel("GESTIONAR RESULTADOS JORNADAS");
+		lblGestionarJornadas = 	new JLabel("JORNADAS");
 		lblGestionarJornadas.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblGestionarJornadas.setForeground(new Color(0, 128, 192));
+		lblGestionarJornadas.setForeground(azulPrimero);
 		lblGestionarJornadas.setFont(new Font("Leelawadee", Font.BOLD, 25));
 		panelTitulo.add(lblGestionarJornadas);
 		
-		panelListasGestionarJornadas = new JPanel();
-		panelGestionarJornadas.add(panelListasGestionarJornadas);
+		panelListasJornadas = new JPanel();
+		panelListasJornadas.setPreferredSize(new Dimension(750, 200));
+		panelListasJornadas.setMaximumSize(new Dimension(1500, 300));
+	
+		panelJornadas.add(panelListasJornadas);
+		GridBagLayout gbl_panelListasJornadas = new GridBagLayout();
+		gbl_panelListasJornadas.columnWidths = new int[] {50, 150, 150};
+		gbl_panelListasJornadas.rowHeights = new int[]{0, 0};
+		gbl_panelListasJornadas.columnWeights = new double[]{0.0, 1.0, 1.0};
+		gbl_panelListasJornadas.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		panelListasJornadas.setLayout(gbl_panelListasJornadas);
 		
-		listContainerGestionarJornadas = new JPanel((LayoutManager) null);
-		listContainerGestionarJornadas.setPreferredSize(new Dimension(500, 180));
-		panelListasGestionarJornadas.add(listContainerGestionarJornadas);
-		listContainerGestionarJornadas.setLayout(new BorderLayout());
-
-
-		headerPanelGestionarJornadas = new JPanel();
-		headerPanelGestionarJornadas.setBackground(new Color(77, 130, 188));
-		listContainerGestionarJornadas.add(headerPanelGestionarJornadas, BorderLayout.NORTH);
-		GridBagLayout gbl_headerPanelGestionarJornadas = new GridBagLayout();
-		gbl_headerPanelGestionarJornadas.columnWidths = new int[]{40, 30, 117, 152, 0};
-		gbl_headerPanelGestionarJornadas.rowHeights = new int[]{19, 0};
-		gbl_headerPanelGestionarJornadas.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_headerPanelGestionarJornadas.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		headerPanelGestionarJornadas.setLayout(gbl_headerPanelGestionarJornadas);
+		panelNumeroJornadas = new JPanel();
+		panelNumeroJornadas.setMaximumSize(new Dimension(75, 0));
+		panelNumeroJornadas.setMinimumSize(new Dimension(75, 0));
+		panelNumeroJornadas.setBackground(azulSegundo);
+		GridBagConstraints gbc_panelNumeroJornadas = new GridBagConstraints();
+		gbc_panelNumeroJornadas.insets = new Insets(0, 0, 0, 5);
+		gbc_panelNumeroJornadas.fill = GridBagConstraints.VERTICAL;
+		gbc_panelNumeroJornadas.gridx = 0;
+		gbc_panelNumeroJornadas.gridy = 0;
+		panelListasJornadas.add(panelNumeroJornadas, gbc_panelNumeroJornadas);
 		
-			
-		headerNJornadas_1 = new JLabel("Nº  ");
-		headerNJornadas_1.setHorizontalAlignment(SwingConstants.CENTER);
-		headerNJornadas_1.setForeground(Color.WHITE);
-		headerNJornadas_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		GridBagConstraints gbc_headerNJornadas_1 = new GridBagConstraints();
-		gbc_headerNJornadas_1.anchor = GridBagConstraints.NORTHWEST;
-		gbc_headerNJornadas_1.insets = new Insets(0, 0, 0, 5);
-		gbc_headerNJornadas_1.gridx = 0;
-		gbc_headerNJornadas_1.gridy = 0;
-		headerPanelGestionarJornadas.add(headerNJornadas_1, gbc_headerNJornadas_1);
+		headerNJornadas = new JLabel("Nº ");
+		headerNJornadas.setForeground(amarilloPrimero);
+	
+		headerNJornadas.setHorizontalAlignment(SwingConstants.CENTER);
+		headerNJornadas.setFont(new Font("Lucida Console", Font.BOLD, 20));
+		panelNumeroJornadas.add(headerNJornadas);
 		
-		headerEqLocal_1 = new JLabel("EQUIPO LOCAL");
-		headerEqLocal_1.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEqLocal_1.setForeground(Color.WHITE);
-		headerEqLocal_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		GridBagConstraints gbc_headerEqLocal_1 = new GridBagConstraints();
-		gbc_headerEqLocal_1.anchor = GridBagConstraints.NORTHWEST;
-		gbc_headerEqLocal_1.insets = new Insets(0, 0, 0, 5);
-		gbc_headerEqLocal_1.gridx = 1;
-		gbc_headerEqLocal_1.gridy = 0;
-		headerPanelGestionarJornadas.add(headerEqLocal_1, gbc_headerEqLocal_1);
+		panelEqLocales = new JPanel();
+		panelEqLocales.setBackground(azulSegundo);
+		GridBagConstraints gbc_panelEqLocales = new GridBagConstraints();
+		gbc_panelEqLocales.insets = new Insets(0, 0, 0, 5);
+		gbc_panelEqLocales.fill = GridBagConstraints.BOTH;
+		gbc_panelEqLocales.gridx = 1;
+		gbc_panelEqLocales.gridy = 0;
+		panelListasJornadas.add(panelEqLocales, gbc_panelEqLocales);
+		panelEqLocales.setLayout(new BoxLayout(panelEqLocales, BoxLayout.Y_AXIS));
 		
-		headerEqVisitante_1 = new JLabel("EQUIPO VISITANTE");
-		headerEqVisitante_1.setHorizontalAlignment(SwingConstants.CENTER);
-		headerEqVisitante_1.setForeground(Color.WHITE);
-		headerEqVisitante_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		GridBagConstraints gbc_headerEqVisitante_1 = new GridBagConstraints();
-		gbc_headerEqVisitante_1.anchor = GridBagConstraints.NORTHWEST;
-		gbc_headerEqVisitante_1.gridx = 3;
-		gbc_headerEqVisitante_1.gridy = 0;
-		headerPanelGestionarJornadas.add(headerEqVisitante_1, gbc_headerEqVisitante_1);
+		lblTitleEqLocales = new JLabel("EQUIPOS LOCALES");
+		lblTitleEqLocales.setForeground(new Color(255, 255, 255));
+		lblTitleEqLocales.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lblTitleEqLocales.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblTitleEqLocales.setHorizontalAlignment(SwingConstants.CENTER);
+		panelEqLocales.add(lblTitleEqLocales);
 		
-		arbitroListPanelJornadas = new JPanel();
-		listContainerGestionarJornadas.add(arbitroListPanelJornadas, BorderLayout.CENTER);
-		arbitroListPanelJornadas.setLayout(new GridLayout(0, 2, 0, 0));
+		panelListContainerLocales = new JPanel();
+		panelListContainerLocales.setBackground(azulTercero);
+		panelEqLocales.add(panelListContainerLocales);
+		GridBagLayout gbl_panelListContainerLocales = new GridBagLayout();
+		gbl_panelListContainerLocales.columnWidths = new int[] {140, 30, 30, 30, 30, 30, 30, 0};
+		gbl_panelListContainerLocales.rowHeights = new int[]{373, 0};
+		gbl_panelListContainerLocales.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelListContainerLocales.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panelListContainerLocales.setLayout(gbl_panelListContainerLocales);
 		
-		listEqLocalGestionar = new JList<String>(dlmJornadasEqLocal);
-		listEqLocalGestionar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listEqLocalGestionar.setForeground(new Color(50, 50, 50));
-		listEqLocalGestionar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listEqLocalGestionar.setFixedCellHeight(25);
-		listEqLocalGestionar.setBackground(new Color(204, 229, 255));
-		arbitroListPanelJornadas.add(listEqLocalGestionar);
+		listNombreEquiposLocal = new JList<String>(dlmJornadasEqLocal);
+		listNombreEquiposLocal.addListSelectionListener(this);
+		listNombreEquiposLocal.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listNombreEquiposLocal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listNombreEquiposLocal.setBackground(azulTercero);
+		GridBagConstraints gbc_listNombreEquiposLocal = new GridBagConstraints();
+		gbc_listNombreEquiposLocal.fill = GridBagConstraints.BOTH;
+		gbc_listNombreEquiposLocal.insets = new Insets(0, 0, 0, 5);
+		gbc_listNombreEquiposLocal.gridx = 0;
+		gbc_listNombreEquiposLocal.gridy = 0;
+		panelListContainerLocales.add(listNombreEquiposLocal, gbc_listNombreEquiposLocal);
 		
-		listEqVisitanteGestionar = new JList<String>(dlmJornadasEqVisitante);
-		listEqVisitanteGestionar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listEqVisitanteGestionar.setForeground(new Color(50, 50, 50));
-		listEqVisitanteGestionar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listEqVisitanteGestionar.setFixedCellHeight(25);
-		listEqVisitanteGestionar.setBackground(new Color(204, 229, 255));
-		arbitroListPanelJornadas.add(listEqVisitanteGestionar);
+		listSetsLocales = new JList<Integer>(dlmJornadaSetsL);
+		listSetsLocales.addListSelectionListener(this);
+		listSetsLocales.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSetsLocales.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listSetsLocales.setBackground(azulTercero);
+		GridBagConstraints gbc_listSetsLocales = new GridBagConstraints();
+		gbc_listSetsLocales.fill = GridBagConstraints.BOTH;
+		gbc_listSetsLocales.insets = new Insets(0, 0, 0, 5);
+		gbc_listSetsLocales.gridx = 1;
+		gbc_listSetsLocales.gridy = 0;
+		panelListContainerLocales.add(listSetsLocales, gbc_listSetsLocales);
 		
-		JPanel panelListasGestionarResultadosJornadas = new JPanel();
-		panelListasGestionarResultadosJornadas.setAlignmentY(0.2f);
-		panelListasGestionarResultadosJornadas.setAlignmentX(0.2f);
-		panelGestionarJornadas.add(panelListasGestionarResultadosJornadas);
+		listS1TL = new JList<Integer>(dlmJornadaS1TAL);
+		listS1TL.addListSelectionListener(this);
+		listS1TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS1TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS1TL.setBackground(azulTercero);
+		GridBagConstraints gbc_listS1TL = new GridBagConstraints();
+		gbc_listS1TL.fill = GridBagConstraints.BOTH;
+		gbc_listS1TL.insets = new Insets(0, 0, 0, 5);
+		gbc_listS1TL.gridx = 2;
+		gbc_listS1TL.gridy = 0;
+		panelListContainerLocales.add(listS1TL, gbc_listS1TL);
 		
-		/*PANEL INTRODUCIR DATOS JORNADAS*/
-		panelInputDatosJornadas = new JPanel();
-		panelListasGestionarResultadosJornadas.add(panelInputDatosJornadas);
-		GridBagLayout gbl_panelInputDatosJornadas = new GridBagLayout();
-		gbl_panelInputDatosJornadas.columnWidths = new int[] {40, 0, 20};
-		gbl_panelInputDatosJornadas.rowHeights = new int[] {30, 20};
-		gbl_panelInputDatosJornadas.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		gbl_panelInputDatosJornadas.rowWeights = new double[]{0.0, 0.0};
-		panelInputDatosJornadas.setLayout(gbl_panelInputDatosJornadas);
+		listS2TL = new JList<Integer>(dlmJornadaS2TAL);
+		listS2TL.addListSelectionListener(this);
+		listS2TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS2TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS2TL.setBackground(azulTercero);
+		GridBagConstraints gbc_listS2TL = new GridBagConstraints();
+		gbc_listS2TL.fill = GridBagConstraints.BOTH;
+		gbc_listS2TL.insets = new Insets(0, 0, 0, 5);
+		gbc_listS2TL.gridx = 3;
+		gbc_listS2TL.gridy = 0;
+		panelListContainerLocales.add(listS2TL, gbc_listS2TL);
 		
-		lbl_Equipos_resultadosJornadas = new JLabel("EQUIPOS:");
-		lbl_Equipos_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_Equipos_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_Equipos_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_Equipos_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_Equipos_resultadosJornadas.anchor = GridBagConstraints.EAST;
-		gbc_lbl_Equipos_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_Equipos_resultadosJornadas.gridx = 0;
-		gbc_lbl_Equipos_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_Equipos_resultadosJornadas, gbc_lbl_Equipos_resultadosJornadas);
+		listS3TL = new JList<Integer>(dlmJornadaS3TAL);
+		listS3TL.addListSelectionListener(this);
+		listS3TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS3TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS3TL.setBackground(azulTercero);
+		GridBagConstraints gbc_listS3TL = new GridBagConstraints();
+		gbc_listS3TL.fill = GridBagConstraints.BOTH;
+		gbc_listS3TL.insets = new Insets(0, 0, 0, 5);
+		gbc_listS3TL.gridx = 4;
+		gbc_listS3TL.gridy = 0;
+		panelListContainerLocales.add(listS3TL, gbc_listS3TL);
 		
-		txtEquipos_resultadosJornadas = new JTextField();
-		txtEquipos_resultadosJornadas.setEditable(false);
-		txtEquipos_resultadosJornadas.setEnabled(false);
-		txtEquipos_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtEquipos_resultadosJornadas = new GridBagConstraints();
-		gbc_txtEquipos_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtEquipos_resultadosJornadas.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtEquipos_resultadosJornadas.gridx = 1;
-		gbc_txtEquipos_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtEquipos_resultadosJornadas, gbc_txtEquipos_resultadosJornadas);
+		listS4TL = new JList<Integer>(dlmJornadaS4TAL);
+		listS4TL.addListSelectionListener(this);
+		listS4TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS4TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS4TL.setBackground(azulTercero);
+		GridBagConstraints gbc_listS4TL = new GridBagConstraints();
+		gbc_listS4TL.fill = GridBagConstraints.BOTH;
+		gbc_listS4TL.insets = new Insets(0, 0, 0, 5);
+		gbc_listS4TL.gridx = 5;
+		gbc_listS4TL.gridy = 0;
+		panelListContainerLocales.add(listS4TL, gbc_listS4TL);
 		
-		JLabel lbl_Ptos_resultadosJornadas = new JLabel("PTOS:");
-		lbl_Ptos_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_Ptos_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_Ptos_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_Ptos_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_Ptos_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_lbl_Ptos_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_Ptos_resultadosJornadas.gridx = 3;
-		gbc_lbl_Ptos_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_Ptos_resultadosJornadas, gbc_lbl_Ptos_resultadosJornadas);
+		listS5TL = new JList<Integer>(dlmJornadaS5TAL);
+		listS5TL.addListSelectionListener(this);
+		listS5TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS5TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS5TL.setBackground(azulTercero);
+		GridBagConstraints gbc_listS5TL = new GridBagConstraints();
+		gbc_listS5TL.fill = GridBagConstraints.BOTH;
+		gbc_listS5TL.gridx = 6;
+		gbc_listS5TL.gridy = 0;
+		panelListContainerLocales.add(listS5TL, gbc_listS5TL);
 		
-		txtPtos_resultadosJornadas = new JTextField();
-		txtPtos_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtPtos_resultadosJornadas = new GridBagConstraints();
-		gbc_txtPtos_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_txtPtos_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPtos_resultadosJornadas.gridx = 4;
-		gbc_txtPtos_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtPtos_resultadosJornadas, gbc_txtPtos_resultadosJornadas);
+	
 		
-		JLabel lbl_PJ_resultadosJornadas = new JLabel("P.J:");
-		lbl_PJ_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_PJ_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_PJ_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_PJ_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_PJ_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_lbl_PJ_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_PJ_resultadosJornadas.gridx = 5;
-		gbc_lbl_PJ_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_PJ_resultadosJornadas, gbc_lbl_PJ_resultadosJornadas);
+		panelEqVisitantes = new JPanel();
+		panelEqVisitantes.setBackground(azulSegundo);
+		GridBagConstraints gbc_panelEqVisitantes = new GridBagConstraints();
+		gbc_panelEqVisitantes.fill = GridBagConstraints.BOTH;
+		gbc_panelEqVisitantes.gridx = 2;
+		gbc_panelEqVisitantes.gridy = 0;
+		panelListasJornadas.add(panelEqVisitantes, gbc_panelEqVisitantes);
+		panelEqVisitantes.setLayout(new BoxLayout(panelEqVisitantes, BoxLayout.Y_AXIS));
 		
-		txtPJ_resultadosJornadas = new JTextField();
-		txtPJ_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtPJ_resultadosJornadas = new GridBagConstraints();
-		gbc_txtPJ_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_txtPJ_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPJ_resultadosJornadas.gridx = 6;
-		gbc_txtPJ_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtPJ_resultadosJornadas, gbc_txtPJ_resultadosJornadas);
+		lblTitleEqVisitante = new JLabel("EQUIPOS VISITANTES");
+		lblTitleEqVisitante.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitleEqVisitante.setForeground(Color.WHITE);
+		lblTitleEqVisitante.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		lblTitleEqVisitante.setAlignmentX(0.5f);
+		panelEqVisitantes.add(lblTitleEqVisitante);
 		
-		JLabel lbl_PG_resultadosJornadas = new JLabel("P.G:");
-		lbl_PG_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_PG_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_PG_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_PG_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_PG_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_lbl_PG_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_PG_resultadosJornadas.gridx = 8;
-		gbc_lbl_PG_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_PG_resultadosJornadas, gbc_lbl_PG_resultadosJornadas);
+		panelListContainerVisitantes = new JPanel();
+		panelListContainerVisitantes.setBackground(azulTercero);
+		panelEqVisitantes.add(panelListContainerVisitantes);
+		GridBagLayout gbl_panelListContainerVisitantes = new GridBagLayout();
+		gbl_panelListContainerVisitantes.columnWidths = new int[] {140, 30, 30, 30, 30, 30, 30, 0};
+		gbl_panelListContainerVisitantes.rowHeights = new int[]{373, 0};
+		gbl_panelListContainerVisitantes.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelListContainerVisitantes.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panelListContainerVisitantes.setLayout(gbl_panelListContainerVisitantes);
 		
-		txtPG_resultadosJornadas = new JTextField();
-		txtPG_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtPG_resultadosJornadas = new GridBagConstraints();
-		gbc_txtPG_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_txtPG_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPG_resultadosJornadas.gridx = 9;
-		gbc_txtPG_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtPG_resultadosJornadas, gbc_txtPG_resultadosJornadas);
+		listNombreEquiposVisitantes = new JList<String>(dlmJornadasEqVisitante);
+		listNombreEquiposVisitantes.addListSelectionListener(this);
+		listNombreEquiposVisitantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listNombreEquiposVisitantes.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listNombreEquiposVisitantes.setBackground(azulTercero);
+		GridBagConstraints gbc_listNombreEquiposVisitantes = new GridBagConstraints();
+		gbc_listNombreEquiposVisitantes.fill = GridBagConstraints.BOTH;
+		gbc_listNombreEquiposVisitantes.insets = new Insets(0, 0, 0, 5);
+		gbc_listNombreEquiposVisitantes.gridx = 0;
+		gbc_listNombreEquiposVisitantes.gridy = 0;
+		panelListContainerVisitantes.add(listNombreEquiposVisitantes, gbc_listNombreEquiposVisitantes);
 		
-		JLabel lbl_PP_resultadosJornadas = new JLabel("P.P:");
-		lbl_PP_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_PP_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_PP_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_PP_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_PP_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_lbl_PP_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_PP_resultadosJornadas.gridx = 10;
-		gbc_lbl_PP_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_PP_resultadosJornadas, gbc_lbl_PP_resultadosJornadas);
+		listSetsVisitantes = new JList<Integer>(dlmJornadaSetsV);
+		listSetsVisitantes.addListSelectionListener(this);
+		listSetsVisitantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSetsVisitantes.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listSetsVisitantes.setBackground(azulTercero);
+		GridBagConstraints gbc_listSetsVisitantes = new GridBagConstraints();
+		gbc_listSetsVisitantes.fill = GridBagConstraints.BOTH;
+		gbc_listSetsVisitantes.insets = new Insets(0, 0, 0, 5);
+		gbc_listSetsVisitantes.gridx = 1;
+		gbc_listSetsVisitantes.gridy = 0;
+		panelListContainerVisitantes.add(listSetsVisitantes, gbc_listSetsVisitantes);
 		
-		txtPP_resultadosJornadas = new JTextField();
-		txtPP_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtPP_resultadosJornadas = new GridBagConstraints();
-		gbc_txtPP_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_txtPP_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPP_resultadosJornadas.gridx = 11;
-		gbc_txtPP_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtPP_resultadosJornadas, gbc_txtPP_resultadosJornadas);
+		listS1TV = new JList<Integer>(dlmJornadaS1TAV);
+		listS1TV.addListSelectionListener(this);
+		listS1TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS1TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS1TV.setBackground(azulTercero);
+		GridBagConstraints gbc_listS1TV = new GridBagConstraints();
+		gbc_listS1TV.fill = GridBagConstraints.BOTH;
+		gbc_listS1TV.insets = new Insets(0, 0, 0, 5);
+		gbc_listS1TV.gridx = 2;
+		gbc_listS1TV.gridy = 0;
+		panelListContainerVisitantes.add(listS1TV, gbc_listS1TV);
 		
-		JLabel lbl_SG_resultadosJornadas = new JLabel("S.G:");
-		lbl_SG_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_SG_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_SG_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_SG_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_SG_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_SG_resultadosJornadas.gridx = 12;
-		gbc_lbl_SG_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_SG_resultadosJornadas, gbc_lbl_SG_resultadosJornadas);
+		listS2TV = new JList<Integer>(dlmJornadaS2TAV);
+		listS2TV.addListSelectionListener(this);
+		listS2TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS2TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS2TV.setBackground(azulTercero);
+		GridBagConstraints gbc_listS2TV = new GridBagConstraints();
+		gbc_listS2TV.fill = GridBagConstraints.BOTH;
+		gbc_listS2TV.insets = new Insets(0, 0, 0, 5);
+		gbc_listS2TV.gridx = 3;
+		gbc_listS2TV.gridy = 0;
+		panelListContainerVisitantes.add(listS2TV, gbc_listS2TV);
 		
-		txtSG_resultadosJornadas = new JTextField();
-		txtSG_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtSG_resultadosJornadas = new GridBagConstraints();
-		gbc_txtSG_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_txtSG_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtSG_resultadosJornadas.gridx = 13;
-		gbc_txtSG_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtSG_resultadosJornadas, gbc_txtSG_resultadosJornadas);
+		listS3TV = new JList<Integer>(dlmJornadaS3TAV);
+		listS3TV.addListSelectionListener(this);
+		listS3TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS3TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS3TV.setBackground(azulTercero);
+		GridBagConstraints gbc_listS3TV = new GridBagConstraints();
+		gbc_listS3TV.fill = GridBagConstraints.BOTH;
+		gbc_listS3TV.insets = new Insets(0, 0, 0, 5);
+		gbc_listS3TV.gridx = 4;
+		gbc_listS3TV.gridy = 0;
+		panelListContainerVisitantes.add(listS3TV, gbc_listS3TV);
 		
-		JLabel lbl_SP_resultadosJornadas = new JLabel("S.P:");
-		lbl_SP_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_SP_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_SP_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_SP_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_SP_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_lbl_SP_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_SP_resultadosJornadas.gridx = 15;
-		gbc_lbl_SP_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_SP_resultadosJornadas, gbc_lbl_SP_resultadosJornadas);
+		listS4TV = new JList<Integer>(dlmJornadaS4TAV);
+		listS4TV.addListSelectionListener(this);
+		listS4TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS4TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS4TV.setBackground(azulTercero);
+		GridBagConstraints gbc_listS4TV = new GridBagConstraints();
+		gbc_listS4TV.fill = GridBagConstraints.BOTH;
+		gbc_listS4TV.insets = new Insets(0, 0, 0, 5);
+		gbc_listS4TV.gridx = 5;
+		gbc_listS4TV.gridy = 0;
+		panelListContainerVisitantes.add(listS4TV, gbc_listS4TV);
 		
-		txtSP_resultadosJornadas = new JTextField();
-		txtSP_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtSP_resultadosJornadas = new GridBagConstraints();
-		gbc_txtSP_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_txtSP_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtSP_resultadosJornadas.gridx = 16;
-		gbc_txtSP_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtSP_resultadosJornadas, gbc_txtSP_resultadosJornadas);
+		listS5TV = new JList<Integer>(dlmJornadaS5TAV);
+		listS5TV.addListSelectionListener(this);
+		listS5TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listS5TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listS5TV.setBackground(azulTercero);
+		GridBagConstraints gbc_listS5TV = new GridBagConstraints();
+		gbc_listS5TV.fill = GridBagConstraints.BOTH;
+		gbc_listS5TV.gridx = 6;
+		gbc_listS5TV.gridy = 0;
+		panelListContainerVisitantes.add(listS5TV, gbc_listS5TV);
 		
-		JLabel lbl_TA_resultadosJornadas = new JLabel("T.A:");
-		lbl_TA_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_TA_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_TA_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_TA_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_TA_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_lbl_TA_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_TA_resultadosJornadas.gridx = 17;
-		gbc_lbl_TA_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_TA_resultadosJornadas, gbc_lbl_TA_resultadosJornadas);
+		JPanel panelBotonesJornadas = new JPanel();
+		panelBotonesJornadas.setPreferredSize(new Dimension(1100, 220));
+		panelBotonesJornadas.setMaximumSize(new Dimension(1000, 220));
 		
-		txtTA_resultadosJornadas = new JTextField();
-		txtTA_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtTA_resultadosJornadas = new GridBagConstraints();
-		gbc_txtTA_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_txtTA_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_txtTA_resultadosJornadas.gridx = 18;
-		gbc_txtTA_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtTA_resultadosJornadas, gbc_txtTA_resultadosJornadas);
+		panelJornadas.add(panelBotonesJornadas);
+		panelBotonesJornadas.setLayout(new BoxLayout(panelBotonesJornadas, BoxLayout.Y_AXIS));
 		
-		JLabel lbl_TC_resultadosJornadas = new JLabel("T.C:");
-		lbl_TC_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		lbl_TC_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lbl_TC_resultadosJornadas.setBackground(new Color(217, 217, 217));
-		GridBagConstraints gbc_lbl_TC_resultadosJornadas = new GridBagConstraints();
-		gbc_lbl_TC_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_lbl_TC_resultadosJornadas.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_TC_resultadosJornadas.gridx = 19;
-		gbc_lbl_TC_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(lbl_TC_resultadosJornadas, gbc_lbl_TC_resultadosJornadas);
+		panelTxtJornadasContainer = new JPanel();
+		panelBotonesJornadas.add(panelTxtJornadasContainer);
+		panelTxtJornadasContainer.setLayout(new BoxLayout(panelTxtJornadasContainer, BoxLayout.Y_AXIS));
 		
-		txtTC_resultadosJornadas = new JTextField();
-		txtTC_resultadosJornadas.setColumns(10);
-		GridBagConstraints gbc_txtTC_resultadosJornadas = new GridBagConstraints();
-		gbc_txtTC_resultadosJornadas.anchor = GridBagConstraints.WEST;
-		gbc_txtTC_resultadosJornadas.insets = new Insets(0, 0, 5, 0);
-		gbc_txtTC_resultadosJornadas.gridx = 20;
-		gbc_txtTC_resultadosJornadas.gridy = 0;
-		panelInputDatosJornadas.add(txtTC_resultadosJornadas, gbc_txtTC_resultadosJornadas);
+		txtLocales = new JPanel();
+		panelTxtJornadasContainer.add(txtLocales);
+		txtLocales.setLayout(new BorderLayout(0, 0));
 		
-		btnInsertar_resultadosJornadas = new JButton("Insertar");
-		btnInsertar_resultadosJornadas.setForeground(azulSegundo);
-		btnInsertar_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnInsertar_resultadosJornadas.setBackground(amarilloPrimero);
-		btnInsertar_resultadosJornadas.addActionListener(this);
+		lblEquipoLocal_ResultadoPartido= new JLabel("EQUIPO LOCAL");
+		lblEquipoLocal_ResultadoPartido.setPreferredSize(new Dimension(200, 50));
+		lblEquipoLocal_ResultadoPartido.setVerticalAlignment(SwingConstants.TOP);
+		lblEquipoLocal_ResultadoPartido.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblEquipoLocal_ResultadoPartido.setHorizontalAlignment(SwingConstants.LEFT);
+		txtLocales.add(lblEquipoLocal_ResultadoPartido, BorderLayout.WEST);
 		
-		GridBagConstraints gbc_btnInsertar_resultadosJornadas = new GridBagConstraints();
-		gbc_btnInsertar_resultadosJornadas.anchor = GridBagConstraints.NORTHWEST;
-		gbc_btnInsertar_resultadosJornadas.insets = new Insets(0, 0, 0, 5);
-		gbc_btnInsertar_resultadosJornadas.gridx = 9;
-		gbc_btnInsertar_resultadosJornadas.gridy = 1;
-		panelInputDatosJornadas.add(btnInsertar_resultadosJornadas, gbc_btnInsertar_resultadosJornadas);
+		localesInput = new JPanel();
+		txtLocales.add(localesInput, BorderLayout.CENTER);
 		
-		btnBorrar_resultadosJornadas = new JButton("Borrar");
+		lblSetsTotales = new JLabel("SETS:");
+		lblSetsTotales.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSetsTotales.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		localesInput.add(lblSetsTotales);
+		
+		txtSestL = new JTextField();
+		txtSestL.setEnabled(false);
+		txtSestL.setEditable(false);
+		txtSestL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSestL.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
+		txtSestL.setColumns(3);
+		localesInput.add(txtSestL);
+		
+		lblS1Ta = new JLabel("S1 - TA:");
+		
+		lblS1Ta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblS1Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		localesInput.add(lblS1Ta);
+		
+		
+		txtS1TaL = new JTextField();
+		txtS1TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS1TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS1TaL.setColumns(3);
+		localesInput.add(txtS1TaL);
+		
+		lblS2Ta = new JLabel("S2 - TA:");
+		lblS2Ta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblS2Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		localesInput.add(lblS2Ta);
+		
+		txtS2TaL = new JTextField();
+		txtS2TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS2TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS2TaL.setColumns(3);
+		localesInput.add(txtS2TaL);
+		
+		lblS3Ta = new JLabel("S3 - TA:");
+		lblS3Ta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblS3Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		localesInput.add(lblS3Ta);
+		
+		txtS3TaL = new JTextField();
+		txtS3TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS3TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS3TaL.setColumns(3);
+		localesInput.add(txtS3TaL);
+		
+		lblS4Ta = new JLabel("S4 - TA:");
+		lblS4Ta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblS4Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		localesInput.add(lblS4Ta);
+		
+		txtS4TaL = new JTextField();
+		txtS4TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS4TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS4TaL.setColumns(3);
+		localesInput.add(txtS4TaL);
+		
+		lblS5Ta = new JLabel("S5 - TA:");
+		lblS5Ta.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblS5Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		localesInput.add(lblS5Ta);
+		
+		txtS5TaL = new JTextField();
+		txtS5TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS5TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS5TaL.setColumns(3);
+		localesInput.add(txtS5TaL);
+		
+		
+		txtVisitantes = new JPanel();
+		panelTxtJornadasContainer.add(txtVisitantes);
+		txtVisitantes.setLayout(new BorderLayout(0, 0));
+		
+		lblEquipoVisitante_ResultadoPartido = new JLabel("EQUIPO VISITANTE");
+		lblEquipoVisitante_ResultadoPartido.setPreferredSize(new Dimension(200, 50));
+		lblEquipoVisitante_ResultadoPartido.setVerticalAlignment(SwingConstants.TOP);
+		lblEquipoVisitante_ResultadoPartido.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblEquipoVisitante_ResultadoPartido.setHorizontalAlignment(SwingConstants.LEFT);
+		txtVisitantes.add(lblEquipoVisitante_ResultadoPartido, BorderLayout.WEST);
+		
+		visitantesInput = new JPanel();
+		txtVisitantes.add(visitantesInput);
+		
+		lblSetsTotalesV = new JLabel("SETS:");
+		lblSetsTotalesV.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSetsTotalesV.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		visitantesInput.add(lblSetsTotalesV);
+		
+		txtSetsV = new JTextField();
+		txtSetsV.setEnabled(false);
+		txtSetsV.setEditable(false);
+		txtSetsV.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSetsV.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
+		txtSetsV.setColumns(3);
+		visitantesInput.add(txtSetsV);
+		
+		lblS1TaV = new JLabel("S1 - TA:");
+		lblS1TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		lblS1TaV.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		visitantesInput.add(lblS1TaV);
+		
+		txtS1TavV = new JTextField();
+		txtS1TavV.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS1TavV.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS1TavV.setColumns(3);
+		visitantesInput.add(txtS1TavV);
+		
+		lblS2TaV = new JLabel("S2 - TA:");
+		lblS2TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		lblS2TaV.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		visitantesInput.add(lblS2TaV);
+		
+		txtS2TaV = new JTextField();
+		txtS2TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS2TaV.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS2TaV.setColumns(3);
+		visitantesInput.add(txtS2TaV);
+		
+		lblS3TaV = new JLabel("S3 - TA:");
+		lblS3TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		lblS3TaV.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		visitantesInput.add(lblS3TaV);
+		
+		txtS3TaV = new JTextField();
+		txtS3TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS3TaV.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS3TaV.setColumns(3);
+		visitantesInput.add(txtS3TaV);
+		
+		lblS4TaV = new JLabel("S4 - TA:");
+		lblS4TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		lblS4TaV.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		visitantesInput.add(lblS4TaV);
+		
+		txtS4TaV = new JTextField();
+		txtS4TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS4TaV.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS4TaV.setColumns(3);
+		visitantesInput.add(txtS4TaV);
+		
+		lblS5TaV = new JLabel("S5 - TA:");
+		lblS5TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		lblS5TaV.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		visitantesInput.add(lblS5TaV);
+		
+		txtS5TaV = new JTextField();
+		txtS5TaV.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS5TaV.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS5TaV.setColumns(3);
+		visitantesInput.add(txtS5TaV);
+		
+		panelBtnContainer = new JPanel();
+		panelBotonesJornadas.add(panelBtnContainer);
+		panelBtnContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		btnGuardarCambios_resultadosJornadas = new JButton("Guardar Cambios");
+		btnGuardarCambios_resultadosJornadas.addActionListener(this);
+		btnGuardarCambios_resultadosJornadas.setForeground(new Color(51, 153, 204));
+		btnGuardarCambios_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnGuardarCambios_resultadosJornadas.setBackground(new Color(253, 253, 150));
+		panelBtnContainer.add(btnGuardarCambios_resultadosJornadas);
+		
+		btnBorrar_resultadosJornadas = new JButton("Borrar Partido");
+		btnBorrar_resultadosJornadas.addActionListener(this);
 		btnBorrar_resultadosJornadas.setForeground(new Color(51, 153, 204));
 		btnBorrar_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBorrar_resultadosJornadas.setBackground(new Color(253, 253, 150));
-		btnBorrar_resultadosJornadas.addActionListener(this);
-		GridBagConstraints gbc_btnBorrar_resultadosJornadas = new GridBagConstraints();
-		gbc_btnBorrar_resultadosJornadas.anchor = GridBagConstraints.NORTHWEST;
-		gbc_btnBorrar_resultadosJornadas.insets = new Insets(0, 0, 0, 5);
-		gbc_btnBorrar_resultadosJornadas.gridx = 11;
-		gbc_btnBorrar_resultadosJornadas.gridy = 1;
-		panelInputDatosJornadas.add(btnBorrar_resultadosJornadas, gbc_btnBorrar_resultadosJornadas);
+		panelBtnContainer.add(btnBorrar_resultadosJornadas);
 		
-		btnLimpiar_resultadosJornadas = new JButton("Limpiar");
+		btnLimpiar_resultadosJornadas = new JButton("Limpiar Jornada");
+		btnLimpiar_resultadosJornadas.addActionListener(this);
 		btnLimpiar_resultadosJornadas.setForeground(new Color(51, 153, 204));
 		btnLimpiar_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLimpiar_resultadosJornadas.setBackground(new Color(253, 253, 150));
-		btnLimpiar_resultadosJornadas.addActionListener(this);
-		GridBagConstraints gbc_btnLimpiar_resultadosJornadas = new GridBagConstraints();
-		gbc_btnLimpiar_resultadosJornadas.insets = new Insets(0, 0, 0, 5);
-		gbc_btnLimpiar_resultadosJornadas.anchor = GridBagConstraints.NORTHWEST;
-		gbc_btnLimpiar_resultadosJornadas.gridx = 12;
-		gbc_btnLimpiar_resultadosJornadas.gridy = 1;
-		panelInputDatosJornadas.add(btnLimpiar_resultadosJornadas, gbc_btnLimpiar_resultadosJornadas);
+		panelBtnContainer.add(btnLimpiar_resultadosJornadas);
 		
-		
-		/*CABEZERA GESTIONAR RESULTADOS JORNADAS*/
-		panelListasGestionarResultadosJornadas.setLayout(new BoxLayout(panelListasGestionarResultadosJornadas, BoxLayout.Y_AXIS));
-		JPanel panelGestionarResultadosJornadasHeader = new JPanel();
-		panelGestionarResultadosJornadasHeader.setBackground(azulPrimero);
-		panelListasGestionarResultadosJornadas.add(panelGestionarResultadosJornadasHeader);
-		panelGestionarResultadosJornadasHeader.setLayout(new GridLayout(1, 1, 0, 0));
-		
-		/*JLIST Y LABELS GESTIONAR RESULTADOS JORNADAS*/
-		JPanel panelResultadosListas = new JPanel();
-		panelListasGestionarResultadosJornadas.add(panelResultadosListas);
-		panelResultadosListas.setLayout(new GridLayout(0, 9, 0, 0));
-		
-		/*EQUIPOS*/
-		JLabel lblheaderEquipo_restultados = new JLabel("EQUIPO");
-		lblheaderEquipo_restultados.setHorizontalAlignment(SwingConstants.LEFT);
-		lblheaderEquipo_restultados.setForeground(Color.WHITE);
-		lblheaderEquipo_restultados.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblheaderEquipo_restultados);
 
-		listEquipos_resultadosJornadas = new JList<String>(dlmJornadasEquipos_resultado);
-		listEquipos_resultadosJornadas.addListSelectionListener(this);
-		listEquipos_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listEquipos_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listEquipos_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listEquipos_resultadosJornadas.setFixedCellHeight(25);
-		listEquipos_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listEquipos_resultadosJornadas);
 		
-		/*PUNTOS*/
-		JLabel lblheaderPTOS_resultados = new JLabel("PTOS");
-		lblheaderPTOS_resultados.setHorizontalAlignment(SwingConstants.LEFT);
-		lblheaderPTOS_resultados.setForeground(Color.WHITE);
-		lblheaderPTOS_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblheaderPTOS_resultados);
+		Clasificacion = new JPanel();
+		scrollPanel.add(Clasificacion);
+		Clasificacion.setLayout(new BoxLayout(Clasificacion, BoxLayout.Y_AXIS));
 		
-		listPTOS_resultadosJornadas = new JList<Integer>(dlmJornadasPuntos_resultado);
-		listPTOS_resultadosJornadas.addListSelectionListener(this);
-		listPTOS_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listPTOS_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listPTOS_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPTOS_resultadosJornadas.setFixedCellHeight(25);
-		listPTOS_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listPTOS_resultadosJornadas);
+		panelTituloClasificacion = new JPanel();
+		Clasificacion.add(panelTituloClasificacion);
 		
-		/*PARTIDOS JUGADOS*/
-		JLabel lblheaderPJ_resultadosClasifiacion = new JLabel("P.J");
-		lblheaderPJ_resultadosClasifiacion.setHorizontalAlignment(SwingConstants.LEFT);
-		lblheaderPJ_resultadosClasifiacion.setForeground(Color.WHITE);
-		lblheaderPJ_resultadosClasifiacion.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblheaderPJ_resultadosClasifiacion);
-		
-		listPJ_resultadosJornadas = new JList<Integer>(dlmJornadasPartidosJugados_resultado);
-		listPJ_resultadosJornadas.addListSelectionListener(this);
-		listPJ_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listPJ_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listPJ_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPJ_resultadosJornadas.setFixedCellHeight(25);
-		listPJ_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listPJ_resultadosJornadas);
-		
-		
-		/*PARTIDOS GANADOS*/
-		JLabel lblheaderPG_resultados = new JLabel("P.G");
-		lblheaderPG_resultados.setHorizontalAlignment(SwingConstants.LEFT);
-		lblheaderPG_resultados.setForeground(Color.WHITE);
-		lblheaderPG_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblheaderPG_resultados);
-		
-		listPG_resultadosJornadas = new JList<Integer>(dlmJornadasPartidosGanados_resultado);
-		listPG_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listPG_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listPG_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPG_resultadosJornadas.setFixedCellHeight(25);
-		listPG_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		listPG_resultadosJornadas.addListSelectionListener(this);
-		panelResultadosListas.add(listPG_resultadosJornadas);
-		
-		
-		/*PARTIDOS PERDIDOS*/
-		JLabel lblHeaderPP_resultados = new JLabel("P.P");
-		lblHeaderPP_resultados.setHorizontalAlignment(SwingConstants.LEFT);
-		lblHeaderPP_resultados.setForeground(Color.WHITE);
-		lblHeaderPP_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblHeaderPP_resultados);
-		
-		listPP_resultadosJornadas = new JList<Integer>(dlmJornadasPartidosPerdidos_resultado);
-		listPP_resultadosJornadas.addListSelectionListener(this);
-		listPP_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listPP_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listPP_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listPP_resultadosJornadas.setFixedCellHeight(25);
-		listPP_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listPP_resultadosJornadas);
-		
-		/*SETS GANADOS*/
-		JLabel lblHeaderSG = new JLabel("S.G");
-		lblHeaderSG.setHorizontalAlignment(SwingConstants.LEFT);
-		lblHeaderSG.setForeground(Color.WHITE);
-		lblHeaderSG.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblHeaderSG);
-		
-		listSG_resultadosJornadas = new JList<Integer>(dlmJornadasSetsGanados_resultado);
-		listSG_resultadosJornadas.addListSelectionListener(this);
-		listSG_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listSG_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listSG_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listSG_resultadosJornadas.setFixedCellHeight(25);
-		listSG_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listSG_resultadosJornadas);
-		
-		/*SETS PERDIDOS*/
-		JLabel lblHeaderSP_resultados = new JLabel("S.P");
-		lblHeaderSP_resultados.setHorizontalAlignment(SwingConstants.LEFT);
-		lblHeaderSP_resultados.setForeground(Color.WHITE);
-		lblHeaderSP_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblHeaderSP_resultados);
-		
-		listSP_resultadosJornadas = new JList<Integer>(dlmJornadasSetsPerdidos_resultado);
-		listSP_resultadosJornadas.addListSelectionListener(this);
-		listSP_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listSP_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listSP_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listSP_resultadosJornadas.setFixedCellHeight(25);
-		listSP_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listSP_resultadosJornadas);
-		
-		/*TANTOS A FAVOR*/
-		JLabel lblHeaderTA_resultados = new JLabel("T.A");
-		lblHeaderTA_resultados.setHorizontalAlignment(SwingConstants.LEFT);
-		lblHeaderTA_resultados.setForeground(Color.WHITE);
-		lblHeaderTA_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblHeaderTA_resultados);
-		
-		listTA_resultadosJornadas = new JList<Integer>(dlmJornadasTantosFavor_resultado);
-		listTA_resultadosJornadas.addListSelectionListener(this);
-		listTA_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listTA_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listTA_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listTA_resultadosJornadas.setFixedCellHeight(25);
-		listTA_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listTA_resultadosJornadas);
-		
-		/*TANTOS EN CONTRA*/
-		JLabel lblHeaderTC_resultados = new JLabel("T.C");
-		lblHeaderTC_resultados.setHorizontalAlignment(SwingConstants.LEFT);
-		lblHeaderTC_resultados.setForeground(Color.WHITE);
-		lblHeaderTC_resultados.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelGestionarResultadosJornadasHeader.add(lblHeaderTC_resultados);
-		
-		listTC_resultadosJornadas = new JList<Integer>(dlmJornadasTantosContra_resultado);
-		listTC_resultadosJornadas.addListSelectionListener(this);
-		listTC_resultadosJornadas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listTC_resultadosJornadas.setForeground(new Color(50, 50, 50));
-		listTC_resultadosJornadas.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		listTC_resultadosJornadas.setFixedCellHeight(25);
-		listTC_resultadosJornadas.setBackground(new Color(204, 229, 255));
-		panelResultadosListas.add(listTC_resultadosJornadas);
-		
-		panelTiutlo_Clasificacion_Arbitro = new JPanel();
-		panelListasGestionarResultadosJornadas.add(panelTiutlo_Clasificacion_Arbitro);
-		
-		lblClasifiacin = new JLabel("CLASIFIACIÓN");
-		lblClasifiacin.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblClasifiacin.setForeground(new Color(0, 128, 192));
-		lblClasifiacin.setFont(new Font("Leelawadee", Font.BOLD, 25));
-		panelTiutlo_Clasificacion_Arbitro.add(lblClasifiacin);
-		
-		/*GESTIONAR CLASIFICACION*/
-		gestionarClasificacion = new JPanel();
-		scrollPanelArbitro.add(gestionarClasificacion);
-		gestionarClasificacion.setLayout(new BoxLayout(gestionarClasificacion, BoxLayout.Y_AXIS));
+		lblClasificacion = new JLabel("CLASIFICACIÓN");
+		lblClasificacion.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblClasificacion.setForeground(new Color(0, 128, 192));
+		lblClasificacion.setFont(new Font("Leelawadee", Font.BOLD, 25));
+		panelTituloClasificacion.add(lblClasificacion);
 		
 		panelGestionarClasificacionHeader = new JPanel();
 		panelGestionarClasificacionHeader.setBackground(new Color(0, 128, 192));
-		gestionarClasificacion.add(panelGestionarClasificacionHeader);
+		Clasificacion.add(panelGestionarClasificacionHeader);
 		panelGestionarClasificacionHeader.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		panelGestionClasificacionListas = new JPanel();
-		gestionarClasificacion.add(panelGestionClasificacionListas);
+		Clasificacion.add(panelGestionClasificacionListas);
 		panelGestionClasificacionListas.setLayout(new GridLayout(0, 9, 0, 0));
+		
 		
 		/*CLASIFIACION EQUIPOS*/
 		listEquipos__resultadosClasificacion = new JList<String>(dlmEquipos);
 		listEquipos__resultadosClasificacion.setEnabled(false);
 		listEquipos__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listEquipos__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listEquipos__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listEquipos__resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 17));
 		listEquipos__resultadosClasificacion.setFixedCellHeight(25);
-		listEquipos__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listEquipos__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listEquipos__resultadosClasificacion);
 
 		lblheaderEquipo_restultados_1 = new JLabel("EQUIPO");
 		lblheaderEquipo_restultados_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblheaderEquipo_restultados_1.setForeground(Color.WHITE);
-		lblheaderEquipo_restultados_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblheaderEquipo_restultados_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblheaderEquipo_restultados_1);
 		
 		/*CLASIFIACION PUNTOS*/
 		listPuntos__resultadosClasificacion = new JList<Integer>(dlmClasificacionPuntos);
 		listPuntos__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPuntos__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listPuntos__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPuntos__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listPuntos__resultadosClasificacion.setFixedCellHeight(25);
 		listPuntos__resultadosClasificacion.setEnabled(false);
-		listPuntos__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listPuntos__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listPuntos__resultadosClasificacion);
 		
 		lblheaderPTOS_resultadosClasificacion = new JLabel("PTOS");
 		lblheaderPTOS_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblheaderPTOS_resultadosClasificacion.setForeground(Color.WHITE);
-		lblheaderPTOS_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblheaderPTOS_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblheaderPTOS_resultadosClasificacion);
 		
 		/*CLASIFIACION PARTIDOS JUGADOS*/
@@ -1254,15 +941,15 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listPJ__resultadosClasificacion.setEnabled(false);
 		listPJ__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPJ__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listPJ__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPJ__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listPJ__resultadosClasificacion.setFixedCellHeight(25);
-		listPJ__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listPJ__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listPJ__resultadosClasificacion);
 		
 		lblheaderPJ_resultadosClasificacion = new JLabel("P.J");
 		lblheaderPJ_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblheaderPJ_resultadosClasificacion.setForeground(Color.WHITE);
-		lblheaderPJ_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblheaderPJ_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblheaderPJ_resultadosClasificacion);
 		
 		/*CLASIFIACION PARTIDOS GANADOS*/
@@ -1270,15 +957,15 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listPG__resultadosClasificacion.setEnabled(false);
 		listPG__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPG__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listPG__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPG__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listPG__resultadosClasificacion.setFixedCellHeight(25);
-		listPG__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listPG__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listPG__resultadosClasificacion);
 		
 		lblheaderPG_resultadosClasificacion = new JLabel("P.G");
 		lblheaderPG_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblheaderPG_resultadosClasificacion.setForeground(Color.WHITE);
-		lblheaderPG_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblheaderPG_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblheaderPG_resultadosClasificacion);
 		
 		/*CLASIFIACION PARTIDOS PERDIDOS*/
@@ -1286,15 +973,15 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listPP__resultadosClasificacion.setEnabled(false);
 		listPP__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listPP__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listPP__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listPP__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listPP__resultadosClasificacion.setFixedCellHeight(25);
-		listPP__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listPP__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listPP__resultadosClasificacion);
 		
 		lblHeaderPP_resultadosClasificacion = new JLabel("P.P");
 		lblHeaderPP_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHeaderPP_resultadosClasificacion.setForeground(Color.WHITE);
-		lblHeaderPP_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblHeaderPP_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblHeaderPP_resultadosClasificacion);
 		
 		/*CLASIFIACION SETS GANADOS*/
@@ -1302,15 +989,15 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listSG__resultadosClasificacion.setEnabled(false);
 		listSG__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSG__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listSG__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listSG__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listSG__resultadosClasificacion.setFixedCellHeight(25);
-		listSG__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listSG__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listSG__resultadosClasificacion);
 		
 		lblHeaderSG_1 = new JLabel("S.G");
 		lblHeaderSG_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHeaderSG_1.setForeground(Color.WHITE);
-		lblHeaderSG_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblHeaderSG_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblHeaderSG_1);
 		
 		/*CLASIFIACION SETS PERDIDOS*/
@@ -1318,15 +1005,15 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listSP__resultadosClasificacion.setEnabled(false);
 		listSP__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSP__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listSP__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listSP__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listSP__resultadosClasificacion.setFixedCellHeight(25);
-		listSP__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listSP__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listSP__resultadosClasificacion);
 		
 		lblHeaderSP_resultadosClasificacion = new JLabel("S.P");
 		lblHeaderSP_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHeaderSP_resultadosClasificacion.setForeground(Color.WHITE);
-		lblHeaderSP_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblHeaderSP_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblHeaderSP_resultadosClasificacion);
 		
 		/*CLASIFIACION TANTOS A FAVOR*/
@@ -1334,15 +1021,15 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listTA__resultadosClasificacion.setEnabled(false);
 		listTA__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listTA__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listTA__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listTA__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listTA__resultadosClasificacion.setFixedCellHeight(25);
-		listTA__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listTA__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listTA__resultadosClasificacion);
 		
 		lblHeaderTA_resultadosClasificacion = new JLabel("T.A");
 		lblHeaderTA_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHeaderTA_resultadosClasificacion.setForeground(Color.WHITE);
-		lblHeaderTA_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblHeaderTA_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblHeaderTA_resultadosClasificacion);
 		
 		/*CLASIFIACION TANTOS EN CONTRA*/
@@ -1350,42 +1037,54 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		listTC__resultadosClasificacion.setEnabled(false);
 		listTC__resultadosClasificacion.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listTC__resultadosClasificacion.setForeground(new Color(50, 50, 50));
-		listTC__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listTC__resultadosClasificacion.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listTC__resultadosClasificacion.setFixedCellHeight(25);
-		listTC__resultadosClasificacion.setBackground(new Color(204, 229, 255));
+		listTC__resultadosClasificacion.setBackground(azulTercero);
 		panelGestionClasificacionListas.add(listTC__resultadosClasificacion);
 		
 		lblHeaderTC_resultadosClasificacion = new JLabel("T.C");
 		lblHeaderTC_resultadosClasificacion.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHeaderTC_resultadosClasificacion.setForeground(Color.WHITE);
-		lblHeaderTC_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblHeaderTC_resultadosClasificacion.setFont(new Font("Tahoma", Font.BOLD, 18));
 		panelGestionarClasificacionHeader.add(lblHeaderTC_resultadosClasificacion);
+		
+		
+		
+		
 		
 // ----------------------------------- GESTION USUARIOS ------------------------------------ //  
 	    
 	    /*GESTION USUARIOS*/
 		
 		if (username_param.equals(Login.arbitro_user)){
-			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setTitle(this.getTitle() + " - GESTIÓN ARBITRO");
-			cardLayoutPrincipal.show(contentPane, "PanelArbitro_");
-			//ESTABLECEMOS LOS DATOS DE LAS JORNADAS
-			definirDatosResultadosJornadasPorDefecto();
-			//ACTUALIZAR LAS JORNADAS
-			cambiarJornada(comboBoxGestionarJornadas, headerNJornadas_1);
-			//ACTUALIZAR CLASIFICACIÓN
-			actualizarPosicionClasifiacion();
 		} else {
-			cardLayoutPrincipal.show(contentPane, "PanelAnonimo_");
-			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			//ESTABLECEMOS LOS DATOS DE LAS JORNADAS
-			definirDatosResultadosJornadasPorDefecto();
-			//ACTUALIZAR LAS JORNADAS
-			cambiarJornada(comboBoxGestionarJornadas, headerNJornadas_1);
-			//ACTUALIZAR CLASIFICACIÓN
-			actualizarPosicionClasifiacion();
+			panelBtnContainer.setVisible(false);
+			btnGuardarCambios_resultadosJornadas.setEnabled(false);
+			btnBorrar_resultadosJornadas.setEnabled(false);
+			btnLimpiar_resultadosJornadas.setEnabled(false);
+			txtS1TaL.setEnabled(false);
+			txtS2TaL.setEnabled(false);
+			txtS3TaL.setEnabled(false);
+			txtS4TaL.setEnabled(false);
+			txtS5TaL.setEnabled(false);
+			txtSetsV.setEnabled(false);
+			txtS1TavV.setEnabled(false);
+			txtS2TaV.setEnabled(false);
+			txtS3TaV.setEnabled(false);
+			txtS4TaV.setEnabled(false);
+			txtS5TaV.setEnabled(false);
+			
 		}
 		
+		//ESTABLECEMOS LOS DATOS DE LAS JORNADAS
+		definirDatosResultadosJornadasPorDefecto();
+		//ACTUALIZAR LAS JORNADAS
+		cambiarJornada(comboBoxJornadas, headerNJornadas);
+		//ACTUALIZAR CLASIFICACIÓN
+		actualizarPosicionClasifiacion();
+		listNombreEquiposLocal.setSelectedIndex(0);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	// -- METODOS (FUNCIONES) PRIVADAS --
@@ -1401,26 +1100,42 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	}
 	
 	/*Esta funcion vaciara la dlm y la rellenada con el rango estableciado */
-	private void setEquiposLocales(DefaultListModel<String> dlmEquiposLocales,int minIndex,int maxIndex) {
-		dlmEquiposLocales.clear(); // Vacia el dlm
-		for(int i = minIndex; i < maxIndex; i++) {
-			dlmEquiposLocales.addElement(equiposLocales[i]);
-		}
-	}
+	private void setEquiposLocales(DefaultListModel<String> dlmEquiposLocales, int minIndex, int maxIndex) {
+	    // 1. Vacia el dlm para empezar desde cero
+	    dlmEquiposLocales.clear(); 
+	    
+	    // 2. Recorre el rango de filas (partidos) especificado
+	    for (int i = minIndex; i < maxIndex; i++) {
+	        // 3. Añade el elemento de la matriz:
+	        //    'i' es el índice de la fila (el partido).
+	        //   'COL_EQUIPOS_LOCALES' es el índice de la columna (0).
+	
+	            String equipoLocal = matrizJornadas[i][COL_EQUIPOS_LOCALES];
+	            dlmEquiposLocales.addElement(equipoLocal);
+	        }
+	    }
+	
 	
 	/*Esta funcion vaciara la dlm y la rellenada con el rango estableciado */
-	private void setEquiposVisitantes(DefaultListModel<String> dlmEquiposVisitantes,int minIndex,int maxIndex) {
-		dlmEquiposVisitantes.clear(); // Vacia el dlm
-		for(int i = minIndex; i < maxIndex; i++) {
-
-			dlmEquiposVisitantes.addElement(equiposVisitantes[i]);
-		}
-	}
+	private void setEquiposVisitantes(DefaultListModel<String> dlmEquiposLocales, int minIndex, int maxIndex) {
+	    // 1. Vacia el dlm para empezar desde cero
+	    dlmEquiposLocales.clear(); 
+	    
+	    // 2. Recorre el rango de filas (partidos) especificado
+	    for (int i = minIndex; i < maxIndex; i++) {
+	        // 3. Añade el elemento de la matriz:
+	        //    'i' es el índice de la fila (el partido).
+	        //   'COL_EQUIPOS_LOCALES' es el índice de la columna (0).
+	
+	            String equipoLocal = matrizJornadas[i][COL_EQUIPOS_VISITANTES];
+	            dlmEquiposLocales.addElement(equipoLocal);
+	        }
+	    }
 	
 	/*Establece el numero de jornadas en la dlm -> Necesario para poder usar ComboBox*/
-	private void setNumeroJorndas(DefaultComboBoxModel<String> dlmNumerosJorndas, int numeroJornadas) {
+	private void setNumeroJorndas(DefaultComboBoxModel<String> dcmJornadas, int numeroJornadas) {
 		for(int i = 1; i<= numeroJornadas; i++) {
-			dlmNumerosJorndas.addElement("Jornada: " + i);
+			dcmJornadas.addElement("Jornada: " + i);
 		}
 	}
 	
@@ -1444,336 +1159,271 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	 */
 	private void cambiarJornada(JComboBox<String> comboBox, JLabel nJornada) {
 	    
-	    // 1. OBTIENE LA JORNADA SELECCIONADA (0 para Jornada 1, 1 para Jornada 2, etc.)
+	    // 1. OBTIENE LA JORNADA SELECCIONADA (0 for Jornada 1, 1 for Jornada 2, etc.)
 	    int jornadaIndex = comboBox.getSelectedIndex();
 	    
-	    // 2. CALCULA EL RANGO PARA TUS ARRAYS DE EQUIPOS
-	    int minIndex = jornadaIndex * 3;
+	    // 2. CALCULA EL RANGO DE ÍNDICES DE PARTIDO para la jornada seleccionada
+	    // (Cada jornada tiene 3 partidos en la matriz de pairings)
+	    int minIndex = jornadaIndex * 3; 
 	    int maxIndex = minIndex + 3;
 	    
-	    // 3. RELLENA LAS LISTAS TEMPORALES DE LOCAL/VISITANTE
-	    // (Estos métodos usan las variables de clase dlmJornadasEqLocal y dlmJornadasEqVisitante)
+	    // 3. RELLENA LAS LISTAS DE NOMBRES DE EQUIPOS LOCAL/VISITANTE para la jornada
 	    setEquiposLocales(dlmJornadasEqLocal, minIndex, maxIndex);
 	    setEquiposVisitantes(dlmJornadasEqVisitante, minIndex, maxIndex);
 	    
-	    // 4. UNE LOS 6 EQUIPOS EN LA LISTA PRINCIPAL
-	    // (Esto limpia dlmJornadasEquipos_resultado y añade los 6 equipos)
-	    unirEquiposLocalesVisitantes();
+	    // 4. LIMPIA LOS MODELOS DE LISTA DE RESULTADOS ANTES DE RELLENARLOS
+	    dlmJornadaSetsL.clear();
+	    dlmJornadaS1TAL.clear();
+	    dlmJornadaS2TAL.clear();
+	    dlmJornadaS3TAL.clear();
+	    dlmJornadaS4TAL.clear();
+	    dlmJornadaS5TAL.clear();
 	    
-	    // 5. LIMPIA TODAS LAS LISTAS DE DATOS (PUNTOS, PJ, PG...)
-	    dlmJornadasPuntos_resultado.clear();
-	    dlmJornadasPartidosJugados_resultado.clear();
-	    dlmJornadasPartidosGanados_resultado.clear();
-	    dlmJornadasPartidosPerdidos_resultado.clear();
-	    dlmJornadasSetsGanados_resultado.clear();
-	    dlmJornadasSetsPerdidos_resultado.clear();
-	    dlmJornadasTantosFavor_resultado.clear();
-	    dlmJornadasTantosContra_resultado.clear();
-	    
-	    // 6. RELLENA LAS LISTAS DE DATOS USANDO LAS MATRICES
-	    // Este bucle se ejecuta 6 veces (una por cada equipo en la lista)
-	    for (int i = 0; i < dlmJornadasEquipos_resultado.getSize(); i++) {
+	    dlmJornadaSetsV.clear(); // No olvides limpiar los de visitantes también
+	    dlmJornadaS1TAV.clear();
+	    dlmJornadaS2TAV.clear();
+	    dlmJornadaS3TAV.clear();
+	    dlmJornadaS4TAV.clear();
+	    dlmJornadaS5TAV.clear();
+	  
+	    // 5. ITERA POR LOS 3 PARTIDOS DE LA JORNADA Y RELLENA LOS MODELOS DE RESULTADOS
+	    for (int i = minIndex; i < maxIndex; i++) {
+	        // Obtiene los nombres de los equipos de la matriz de pairings
+	        String local = matrizJornadas[i][COL_EQUIPOS_LOCALES];
+	        String visitante = matrizJornadas[i][COL_EQUIPOS_VISITANTES];
+
+	        // Obtiene las matrices de estadísticas correspondientes a los equipos
+	        int[][] matrizLocal = obtenterMatrizPorNombreEquipo(local);
+	        int[][] matrizVisitante = obtenterMatrizPorNombreEquipo(visitante);
+
+	        // Verifica si las matrices se encontraron
+	        if (matrizLocal == null || matrizVisitante == null) {
+	            // Puedes añadir valores por defecto (ej. 0) o saltar este partido
+	            dlmJornadaSetsL.addElement(0);
+	            dlmJornadaS1TAL.addElement(0);
+	            dlmJornadaS2TAL.addElement(0);
+	            dlmJornadaS3TAL.addElement(0);
+	            dlmJornadaS4TAL.addElement(0);
+	            dlmJornadaS5TAL.addElement(0);
+	            
+	            dlmJornadaSetsV.addElement(0);
+	            dlmJornadaS1TAV.addElement(0);
+	            dlmJornadaS2TAV.addElement(0);
+	            dlmJornadaS3TAV.addElement(0);
+	            dlmJornadaS4TAV.addElement(0);
+	            dlmJornadaS5TAV.addElement(0);
+	            continue; // Pasa al siguiente partido
+	        }
+
+	        // Añade los resultados del equipo LOCAL a sus modelos de lista
+	        dlmJornadaSetsL.addElement(matrizLocal[jornadaIndex][COL_SG]); // Sets Ganados por el local
+	        dlmJornadaS1TAL.addElement(matrizLocal[jornadaIndex][COL_S1_TA]);
+	        dlmJornadaS2TAL.addElement(matrizLocal[jornadaIndex][COL_S2_TA]);
+	        dlmJornadaS3TAL.addElement(matrizLocal[jornadaIndex][COL_S3_TA]);
+	        dlmJornadaS4TAL.addElement(matrizLocal[jornadaIndex][COL_S4_TA]);
+	        dlmJornadaS5TAL.addElement(matrizLocal[jornadaIndex][COL_S5_TA]);
 	        
-	        // A. Obtiene el nombre del equipo (en el índice 0, 1, 2, 3, 4, 5)
-	        String nombreEquipo = dlmJornadasEquipos_resultado.getElementAt(i);
-	        
-	        // B. Obtiene la matriz de ese equipo usando el 'Map'
-	        int[][] matrizDelEquipo = obtenterMatrizPorNombreEquipo(nombreEquipo);
-	        
-	        // C. Obtiene la FILA de datos para esa JORNADA
-	        // (matrizDelEquipo[jornadaIndex] te da la fila: int[10])
-	        int[] datosFila = matrizDelEquipo[jornadaIndex];
-	        
-	        // D. Añade los datos de esa fila a las listas DLM
-	        // (Usando las constantes COL_... que definimos)
-	        dlmJornadasPuntos_resultado.addElement(datosFila[COL_PUNTOS]);
-	        dlmJornadasPartidosJugados_resultado.addElement(datosFila[COL_PJ]);
-	        dlmJornadasPartidosGanados_resultado.addElement(datosFila[COL_PG]);
-	        dlmJornadasPartidosPerdidos_resultado.addElement(datosFila[COL_PP]);
-	        dlmJornadasSetsGanados_resultado.addElement(datosFila[COL_SG]);
-	        dlmJornadasSetsPerdidos_resultado.addElement(datosFila[COL_SP]);
-	        dlmJornadasTantosFavor_resultado.addElement(datosFila[COL_TA]);
-	        dlmJornadasTantosContra_resultado.addElement(datosFila[COL_TC]);
+	        // Añade los resultados del equipo VISITANTE a sus modelos de lista
+	        dlmJornadaSetsV.addElement(matrizVisitante[jornadaIndex][COL_SG]); // Sets Ganados por el visitante
+	        dlmJornadaS1TAV.addElement(matrizVisitante[jornadaIndex][COL_S1_TA]);
+	        dlmJornadaS2TAV.addElement(matrizVisitante[jornadaIndex][COL_S2_TA]);
+	        dlmJornadaS3TAV.addElement(matrizVisitante[jornadaIndex][COL_S3_TA]);
+	        dlmJornadaS4TAV.addElement(matrizVisitante[jornadaIndex][COL_S4_TA]);
+	        dlmJornadaS5TAV.addElement(matrizVisitante[jornadaIndex][COL_S5_TA]);
 	    }
-	    
-	    // 7. ACTUALIZA LA ETIQUETA
-	    nJornada.setText("Nº " + Integer.toString(jornadaIndex + 1));
+	  
+	    // 6. ACTUALIZA LA ETIQUETA DEL NÚMERO DE JORNADA
+	    nJornada.setText("Nº " + (jornadaIndex + 1));
+	
+	    listNombreEquiposLocal.setSelectedIndex(0);
 	}
 	
-	/*Este metodo se encarga de hacer una lista modelo para la gestion en jornadas es decir muestra los equipos que juegan esa jornada en una unica lista*/
-	private void unirEquiposLocalesVisitantes() {
-		// Primero vaciamos la lista
-		dlmJornadasEquipos_resultado.clear();
-		/*Añadir ala dlm listEquipos_resultadosJornadas los equipos locales*/
-		for(int i = 0; i< dlmJornadasEqLocal.getSize();i++) {
-			dlmJornadasEquipos_resultado.addElement(dlmJornadasEqLocal.getElementAt(i));
-		}
-		for(int i = 0; i< dlmJornadasEqVisitante.getSize();i++) {
-			//araSystem.out.println("equipo " +  dlmJornadasEqVisitante.getElementAt(i));
-			dlmJornadasEquipos_resultado.addElement(dlmJornadasEqVisitante.getElementAt(i));
-		}
-	}
-
-	/*POR DEFECTO TODOS LOS RESULTADOS DE LA TEMPORADA EN CADA JORNADA*/
 	private void definirDatosResultadosJornadasPorDefecto() {
 	    
-	    // Variables de ayuda para que el código sea más limpio
-	    int j; // Índice de la jornada (fila de la matriz)
-	    int[][] matLocal; // Matriz del equipo local
-	    int[][] matVisit; // Matriz del equipo visitante
+	    // Método auxiliar (sin cambios, ya que los 15 parámetros son correctos)
+	    // private void asignarResultadosJornada(int[][] matriz, int J, int puntos, int sg, int sp, int ta, int tc, int s1Ta, int s2Ta, int s3Ta, int s4Ta, int s5Ta, int pg, int pp, int pj)
 
-	    // --- JORNADA 1 (j=0) ---
-	    j = 0;
+	    // -------------------------------------------------------------------------
+	    // JORNADA 1 (Índice 0)
+	    // -------------------------------------------------------------------------
+	    int J = 0;
 	    
-	    // Zaragoza (3) vs SanFernando (1) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    // Resultado: 3 - 1 (25-21, 23-25, 25-19, 25-20)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 98; matLocal[j][COL_TC] = 85;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 85; matVisit[j][COL_TC] = 98;
-	    
-	    // Valladolid (3) vs Rivas (2) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    // Resultado: 3 - 2 (25-18, 20-25, 25-22, 21-25, 15-13)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 106; matLocal[j][COL_TC] = 103;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 103; matVisit[j][COL_TC] = 106;
+	    // CV ZARAGOZA (3-1) -> Gana (2 Pts) vs. CV SAN FERNANDO (1-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 1, 98, 85, 25, 23, 25, 25, 0, 1, 0, 1); 
+	    asignarResultadosJornada(matriz_sanfernando, J, 1, 1, 3, 85, 98, 21, 25, 19, 20, 0, 0, 1, 1); // Corregido: 1 Pto por perder
 
-	    // Torrelavega (0) vs Palma (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    // Resultado: 0 - 3 (19-25, 21-25, 23-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 63; matLocal[j][COL_TC] = 75;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 63;
-	    
-	    // --- JORNADA 2 (j=1) ---
-	    j = 1;
-	    
-	    // Zaragoza (3) vs Rivas (0) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    // Resultado: 3 - 0 (25-16, 25-17, 25-22)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 55;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 55; matVisit[j][COL_TC] = 75;
+	    // VALLADOLID CV (3-2) -> Gana (2 Pts) vs. CV RIVAS (2-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_valladolid, J, 2, 3, 2, 106, 103, 25, 20, 25, 21, 15, 1, 0, 1);
+	    asignarResultadosJornada(matriz_rivas, J, 1, 2, 3, 103, 106, 18, 25, 22, 25, 13, 0, 1, 1); // Se mantiene 1 Pto por perder 2-3
 
-	    // SanFernando (3) vs Palma (2) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    // Resultado: 3 - 2 (25-23, 19-25, 25-20, 24-26, 17-15)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 110; matLocal[j][COL_TC] = 109;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 109; matVisit[j][COL_TC] = 110;
-	    
-	    // Valladolid (1) vs Torrelavega (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    // Resultado: 1 - 3 (25-22, 20-25, 18-25, 22-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 97;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 97; matVisit[j][COL_TC] = 85;
-	    
-	    // --- JORNADA 3 (j=2) ---
-	    j = 2;
-	    
-	    // Zaragoza (3) vs Palma (1) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    // Resultado: 3 - 1 (25-19, 25-23, 21-25, 25-20)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 96; matLocal[j][COL_TC] = 87;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 87; matVisit[j][COL_TC] = 96;
-	    
-	    // Rivas (2) vs Torrelavega (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    // Resultado: 2 - 3 (25-21, 23-25, 25-22, 20-25, 12-15)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 2; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 105; matLocal[j][COL_TC] = 108;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 2; matVisit[j][COL_TA] = 108; matVisit[j][COL_TC] = 105;
+	    // CV TORRELAVEGA (0-3) -> Gana (1 Pto) vs. CV PALMA (3-0) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_torrelavega, J, 1, 0, 3, 63, 75, 19, 21, 23, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_palma, J, 2, 3, 0, 75, 63, 25, 25, 25, 0, 0, 1, 0, 1);
 
-	    // SanFernando (0) vs Valladolid (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    // Resultado: 0 - 3 (21-25, 17-25, 23-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 61; matLocal[j][COL_TC] = 75;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 61;
+	    // -------------------------------------------------------------------------
+	    // JORNADA 2 (Índice 1)
+	    // -------------------------------------------------------------------------
+	    J = 1;
+	    
+	    // CV ZARAGOZA (3-0) -> Gana (2 Pts) vs. CV RIVAS (0-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 0, 75, 55, 25, 25, 25, 0, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_rivas, J, 1, 0, 3, 55, 75, 16, 17, 22, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
 
-	    // --- JORNADA 4 (j=3) ---
-	    j = 3;
-	    
-	    // Zaragoza (3) vs Torrelavega (2) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    // Resultado: 3 - 2 (25-20, 23-25, 26-24, 22-25, 15-10)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 111; matLocal[j][COL_TC] = 104;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 104; matVisit[j][COL_TC] = 111;
+	    // CV SAN FERNANDO (3-2) -> Gana (2 Pts) vs. CV PALMA (2-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_sanfernando, J, 2, 3, 2, 110, 109, 25, 19, 25, 24, 17, 1, 0, 1);
+	    asignarResultadosJornada(matriz_palma, J, 1, 2, 3, 109, 110, 23, 25, 20, 26, 15, 0, 1, 1); // Se mantiene 1 Pto
 
-	    // Palma (3) vs Valladolid (0) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    // Resultado: 3 - 0 (25-20, 25-18, 25-21)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 59;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 59; matVisit[j][COL_TC] = 75;
-	    
-	    // Rivas (1) vs SanFernando (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    // Resultado: 1 - 3 (25-23, 21-25, 19-25, 20-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 98;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 98; matVisit[j][COL_TC] = 85;
+	    // VALLADOLID CV (1-3) -> Gana (1 Pto) vs. CV TORRELAVEGA (3-1) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_valladolid, J, 1, 1, 3, 85, 97, 25, 20, 18, 22, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_torrelavega, J, 2, 3, 1, 97, 85, 22, 25, 25, 25, 0, 1, 0, 1);
 
-	    // --- JORNADA 5 (j=4) ---
-	    j = 4;
-	    
-	    // Zaragoza (3) vs Valladolid (0) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    // Resultado: 3 - 0 (25-17, 25-18, 25-23)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 58;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 58; matVisit[j][COL_TC] = 75;
-	    
-	    // Torrelavega (3) vs SanFernando (1) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    // Resultado: 3 - 1 (25-22, 25-20, 20-25, 25-23)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 95; matLocal[j][COL_TC] = 90;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 90; matVisit[j][COL_TC] = 95;
-	    
-	    // Palma (3) vs Rivas (1) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    // Resultado: 3 - 1 (25-23, 21-25, 25-19, 25-22)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 96; matLocal[j][COL_TC] = 89;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 89; matVisit[j][COL_TC] = 96;
-	    
-	    // --- JORNADA 6 (j=5) ---
-	    j = 5;
-	    
-	    // SanFernando (1) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    // Resultado: 1 - 3 (25-22, 19-25, 20-25, 21-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 97;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 97; matVisit[j][COL_TC] = 85;
-	    
-	    // Rivas (3) vs Valladolid (0) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    // Resultado: 3 - 0 (25-19, 25-23, 25-21)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 63;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 63; matVisit[j][COL_TC] = 75;
+	    // -------------------------------------------------------------------------
+	    // JORNADA 3 (Índice 2)
+	    // -------------------------------------------------------------------------
+	    J = 2;
 
-	    // Palma (3) vs Torrelavega (2) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    // Resultado: 3 - 2 (25-23, 22-25, 25-21, 23-25, 15-11)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 110; matLocal[j][COL_TC] = 105;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 105; matVisit[j][COL_TC] = 110;
-	    
-	    // --- JORNADA 7 (j=6) ---
-	    j = 6;
-	    
-	    // Rivas (0) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    // Resultado: 0 - 3 (18-25, 20-25, 23-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 61; matLocal[j][COL_TC] = 75;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 61;
+	    // CV ZARAGOZA (3-1) -> Gana (2 Pts) vs. CV PALMA (1-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 1, 96, 87, 25, 25, 21, 25, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_palma, J, 1, 1, 3, 87, 96, 19, 23, 25, 20, 0, 0, 1, 1); // Corregido: 1 Pto por perder
 
-	    // Palma (3) vs SanFernando (0) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    // Resultado: 3 - 0 (25-21, 25-17, 25-22)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 60;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 60; matVisit[j][COL_TC] = 75;
-	    
-	    // Torrelavega (3) vs Valladolid (0) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    matVisit = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    // Resultado: 3 - 0 (25-18, 25-19, 25-23)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 0; matLocal[j][COL_TA] = 75; matLocal[j][COL_TC] = 60;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 0; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 60; matVisit[j][COL_TC] = 75;
+	    // CV RIVAS (2-3) -> Gana (1 Pto) vs. CV TORRELAVEGA (3-2) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_rivas, J, 1, 2, 3, 105, 108, 25, 23, 25, 20, 12, 0, 1, 1); // Se mantiene 1 Pto
+	    asignarResultadosJornada(matriz_torrelavega, J, 2, 3, 2, 108, 105, 21, 25, 22, 25, 15, 1, 0, 1);
 
-	    // --- JORNADA 8 (j=7) ---
-	    j = 7;
-	    
-	    // Palma (1) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    // Resultado: 1 - 3 (25-23, 20-25, 19-25, 21-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 98;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 98; matVisit[j][COL_TC] = 85;
+	    // CV SAN FERNANDO (0-3) -> Gana (1 Pto) vs. VALLADOLID CV (3-0) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_sanfernando, J, 1, 0, 3, 61, 75, 21, 17, 23, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_valladolid, J, 2, 3, 0, 75, 61, 25, 25, 25, 0, 0, 1, 0, 1);
 
-	    // Torrelavega (3) vs Rivas (1) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    // Resultado: 3 - 1 (25-22, 25-18, 23-25, 25-20)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 98; matLocal[j][COL_TC] = 85;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 85; matVisit[j][COL_TC] = 98;
+	    // -------------------------------------------------------------------------
+	    // JORNADA 4 (Índice 3)
+	    // -------------------------------------------------------------------------
+	    J = 3;
 	    
-	    // Valladolid (3) vs SanFernando (2) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    // Resultado: 3 - 2 (25-21, 23-25, 25-23, 22-25, 15-13)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 110; matLocal[j][COL_TC] = 107;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 107; matVisit[j][COL_TC] = 110;
-	    
-	    // --- JORNADA 9 (j=8) ---
-	    j = 8;
-	    
-	    // Torrelavega (0) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    // Resultado: 0 - 3 (21-25, 22-25, 19-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 62; matLocal[j][COL_TC] = 75;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 62;
+	    // CV ZARAGOZA (3-2) -> Gana (2 Pts) vs. CV TORRELAVEGA (2-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 2, 111, 104, 25, 23, 26, 22, 15, 1, 0, 1);
+	    asignarResultadosJornada(matriz_torrelavega, J, 1, 2, 3, 104, 111, 20, 25, 24, 25, 10, 0, 1, 1); // Se mantiene 1 Pto
 
-	    // Valladolid (3) vs Palma (1) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    // Resultado: 3 - 1 (25-19, 25-23, 20-25, 25-21)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 1; matLocal[j][COL_TA] = 95; matLocal[j][COL_TC] = 88;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 1; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 88; matVisit[j][COL_TC] = 95;
+	    // CV PALMA (3-0) -> Gana (2 Pts) vs. VALLADOLID CV (0-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_palma, J, 2, 3, 0, 75, 59, 25, 25, 25, 0, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_valladolid, J, 1, 0, 3, 59, 75, 20, 18, 21, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // CV RIVAS (1-3) -> Gana (1 Pto) vs. CV SAN FERNANDO (3-1) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_rivas, J, 1, 1, 3, 85, 98, 25, 21, 19, 20, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_sanfernando, J, 2, 3, 1, 98, 85, 23, 25, 25, 25, 0, 1, 0, 1);
+
+	    // -------------------------------------------------------------------------
+	    // JORNADA 5 (Índice 4)
+	    // -------------------------------------------------------------------------
+	    J = 4;
 	    
-	    // SanFernando (3) vs Rivas (2) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    // Resultado: 3 - 2 (24-26, 25-21, 25-23, 21-25, 15-12)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 110; matLocal[j][COL_TC] = 107;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 107; matVisit[j][COL_TC] = 110;
+	    // CV ZARAGOZA (3-0) -> Gana (2 Pts) vs. VALLADOLID CV (0-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 0, 75, 58, 25, 25, 25, 0, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_valladolid, J, 1, 0, 3, 58, 75, 17, 18, 23, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // CV TORRELAVEGA (3-1) -> Gana (2 Pts) vs. CV SAN FERNANDO (1-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_torrelavega, J, 2, 3, 1, 95, 90, 25, 25, 20, 25, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_sanfernando, J, 1, 1, 3, 90, 95, 22, 20, 25, 23, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // CV PALMA (3-1) -> Gana (2 Pts) vs. CV RIVAS (1-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_palma, J, 2, 3, 1, 96, 89, 25, 21, 25, 25, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_rivas, J, 1, 1, 3, 89, 96, 23, 25, 19, 22, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // -------------------------------------------------------------------------
+	    // JORNADA 6 (Índice 5)
+	    // -------------------------------------------------------------------------
+	    J = 5;
+
+	    // CV SAN FERNANDO (1-3) -> Gana (1 Pto) vs. CV ZARAGOZA (3-1) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_sanfernando, J, 1, 1, 3, 85, 97, 25, 19, 20, 21, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 1, 97, 85, 22, 25, 25, 25, 0, 1, 0, 1);
+
+	    // CV RIVAS (3-0) -> Gana (2 Pts) vs. VALLADOLID CV (0-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_rivas, J, 2, 3, 0, 75, 63, 25, 25, 25, 0, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_valladolid, J, 1, 0, 3, 63, 75, 19, 23, 21, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // CV PALMA (3-2) -> Gana (2 Pts) vs. CV TORRELAVEGA (2-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_palma, J, 2, 3, 2, 110, 105, 25, 22, 25, 23, 15, 1, 0, 1);
+	    asignarResultadosJornada(matriz_torrelavega, J, 1, 2, 3, 105, 110, 23, 25, 21, 25, 11, 0, 1, 1); // Se mantiene 1 Pto
+
+	    // -------------------------------------------------------------------------
+	    // JORNADA 7 (Índice 6)
+	    // -------------------------------------------------------------------------
+	    J = 6;
+
+	    // CV RIVAS (0-3) -> Gana (1 Pto) vs. CV ZARAGOZA (3-0) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_rivas, J, 1, 0, 3, 61, 75, 18, 20, 23, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 0, 75, 61, 25, 25, 25, 0, 0, 1, 0, 1);
+
+	    // CV PALMA (3-0) -> Gana (2 Pts) vs. CV SAN FERNANDO (0-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_palma, J, 2, 3, 0, 75, 60, 25, 25, 25, 0, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_sanfernando, J, 1, 0, 3, 60, 75, 21, 17, 22, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // CV TORRELAVEGA (3-0) -> Gana (2 Pts) vs. VALLADOLID CV (0-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_torrelavega, J, 2, 3, 0, 75, 60, 25, 25, 25, 0, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_valladolid, J, 1, 0, 3, 60, 75, 18, 19, 23, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // -------------------------------------------------------------------------
+	    // JORNADA 8 (Índice 7)
+	    // -------------------------------------------------------------------------
+	    J = 7;
+
+	    // CV PALMA (1-3) -> Gana (1 Pto) vs. CV ZARAGOZA (3-1) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_palma, J, 1, 1, 3, 85, 97, 25, 20, 19, 21, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 1, 98, 85, 23, 25, 25, 25, 0, 1, 0, 1);
+
+	    // CV TORRELAVEGA (3-1) -> Gana (2 Pts) vs. CV RIVAS (1-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_torrelavega, J, 2, 3, 1, 98, 85, 25, 25, 23, 25, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_rivas, J, 1, 1, 3, 85, 98, 22, 18, 25, 20, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // VALLADOLID CV (3-2) -> Gana (2 Pts) vs. CV SAN FERNANDO (2-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_valladolid, J, 2, 3, 2, 110, 107, 25, 23, 25, 22, 15, 1, 0, 1);
+	    asignarResultadosJornada(matriz_sanfernando, J, 1, 2, 3, 107, 110, 21, 25, 23, 25, 13, 0, 1, 1); // Se mantiene 1 Pto
+
+	    // -------------------------------------------------------------------------
+	    // JORNADA 9 (Índice 8)
+	    // -------------------------------------------------------------------------
+	    J = 8;
 	    
-	    // --- JORNADA 10 (j=9) ---
-	    j = 9;
+	    // CV TORRELAVEGA (0-3) -> Gana (1 Pto) vs. CV ZARAGOZA (3-0) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_torrelavega, J, 1, 0, 3, 62, 75, 21, 22, 19, 0, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 0, 75, 62, 25, 25, 25, 0, 0, 1, 0, 1);
+
+	    // VALLADOLID CV (3-1) -> Gana (2 Pts) vs. CV PALMA (1-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_valladolid, J, 2, 3, 1, 95, 88, 25, 25, 20, 25, 0, 1, 0, 1);
+	    asignarResultadosJornada(matriz_palma, J, 1, 1, 3, 88, 95, 19, 23, 25, 21, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+
+	    // CV SAN FERNANDO (3-2) -> Gana (2 Pts) vs. CV RIVAS (2-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_sanfernando, J, 2, 3, 2, 110, 107, 24, 25, 25, 21, 15, 1, 0, 1);
+	    asignarResultadosJornada(matriz_rivas, J, 1, 2, 3, 107, 110, 26, 21, 23, 25, 12, 0, 1, 1); // Se mantiene 1 Pto
+
+	    // -------------------------------------------------------------------------
+	    // JORNADA 10 (Índice 9)
+	    // -------------------------------------------------------------------------
+	    J = 9;
+
+	    // VALLADOLID CV (1-3) -> Gana (1 Pto) vs. CV ZARAGOZA (3-1) -> Gana (2 Pts)
+	    asignarResultadosJornada(matriz_valladolid, J, 1, 1, 3, 85, 98, 25, 20, 18, 22, 0, 0, 1, 1); // Corregido: 1 Pto por perder
+	    asignarResultadosJornada(matriz_zaragoza, J, 2, 3, 1, 98, 85, 23, 25, 25, 25, 0, 1, 0, 1);
+
+	    // CV SAN FERNANDO (0-3) -> Gana (1 Pto) vs. CV TORRELAVEGA (3-0) -> Gana (2 Pts)
+	    // Corregido: Puntos=1, PG=0, PP=1, PJ=1 y los 15 argumentos.
+	    asignarResultadosJornada(matriz_sanfernando, J, 1, 0, 3, 62, 75, 19, 22, 21, 0, 0, 0, 1, 1); 
+	    asignarResultadosJornada(matriz_torrelavega, J, 2, 3, 0, 75, 62, 25, 25, 25, 0, 0, 1, 0, 1);
+
+	    // CV RIVAS (3-2) -> Gana (2 Pts) vs. CV PALMA (2-3) -> Gana (1 Pto)
+	    asignarResultadosJornada(matriz_rivas, J, 2, 3, 2, 108, 102, 25, 23, 25, 21, 15, 1, 0, 1);
+	    asignarResultadosJornada(matriz_palma, J, 1, 2, 3, 102, 109, 20, 25, 22, 25, 10, 0, 1, 1); // Se mantiene 1 Pto
 	    
-	    // Valladolid (1) vs Zaragoza (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("VALLADOLID CV");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV ZARAGOZA");
-	    // Resultado: 1 - 3 (25-23, 20-25, 18-25, 22-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 1; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 85; matLocal[j][COL_TC] = 98;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 1; matVisit[j][COL_TA] = 98; matVisit[j][COL_TC] = 85;
+	    // ESTABLECER TOTALES
+	    recalcularTotalParaEquipo(matriz_zaragoza);
+	    recalcularTotalParaEquipo(matriz_sanfernando); 
+	    recalcularTotalParaEquipo(matriz_palma);
+	    recalcularTotalParaEquipo(matriz_torrelavega);
+	    recalcularTotalParaEquipo(matriz_rivas);
+	    recalcularTotalParaEquipo(matriz_valladolid); 
 	    
-	    // SanFernando (0) vs Torrelavega (3) -> Puntos: 1-2
-	    matLocal = obtenterMatrizPorNombreEquipo("CV SAN FERNANDO");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV TORRELAVEGA");
-	    // Resultado: 0 - 3 (19-25, 22-25, 21-25)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 0; matLocal[j][COL_PP] = 1; matLocal[j][COL_PUNTOS] = 1; matLocal[j][COL_SG] = 0; matLocal[j][COL_SP] = 3; matLocal[j][COL_TA] = 62; matLocal[j][COL_TC] = 75;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 1; matVisit[j][COL_PP] = 0; matVisit[j][COL_PUNTOS] = 2; matVisit[j][COL_SG] = 3; matVisit[j][COL_SP] = 0; matVisit[j][COL_TA] = 75; matVisit[j][COL_TC] = 62;
-	    
-	    // Rivas (3) vs Palma (2) -> Puntos: 2-1
-	    matLocal = obtenterMatrizPorNombreEquipo("CV RIVAS");
-	    matVisit = obtenterMatrizPorNombreEquipo("CV PALMA");
-	    // Resultado: 3 - 2 (25-20, 23-25, 25-22, 21-25, 15-10)
-	    matLocal[j][COL_PJ] = 1; matLocal[j][COL_PG] = 1; matLocal[j][COL_PP] = 0; matLocal[j][COL_PUNTOS] = 2; matLocal[j][COL_SG] = 3; matLocal[j][COL_SP] = 2; matLocal[j][COL_TA] = 109; matLocal[j][COL_TC] = 102;
-	    matVisit[j][COL_PJ] = 1; matVisit[j][COL_PG] = 0; matVisit[j][COL_PP] = 1; matVisit[j][COL_PUNTOS] = 1; matVisit[j][COL_SG] = 2; matVisit[j][COL_SP] = 3; matVisit[j][COL_TA] = 102; matVisit[j][COL_TC] = 109;
-	    
-	    //CALCULA EL TOTAL DE PUNTOS
-	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV ZARAGOZA"));
-	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("VALLADOLID CV"));
-	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV TORRELAVEGA"));
-	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV RIVAS"));
-	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV PALMA"));
-	    recalcularTotalParaEquipo(mapaMatricesEquipos.get("CV SAN FERNANDO"));
-	    
-	    int totalEquipos = 6;
-	    
-	    //AÑADIR INDICES A DLM CLASIFIACION -> PARA PODER ACTUALIZAR DATOS
-	    for(int d = 0; d < totalEquipos; d++) {
+	  //AÑADIR INDICES A DLM CLASIFIACION -> PARA PODER ACTUALIZAR DATOS
+	    for(int d = 0; d < equipos.length; d++) {
 	    	dlmClasificacionPuntos.add(d, 0); 
     		dlmClasificacionPartidosJugados.add(d, 0); 
     		dlmClasificacionPartidosGanados.add(d, 0); 
@@ -1783,8 +1433,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     		dlmClasificacionTantosFavor.add(d, 0); 
     		dlmClasificacionTantosContra.add(d, 0);
     	}
-	    
 	}
+	private void asignarResultadosJornada(int[][] matriz, int J, int puntos, int sg, int sp, int ta, int tc, int s1Ta, int s2Ta, int s3Ta, int s4Ta, int s5Ta, int pg, int pp, int pj) {
+		matriz[J][COL_PUNTOS] = puntos;
+		matriz[J][COL_SG] = sg;
+		matriz[J][COL_SP] = sp;
+		matriz[J][COL_TA] = ta;
+		matriz[J][COL_TC] = tc;
+		matriz[J][COL_S1_TA] = s1Ta;
+		matriz[J][COL_S2_TA] = s2Ta;
+		matriz[J][COL_S3_TA] = s3Ta;
+		matriz[J][COL_S4_TA] = s4Ta;
+		matriz[J][COL_S5_TA] = s5Ta;
+		matriz[J][COL_PG] = pg;
+		matriz[J][COL_PP] = pp;
+		matriz[J][COL_PJ] = pj;
+}
 	
 	/*OBTENER MATRIZ USANDO EL NOMBRE DE EL EQUIPO*/
 	private int[][] obtenterMatrizPorNombreEquipo(String nombreEquipo) {
@@ -1797,318 +1461,67 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	
 	
 	
-	// -- EVENTO --
-    private void insertarResultadosJornada() {
-        int seleccion = listEquipos_resultadosJornadas.getSelectedIndex();
-
-    // 1 - Comprobamos que todos los campos estén llenos
-        if(
-            txtPtos_resultadosJornadas.getText().isEmpty() ||
-            txtPJ_resultadosJornadas.getText().isEmpty() ||
-            txtPG_resultadosJornadas.getText().isEmpty() ||
-            txtPP_resultadosJornadas.getText().isEmpty() ||
-            txtSG_resultadosJornadas.getText().isEmpty() ||
-            txtSP_resultadosJornadas.getText().isEmpty() ||
-            txtTA_resultadosJornadas.getText().isEmpty() ||
-            txtTC_resultadosJornadas.getText().isEmpty()
-        ) {
-            JOptionPane.showMessageDialog(this,
-                    "Error. Los campos de texto no pueden estar vacíos",
-                    "Error al Insertar",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-            );
-            return; // Salimos del método si hay algún campo vacío
-        }
-        
-        
-        // Casteamos los valores de los txtFields para poder usarlos despues
-        int puntos = Integer.parseInt(txtPtos_resultadosJornadas.getText());
-        int pj = Integer.parseInt(txtPJ_resultadosJornadas.getText());
-        int pg = Integer.parseInt(txtPG_resultadosJornadas.getText());
-        int pp = Integer.parseInt(txtPP_resultadosJornadas.getText());
-        int sg = Integer.parseInt(txtSG_resultadosJornadas.getText());
-        int sp = Integer.parseInt(txtSP_resultadosJornadas.getText());
-        int ta = Integer.parseInt(txtTA_resultadosJornadas.getText());
-        int tc = Integer.parseInt(txtTC_resultadosJornadas.getText());
-
-        
-         // 2 - No tenemos negativos
-        if (puntos < 0 || pj < 0 || pg < 0 || pp < 0 || sg < 0 || sp < 0 || ta < 0 || tc < 0) {
-            JOptionPane.showMessageDialog(this,
-                    "Error. Los campos de texto no pueden ser negativos",
-                    "Error al Insertar",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-            );
-            return; // Salimos del método si hay un error de lógica
-        }
-        
-        // 3 - Los partidos jugados no pueden ser menor a 1
-        if(pj < 1) {
-        	JOptionPane.showMessageDialog(this,
-                    "Error. no puede aver equipos que no hayam jugado una jornada",
-                    "Error al Insertar",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-            );
-            return; // Salimos del método si hay un error de lógica
-        }
-        
-       
-        // 4 - Comprobar suma sets no sea mayor a 5)
-        if(sg+sp > 5 ) {
-        	JOptionPane.showMessageDialog(this,
-                    "Error. La suma de los sets no puede ser mayor a 5",
-                    "Error al Insertar",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-            );
-            return;  // Salimos del método si hay un error de lógica
-        }
-        
-     // 5 y 6 combinadas - Comprobar que la suma de PG y PP sea igual a PJ
-        if (pg + pp != pj) {
-            JOptionPane.showMessageDialog(this,
-                "Error. La suma de partidos ganados y perdidos no coincide con los partidos jugados.",
-                "Error al Insertar",
-                JOptionPane.ERROR_MESSAGE,
-                null
-            );
-            return;
-        }
-        
-//      Si se gana (PG=1), los puntos son 2. Si se pierde (PG=0), los puntos son 1.
-        if ((pg == 1 && puntos != 2) || (pg == 0 && puntos != 1)) {
-            JOptionPane.showMessageDialog(this,
-                "Error. Los puntos no coinciden con el resultado del partido (PG=1 -> 2pts, PG=0 -> 1pt).",
-                "Error al Insertar",
-                JOptionPane.ERROR_MESSAGE,
-                null
-            );
-            return;
-        }
-        
-        // 8 - Validar Sets vs. Resultado
-        //    Si se gana (PG=1), los sets ganados (SG) deben ser 3.
-        if (pg == 1 && sg != 3) {
-        	JOptionPane.showMessageDialog(this,
-                    "Error. Si se gana el partido (PG=1), los sets ganados (SG) deben ser 3.",
-                    "Error al Insertar",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-                );
-            return;
-        }
-        
-     // Regla 1: Si se perdió (PG=0), es un error si SG es 3 o más.
-     // Regla 2: Si se perdió (PG=0), es un error si SP es menor que 3.
-
-     if (pg == 0) {
-         if (sg >= 3) {
-             JOptionPane.showMessageDialog(this,
-                     "Error. Si se perdió el partido (PG=0), los sets ganados (SG) no pueden ser 3 o más.",
-                     "Error al Insertar",
-                     JOptionPane.ERROR_MESSAGE,
-                     null
-                 );
-             return;
-         }
-         
-         if (sp < 3) {
-             JOptionPane.showMessageDialog(this,
-                     "Error. Si se perdió el partido (PG=0), los sets perdidos (SP) deben ser 3 como mínimo.",
-                     "Error al Insertar",
-                     JOptionPane.ERROR_MESSAGE,
-                     null
-                 );
-             return;
-         }
-         
-         if(tc < 65) {
-        	  JOptionPane.showMessageDialog(this,
-                      "Error. Si se perdió el partido (PG=0), los tantos en contra (TC) deben ser 65 como mínimo.",
-                      "Error al Insertar",
-                      JOptionPane.ERROR_MESSAGE,
-                      null
-                  );
-              return;
-         }
-     }
-
-        // 9 - Minimo tantos si ganas 65
-        //    Si se gana (PG=1), los tantos a favor (TA) deben ser 65 o más.
-        //    (Un 3-0 requiere 75+ puntos, un 3-1 90+, y un 3-2 justo 65+ (ej. 25-23, 25-23, 15-10 = 65)).
-        if (pg == 1 && ta < 65) {
-        	JOptionPane.showMessageDialog(this,
-                    "Error. Si se gana el partido (PG=1), los tantos a favor (TA) deben ser como mínimo 65.",
-                    "Error al Insertar",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-                );
-            return;
-        }
-        
-     // Comprobar que no haya mas de 3 partidos ganados en la jornada
-        int totalPartidosGanados = 0;
-        for(int i = 0; i < dlmJornadasPartidosGanados_resultado.getSize(); i++) {
-            // Sumamos el valor (0 o 1) de cada equipo al total
-            totalPartidosGanados += dlmJornadasPartidosGanados_resultado.getElementAt(i);
-        }
-        totalPartidosGanados += pg; // añade el nuevo partido
-        System.out.println("Total partidos ganados: " + totalPartidosGanados);
-        
-        // Al salir del bucle, comprobamos la suma total
-        // La condición de error es: si el total es MAYOR a 3 (es decir, >= 4)
-        if (totalPartidosGanados > 3) {
-            JOptionPane.showMessageDialog(this,
-                    "Error. La suma total de partidos ganados (" + totalPartidosGanados + ") no puede ser mayor a 3.",
-                    "Error de Lógica",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-            );
-            return; // Salimos del método si la lógica es incorrecta
-        }
-
-        // Comprobar que no haya mas de 3 partidos perdidos en la jornada
-        int totalPartidosPerdidos = 0;
-        for(int i = 0; i < dlmJornadasPartidosPerdidos_resultado.getSize(); i++) {
-            totalPartidosPerdidos += dlmJornadasPartidosPerdidos_resultado.getElementAt(i);
-        }
-        totalPartidosPerdidos += pp; // añade el nuevo partido
-        System.out.println("Total partidos perdidos: " + totalPartidosPerdidos);
-
-        // La condición de error es: si el total es MAYOR a 3 (es decir, >= 4)
-        if (totalPartidosPerdidos >= 4) {
-            JOptionPane.showMessageDialog(this,
-                    "Error. La suma total de partidos perdidos (" + totalPartidosPerdidos + ") no puede ser mayor a 3.",
-                    "Error de Lógica",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
-            );
-            return; 
-        }
-        
-        // Añadimos los valores a los DefaultListModel correspondientes
-        dlmJornadasPuntos_resultado.set(seleccion,puntos);
-        dlmJornadasPartidosJugados_resultado.set(seleccion,pj);
-        dlmJornadasPartidosGanados_resultado.set(seleccion,pg);
-        dlmJornadasPartidosPerdidos_resultado.set(seleccion,pp);
-        dlmJornadasSetsGanados_resultado.set(seleccion,sg);
-        dlmJornadasSetsPerdidos_resultado.set(seleccion,sp);
-        dlmJornadasTantosFavor_resultado.set(seleccion,ta);
-        dlmJornadasTantosContra_resultado.set(seleccion,tc);
-        actualizarDatosMatrizJornadas();
-        actualizarPosicionClasifiacion();
-        
-        
-          JOptionPane.showMessageDialog(this,
-        	    "¡Resultado de la jornada actualizado correctamente!",
-        	    "Actualización Exitosa",
-        	    JOptionPane.INFORMATION_MESSAGE, // Usa INFORMATION_MESSAGE para un icono de éxito/información
-        	    null
-        	);
-         
-    }
-    
-    private void borrarSeleccionadoJornada(){
-        int seleccion = listEquipos_resultadosJornadas.getSelectedIndex();
-        System.out.println("Seleccionado: " + dlmJornadasEquipos_resultado.get(seleccion));
-        if(seleccion >= 0 ){
-        	dlmJornadasPuntos_resultado.set(seleccion, 0);
-            dlmJornadasPartidosJugados_resultado.set(seleccion, 0);
-            dlmJornadasPartidosGanados_resultado.set(seleccion, 0);
-            dlmJornadasPartidosPerdidos_resultado.set(seleccion, 0);
-            dlmJornadasSetsGanados_resultado.set(seleccion, 0);
-            dlmJornadasSetsPerdidos_resultado.set(seleccion, 0);
-            dlmJornadasTantosFavor_resultado.set(seleccion, 0);
-            dlmJornadasTantosContra_resultado.set(seleccion, 0);
-            actualizarDatosMatrizJornadas();
-            actualizarPosicionClasifiacion();
-        }
-    }
-    
-    private void limpiarJornada() {
-    	// usamos equipo porque esta dlm no cambia
-    	int totalEquipos = dlmJornadasEquipos_resultado.getSize();
-
-        // Recorremos cada índice (cada fila) de las listas
-        for (int i = 0; i < totalEquipos; i++) {
-        	dlmJornadasPuntos_resultado.set(i, 0);
-        	dlmJornadasPartidosJugados_resultado.set(i, 0);
-            dlmJornadasPartidosGanados_resultado.set(i, 0);
-            dlmJornadasPartidosPerdidos_resultado.set(i, 0);
-            dlmJornadasSetsGanados_resultado.set(i, 0);
-            dlmJornadasSetsPerdidos_resultado.set(i, 0);
-            dlmJornadasTantosFavor_resultado.set(i, 0);
-            dlmJornadasTantosContra_resultado.set(i, 0);
-            actualizarDatosMatrizJornadas();
-            actualizarPosicionClasifiacion();
-        }
-    }
-
-    /*ESTE METODO ES UNA ASISTENCIA PARA LOS EVENTOS DE INSERTAR, BORRAR Y LIMIPIAR 
-     * QUE SE ENCARGA DE ACTUALIZAR LOS DATOS DE LOS EQUIPOS EN SUS MATRICES*/
-    /**
-     * Sincroniza los datos de los DLM (la vista) con la matriz (el modelo)
-     * para la jornada seleccionada y recalcula la fila total de CADA equipo.
-     */
-	private void actualizarDatosMatrizJornadas() {
-	    int jornadaIndex = comboBoxGestionarJornadas.getSelectedIndex();
-	    
-	    // Bucle principal: recorre cada equipo en la lista
-	    for (int i = 0; i < dlmJornadasEquipos_resultado.getSize(); i++) {
-	        
-	        // 1. Obtiene la matriz para el equipo 'i'
-	        String nombreEquipo = dlmJornadasEquipos_resultado.get(i);
-	        int[][] matrizDelEquipo = obtenterMatrizPorNombreEquipo(nombreEquipo);
-	        
-	        // 2. Sincroniza los datos de la jornada actual
-	        //    (Le pasamos la matriz, la jornada a escribir y el índice 'i' de dónde leer los DLM)
-	        sincronizarJornadaParaEquipo(matrizDelEquipo, jornadaIndex, i);
-	        
-	        // 3. Recalcula la fila total para ESE equipo
-	        //    (Solo necesita la matriz para saber qué sumar)
-	        recalcularTotalParaEquipo(matrizDelEquipo);
-	    }
-	}
-  
-    private void sincronizarJornadaParaEquipo(int[][] matrizDelEquipo, int jornadaIndex, int dlmIndex) {
-        // Obtiene la fila para la JORNADA ACTUAL
-        int[] datosFilaJornada = matrizDelEquipo[jornadaIndex];
-        
-        // Actualiza los datos de esa jornada con los valores de los DLM
-        datosFilaJornada[COL_PJ]     = dlmJornadasPartidosJugados_resultado.get(dlmIndex);
-        datosFilaJornada[COL_PG]     = dlmJornadasPartidosGanados_resultado.get(dlmIndex);
-        datosFilaJornada[COL_PP]     = dlmJornadasPartidosPerdidos_resultado.get(dlmIndex);
-        datosFilaJornada[COL_PUNTOS] = dlmJornadasPuntos_resultado.get(dlmIndex);
-        datosFilaJornada[COL_SG]     = dlmJornadasSetsGanados_resultado.get(dlmIndex);
-        datosFilaJornada[COL_SP]     = dlmJornadasSetsPerdidos_resultado.get(dlmIndex);
-        datosFilaJornada[COL_TA]     = dlmJornadasTantosFavor_resultado.get(dlmIndex);
-        datosFilaJornada[COL_TC]     = dlmJornadasTantosContra_resultado.get(dlmIndex);
-    }
     
     /*CALCULA EL TOTAL DE CADA PARAMETRO DE LA CLASIFICACION DE CADA EQUIPO --> Necesario para actualizar la clasificacion*/
     private void recalcularTotalParaEquipo(int[][] matrizDelEquipo) {
-        // Obtiene la fila total de la matriz de este equipo
-        int[] datosFilaTotal = matrizDelEquipo[ROW_TOTAL];
+       // Se asume que las constantes de columna (COL_PUNTOS, COL_SG, etc.)
+       // están definidas y son accesibles, y que la matrizDelEquipo tiene 10 filas (Jornadas).
         
-        // Pone a 0 la fila total ANTES de sumar
-        for (int k = 0; k < datosFilaTotal.length; k++) {
-            datosFilaTotal[k] = 0;
-        }
+       int puntosTotales = 0;
+       int setsGanadosTotales = 0;
+       int setsPerdidosTotales = 0;
+       int tantosFavorTotales = 0;
+       int tantosContraTotales = 0;
+       int s1TaTotales = 0;
+       int s2TaTotales = 0;
+       int s3TaTotales = 0;
+       int s4TaTotales = 0;
+       int s5TaTotales = 0;
+       int partidosJugadosTotales = 0;
+       int partidosPerdidosTotales = 0;
+       int partidosGanadosTotales = 0;
+       
+       // Se itera sobre cada jornada (fila) en la matriz del equipo.
+       // Suponiendo que la matrizDelEquipo.length es el número total de jornadas (10).
+       for (int J = 0; J < ROW_TOTAL; J++) {
+           // Calcular puntos
+           puntosTotales += matrizDelEquipo[J][COL_PUNTOS];
+           
+           // Calcular sets
+           setsGanadosTotales += matrizDelEquipo[J][COL_SG];
+           setsPerdidosTotales += matrizDelEquipo[J][COL_SP];
+           
+           // Calcular tantos (puntos)
+           tantosFavorTotales += matrizDelEquipo[J][COL_TA];
+           tantosContraTotales += matrizDelEquipo[J][COL_TC];
 
-        // Suma todas las jornadas (filas 0 hasta ROW_TOTAL - 1)
-        for (int j = 0; j < ROW_TOTAL; j++) { // Itera de j=0 hasta una antes de ROW_TOTAL
-            
-            // Bucle 'k' para las columnas (PJ, PG, PP, etc.)
-            for (int k = 0; k < datosFilaTotal.length; k++) {
-                
-                // Suma el valor de la (columna k) de la (jornada j)
-                // al total de la (columna k)
-                datosFilaTotal[k] += matrizDelEquipo[j][k];
-            }
-        }
+           // Calcular tantos por set (sólo para la información detallada)
+           s1TaTotales += matrizDelEquipo[J][COL_S1_TA];
+           s2TaTotales += matrizDelEquipo[J][COL_S2_TA];
+           s3TaTotales += matrizDelEquipo[J][COL_S3_TA];
+           s4TaTotales += matrizDelEquipo[J][COL_S4_TA];
+           s5TaTotales += matrizDelEquipo[J][COL_S5_TA];
+           
+           // Calcular partidos
+           partidosJugadosTotales += matrizDelEquipo[J][COL_PJ];
+           partidosGanadosTotales += matrizDelEquipo[J][COL_PG];
+           partidosPerdidosTotales += matrizDelEquipo[J][COL_PP];
+       }
+       
+       matrizDelEquipo[ROW_TOTAL][COL_PUNTOS] = puntosTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_SG] = setsGanadosTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_SP] = setsPerdidosTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_TA] = tantosFavorTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_TC] = tantosContraTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_S1_TA] = s1TaTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_S2_TA] = s2TaTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_S3_TA] = s3TaTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_S4_TA] = s4TaTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_S5_TA] = s5TaTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_PJ] = partidosJugadosTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_PG] = partidosGanadosTotales;
+       matrizDelEquipo[ROW_TOTAL][COL_PP] = partidosPerdidosTotales;
+       
     }
     
     /*ORDENAR CLASIFICACION -> INSERCCIÓN DE DATOS*/
@@ -2116,16 +1529,19 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     // Este metodo se encarga de insertar los datos de forma ordenada en las dlms
     private void actualizarPosicionClasifiacion() {    	
     	String[] ordenEquipos = new String[equipos.length];
+
     	//Llenar de vacios el array ordenEquipos para poder actualizar la posición
     	for(int i = 0; i < ordenEquipos.length; i++) {
     		ordenEquipos[i] = "";
     	}
-    	
     	//Actualiza los datos del array ordenEquipos con los nombres de los equipos en orden
     	for(int p = 0; p < equipos.length; p++) {
     		int posicion_final = obtenerIndiceEqClasificacion(equipos[p], equipos);
+    		//System.out.printf("EQUIPO %s posicion %s\n", equipos[p], posicion_final);
     		ordenEquipos[posicion_final] = equipos[p];
     	}
+    	
+    	
     		
     	// Actualizar posicion dlms
     	for(int d = 0; d < ordenEquipos.length; d++) {
@@ -2133,6 +1549,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     		int[][] matrizEquipo = obtenterMatrizPorNombreEquipo(ordenEquipos[d]);
     		//Establece los resultados de la temporada en variables
     		int ptos = matrizEquipo[ROW_TOTAL][COL_PUNTOS];
+    		//CALCULAR PARTIDOS
     		int pj = matrizEquipo[ROW_TOTAL][COL_PJ];
 	        int pg = matrizEquipo[ROW_TOTAL][COL_PG];
 	        int pp = matrizEquipo[ROW_TOTAL][COL_PP];
@@ -2153,7 +1570,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     	}
     }
     
-    // Este metodo se enc
+    // Este metodo se encarga de calcular en que posicion ira el equipo que se le es pasado como parametro
     private int obtenerIndiceEqClasificacion(String NOMBRE_EQUIPO, String[] ARRAY_EQUIPOS) {
         // 1. Obtene los resultados del equipo principal
         // (Asumo que tu método se llama 'obtenterMatrizPorNombreEquipo' como escribiste)
@@ -2265,6 +1682,332 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     	   
         return posicion; // Devuelve el número de equipos que quedaron por encima
     }
+    
+
+	
+    private void insertarResultadosJornada() {
+        int partidoSeleccionado = listNombreEquiposLocal.getSelectedIndex();
+        int jornadaIndex = comboBoxJornadas.getSelectedIndex();
+        
+        int setsGanadosLocal = 0;
+        int setsGanadosVisitante = 0;
+       
+        
+        // 1. PRIMERO: Validar que no haya campos vacíos
+        if (txtS1TaL.getText().trim().isEmpty() || 
+            txtS2TaL.getText().trim().isEmpty() || 
+            txtS3TaL.getText().trim().isEmpty() || 
+            txtS4TaL.getText().trim().isEmpty() || 
+            txtS5TaL.getText().trim().isEmpty() ||
+            txtS1TavV.getText().trim().isEmpty() || 
+            txtS2TaV.getText().trim().isEmpty() || 
+            txtS3TaV.getText().trim().isEmpty() || 
+            txtS4TaV.getText().trim().isEmpty() || 
+            txtS5TaV.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Todos los campos deben estar completos.\nSi un set no se jugó, introduce 0.",
+                "Validación - Campos Vacíos", 
+                JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
+        
+        // 2. SEGUNDO: Parsear los valores (ahora sabemos que no están vacíos)
+        int s1TaL = Integer.parseInt(txtS1TaL.getText().trim());
+        int s2TaL = Integer.parseInt(txtS2TaL.getText().trim());
+        int s3TaL = Integer.parseInt(txtS3TaL.getText().trim());
+        int s4TaL = Integer.parseInt(txtS4TaL.getText().trim());
+        int s5TaL = Integer.parseInt(txtS5TaL.getText().trim());
+        
+        int s1TaV = Integer.parseInt(txtS1TavV.getText().trim());
+        int s2TaV = Integer.parseInt(txtS2TaV.getText().trim());
+        int s3TaV = Integer.parseInt(txtS3TaV.getText().trim());
+        int s4TaV = Integer.parseInt(txtS4TaV.getText().trim());
+        int s5TaV = Integer.parseInt(txtS5TaV.getText().trim());
+        
+        // 3. TERCERO: Validar que no haya valores negativos
+        if (s1TaL < 0 || s2TaL < 0 || s3TaL < 0 || s4TaL < 0 || s5TaL < 0 ||
+            s1TaV < 0 || s2TaV < 0 || s3TaV < 0 || s4TaV < 0 || s5TaV < 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Los tantos no pueden ser negativos.",
+                "Validación - Valores Negativos", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }  
+        
+        // 4. Al menos los 3 primeros sets deben estar jugados (al menos un equipo con tantos > 0)
+        if ((s1TaL == 0 && s1TaV == 0) || 
+            (s2TaL == 0 && s2TaV == 0) || 
+            (s3TaL == 0 && s3TaV == 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Los sets 1, 2 y 3 son obligatorios. Al menos un equipo debe tener tantos en cada uno.",
+                "Validación - Sets Obligatorios", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // 5. Comprobar empates (solo en sets que se jugaron)
+        if ((s1TaL == s1TaV && s1TaL > 0) || 
+            (s2TaL == s2TaV && s2TaL > 0) || 
+            (s3TaL == s3TaV && s3TaL > 0) ||
+            (s4TaL == s4TaV && s4TaL > 0) ||
+            (s5TaL == s5TaV && s5TaL > 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: No puede haber empates en los sets.\nCada set debe tener un ganador claro.",
+                "Validación - Empate No Permitido", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+     // 6. CALCULAR SETS GANADOS (solo contar sets que se jugaron)
+        // Set 1
+        if (s1TaL > 0 || s1TaV > 0) {  // Solo si el set se jugó
+            if (s1TaL > s1TaV) setsGanadosLocal++; 
+            else if (s1TaV > s1TaL) setsGanadosVisitante++;
+        }
+
+        // Set 2
+        if (s2TaL > 0 || s2TaV > 0) {
+            if (s2TaL > s2TaV) setsGanadosLocal++; 
+            else if (s2TaV > s2TaL) setsGanadosVisitante++;
+        }
+
+        // Set 3
+        if (s3TaL > 0 || s3TaV > 0) {
+            if (s3TaL > s3TaV) setsGanadosLocal++; 
+            else if (s3TaV > s3TaL) setsGanadosVisitante++;
+        }
+
+        // Set 4
+        if (s4TaL > 0 || s4TaV > 0) {
+            if (s4TaL > s4TaV) setsGanadosLocal++; 
+            else if (s4TaV > s4TaL) setsGanadosVisitante++;
+        }
+
+        // Set 5
+        if (s5TaL > 0 || s5TaV > 0) {
+            if (s5TaL > s5TaV) setsGanadosLocal++; 
+            else if (s5TaV > s5TaL) setsGanadosVisitante++;
+        }
+        
+        // 7. Validar que haya un ganador (3 sets)
+        if (setsGanadosLocal != 3 && setsGanadosVisitante != 3) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: El partido no está completo. Un equipo debe ganar 3 sets.",
+                "Validación - Partido Incompleto", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // 8. Validar que no se jueguen sets de más (SI YA HAY GANADOR)
+        int totalSetsJugados = setsGanadosLocal + setsGanadosVisitante;
+        
+        // Si terminó 3-0, los sets 4 y 5 deben estar en 0
+        if (totalSetsJugados == 3 && (s4TaL > 0 || s4TaV > 0 || s5TaL > 0 || s5TaV > 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Si el partido terminó 3-0, los sets 4 y 5 deben estar en 0.",
+                "Validación - Sets Extra", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Si terminó 3-1, el set 5 debe estar en 0
+        if (totalSetsJugados == 4 && (s5TaL > 0 || s5TaV > 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Si el partido terminó 3-1, el set 5 debe estar en 0.",
+                "Validación - Sets Extra", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+     // 10. ACTUALIZAR DLMs
+        txtSestL.setText(Integer.toString(setsGanadosLocal));
+        dlmJornadaSetsL.set(partidoSeleccionado, setsGanadosLocal);
+        dlmJornadaS1TAL.set(partidoSeleccionado, s1TaL);
+        dlmJornadaS2TAL.set(partidoSeleccionado, s2TaL);
+        dlmJornadaS3TAL.set(partidoSeleccionado, s3TaL);
+        dlmJornadaS4TAL.set(partidoSeleccionado, s4TaL);
+        dlmJornadaS5TAL.set(partidoSeleccionado, s5TaL);
+
+        txtSetsV.setText(Integer.toString(setsGanadosVisitante));
+        dlmJornadaSetsV.set(partidoSeleccionado, setsGanadosVisitante);
+        dlmJornadaS1TAV.set(partidoSeleccionado, s1TaV);
+        dlmJornadaS2TAV.set(partidoSeleccionado, s2TaV);
+        dlmJornadaS3TAV.set(partidoSeleccionado, s3TaV);
+        dlmJornadaS4TAV.set(partidoSeleccionado, s4TaV);
+        dlmJornadaS5TAV.set(partidoSeleccionado, s5TaV);
+
+        // 11. ACTUALIZAR MATRICES DIRECTAMENTE
+        String nombreEquipoLocal = lblEquipoLocal_ResultadoPartido.getText();
+        String nombreEquipoVisitante = lblEquipoVisitante_ResultadoPartido.getText();
+
+        int[][] matriz_eq_local = obtenterMatrizPorNombreEquipo(nombreEquipoLocal);
+        int[][] matriz_eq_visitante = obtenterMatrizPorNombreEquipo(nombreEquipoVisitante);
+
+ 
+        // Determinar ganador
+        boolean isLocalWinner = setsGanadosLocal > setsGanadosVisitante;
+        boolean isVisitanteWinner = setsGanadosVisitante > setsGanadosLocal;
+
+        // Calcular puntos: 2 por victoria, 1 por derrota
+        int puntosLocal = isLocalWinner ? 2 : 1;
+        int puntosVisitante = isVisitanteWinner ? 2 : 1;
+
+        // MATRIZ EQUIPO LOCAL
+        matriz_eq_local[jornadaIndex][COL_PUNTOS] = puntosLocal;
+        matriz_eq_local[jornadaIndex][COL_SG] = setsGanadosLocal;
+        matriz_eq_local[jornadaIndex][COL_SP] = setsGanadosVisitante;
+        matriz_eq_local[jornadaIndex][COL_TA] = s1TaL + s2TaL + s3TaL + s4TaL + s5TaL;
+        matriz_eq_local[jornadaIndex][COL_TC] = s1TaV + s2TaV + s3TaV + s4TaV + s5TaV;
+        matriz_eq_local[jornadaIndex][COL_S1_TA] = s1TaL;
+        matriz_eq_local[jornadaIndex][COL_S2_TA] = s2TaL;
+        matriz_eq_local[jornadaIndex][COL_S3_TA] = s3TaL;
+        matriz_eq_local[jornadaIndex][COL_S4_TA] = s4TaL;
+        matriz_eq_local[jornadaIndex][COL_S5_TA] = s5TaL;
+        matriz_eq_local[jornadaIndex][COL_PG] = isLocalWinner ? 1 : 0;
+        matriz_eq_local[jornadaIndex][COL_PP] = isLocalWinner ? 0 : 1;
+        matriz_eq_local[jornadaIndex][COL_PJ] = 1;
+
+        // MATRIZ EQUIPO VISITANTE
+        matriz_eq_visitante[jornadaIndex][COL_PUNTOS] = puntosVisitante;
+        matriz_eq_visitante[jornadaIndex][COL_SG] = setsGanadosVisitante;
+        matriz_eq_visitante[jornadaIndex][COL_SP] = setsGanadosLocal;
+        matriz_eq_visitante[jornadaIndex][COL_TA] = s1TaV + s2TaV + s3TaV + s4TaV + s5TaV;
+        matriz_eq_visitante[jornadaIndex][COL_TC] = s1TaL + s2TaL + s3TaL + s4TaL + s5TaL;
+        matriz_eq_visitante[jornadaIndex][COL_S1_TA] = s1TaV;
+        matriz_eq_visitante[jornadaIndex][COL_S2_TA] = s2TaV;
+        matriz_eq_visitante[jornadaIndex][COL_S3_TA] = s3TaV;
+        matriz_eq_visitante[jornadaIndex][COL_S4_TA] = s4TaV;
+        matriz_eq_visitante[jornadaIndex][COL_S5_TA] = s5TaV;
+        matriz_eq_visitante[jornadaIndex][COL_PG] = isVisitanteWinner ? 1 : 0;
+        matriz_eq_visitante[jornadaIndex][COL_PP] = isVisitanteWinner ? 0 : 1;
+        matriz_eq_visitante[jornadaIndex][COL_PJ] = 1;
+
+        // 12. Recalcular totales
+        recalcularTotalParaEquipo(matriz_eq_local);
+        recalcularTotalParaEquipo(matriz_eq_visitante);
+
+        // 13. ACTUALIZAR CLASIFICACIÓN
+        actualizarPosicionClasifiacion();
+
+
+        // 14. MENSAJE DE ÉXITO
+        JOptionPane.showMessageDialog(this, 
+            "Resultados guardados correctamente.",
+            "Guardado Exitoso", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void borrarPatido() {
+        int partidoSeleccionado = listNombreEquiposLocal.getSelectedIndex();
+        
+        // 1. PRIMERO: Actualizar las DLM a 0
+        dlmJornadaSetsL.set(partidoSeleccionado, 0);
+        dlmJornadaS1TAL.set(partidoSeleccionado, 0);
+        dlmJornadaS2TAL.set(partidoSeleccionado, 0);
+        dlmJornadaS3TAL.set(partidoSeleccionado, 0);
+        dlmJornadaS4TAL.set(partidoSeleccionado, 0);
+        dlmJornadaS5TAL.set(partidoSeleccionado, 0);
+        
+        dlmJornadaSetsV.set(partidoSeleccionado, 0);
+        dlmJornadaS1TAV.set(partidoSeleccionado, 0);
+        dlmJornadaS2TAV.set(partidoSeleccionado, 0);
+        dlmJornadaS3TAV.set(partidoSeleccionado, 0);
+        dlmJornadaS4TAV.set(partidoSeleccionado, 0);
+        dlmJornadaS5TAV.set(partidoSeleccionado, 0);
+        
+        // 2. SEGUNDO: Obtener los equipos del partido seleccionado
+        String nombreEquipoLocal = dlmJornadasEqLocal.get(partidoSeleccionado);
+        String nombreEquipoVisitante = dlmJornadasEqVisitante.get(partidoSeleccionado);
+        
+        int[][] matrizEquipoLocal = obtenterMatrizPorNombreEquipo(nombreEquipoLocal);
+        int[][] matrizEquipoVisitante = obtenterMatrizPorNombreEquipo(nombreEquipoVisitante);
+        
+        int jornadaIndex = comboBoxJornadas.getSelectedIndex();
+        
+        // 3. TERCERO: Poner a 0 en las matrices
+        asignarResultadosJornada(matrizEquipoLocal, jornadaIndex, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        asignarResultadosJornada(matrizEquipoVisitante, jornadaIndex, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+       
+        
+        // 4. CUARTO: Recalcular totales
+        recalcularTotalParaEquipo(matrizEquipoLocal);
+        recalcularTotalParaEquipo(matrizEquipoVisitante);
+        
+        // 5. QUINTO: Actualizar clasificación
+        actualizarPosicionClasifiacion();
+        
+        // 6. SEXTO: Actualizar la vista de los JTextField
+        txtSestL.setText("0");
+        txtS1TaL.setText("0");
+        txtS2TaL.setText("0");
+        txtS3TaL.setText("0");
+        txtS4TaL.setText("0");
+        txtS5TaL.setText("0");
+        txtSetsV.setText("0");
+        txtS1TavV.setText("0");
+        txtS2TaV.setText("0");
+        txtS3TaV.setText("0");
+        txtS4TaV.setText("0");
+        txtS5TaV.setText("0");
+    }
+    
+    private void limpiarJornada() {
+        int jornadaIndex = comboBoxJornadas.getSelectedIndex();
+        
+        // 1. PRIMERO: Limpiar todas las DLM de la jornada
+        for(int i = 0; i < (equipos.length/2); i++) {
+            dlmJornadaSetsL.set(i, 0);
+            dlmJornadaS1TAL.set(i, 0);
+            dlmJornadaS2TAL.set(i, 0);
+            dlmJornadaS3TAL.set(i, 0);
+            dlmJornadaS4TAL.set(i, 0);
+            dlmJornadaS5TAL.set(i, 0);
+            
+            dlmJornadaSetsV.set(i, 0);
+            dlmJornadaS1TAV.set(i, 0);
+            dlmJornadaS2TAV.set(i, 0);
+            dlmJornadaS3TAV.set(i, 0);
+            dlmJornadaS4TAV.set(i, 0);
+            dlmJornadaS5TAV.set(i, 0);
+        }
+        
+        // 2. SEGUNDO: Limpiar las matrices de todos los partidos de la jornada
+        for (int i = 0; i < dlmJornadasEqLocal.getSize(); i++) {
+            String nombreEquipoLocal = dlmJornadasEqLocal.get(i);
+            String nombreEquipoVisitante = dlmJornadasEqVisitante.get(i);
+            
+            int[][] matrizEquipoLocal = obtenterMatrizPorNombreEquipo(nombreEquipoLocal);
+            int[][] matrizEquipoVisitante = obtenterMatrizPorNombreEquipo(nombreEquipoVisitante);
+            
+            // Poner a 0 en las matrices
+            asignarResultadosJornada(matrizEquipoLocal, jornadaIndex, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            asignarResultadosJornada(matrizEquipoVisitante, jornadaIndex, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            
+            // Recalcular totales
+            recalcularTotalParaEquipo(matrizEquipoLocal);
+            recalcularTotalParaEquipo(matrizEquipoVisitante);
+        }
+        
+        // 3. TERCERO: Actualizar clasificación
+        actualizarPosicionClasifiacion();
+        
+        // 4. CUARTO: Actualizar vista si hay un partido seleccionado
+        int partidoSeleccionado = listNombreEquiposLocal.getSelectedIndex();
+        if(partidoSeleccionado >= 0) {
+            txtSestL.setText("0");
+            txtS1TaL.setText("0");
+            txtS2TaL.setText("0");
+            txtS3TaL.setText("0");
+            txtS4TaL.setText("0");
+            txtS5TaL.setText("0");
+            txtSetsV.setText("0");
+            txtS1TavV.setText("0");
+            txtS2TaV.setText("0");
+            txtS3TaV.setText("0");
+            txtS4TaV.setText("0");
+            txtS5TaV.setText("0");
+        }
+    }
+   
         
 // ---------------------- EVENT LISTENERS ------------------------------------ //    
     
@@ -2273,24 +2016,63 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	public void actionPerformed(ActionEvent ae) {
 		Object o = ae.getSource(); // Obtiene la fuente de el evento ( quien lo invoca)
 		
-		// BOTON CERRAR SESION
-		if(o == btnCerrarSesion_ANON || o == btnCerrarSesion_ARBITRO) {
+		// CERRAR SESION
+		if(o == btnCerrarSesion) {
+			this.dispose();
 			Login login = new Login();
 			login.setVisible(true);
-			this.dispose();	
+		}
+			
+		// SIGUIENTE JORNADA
+		if(o == btnSiguienteJornada) {
+			int index = comboBoxJornadas.getSelectedIndex()+1;
+			if(index < dcmJornadas.getSize()) {
+				comboBoxJornadas.setSelectedIndex(index);
+			}	
 		}
 		
+		// JORNADA ANTERIOR
+		if(o == btnAnteriorJornada) {
+			int index = comboBoxJornadas.getSelectedIndex()-1;
+			if(index >= 0) {
+				comboBoxJornadas.setSelectedIndex(index);
+			}
+		}
+			
 		// SOLO EL ARBITRO PUEDE EJECTUTAR ESTOS EVENTOS
-		if(o == btnInsertar_resultadosJornadas && username.equals(Login.arbitro_user)) {
+		if(o == btnGuardarCambios_resultadosJornadas && username.equals(Login.arbitro_user)) {
 			insertarResultadosJornada();
 		}
 		
 		if(o == btnBorrar_resultadosJornadas && username.equals(Login.arbitro_user)) {
-            borrarSeleccionadoJornada();
+			int respuesta = JOptionPane.showConfirmDialog(
+				    this,
+				    "¿Está seguro de que desea eliminar todos los datos del partido?\n\nEsta acción no se puede deshacer.",
+				    "Advertencia - Borrar Partido",
+				    JOptionPane.YES_NO_OPTION,
+				    JOptionPane.WARNING_MESSAGE
+				);
+
+				if (respuesta == JOptionPane.YES_OPTION) {
+					borrarPatido();
+				    JOptionPane.showMessageDialog(this, "Datos del partido eliminados correctamente.");
+				}
 		}
 		
 		if(o == btnLimpiar_resultadosJornadas && username.equals(Login.arbitro_user)) {
-			limpiarJornada();
+			// PARA EVITAR QUE EL USUARIO BORRE SIN QUERER LOS DATOS
+			int respuesta = JOptionPane.showConfirmDialog(
+				    this,
+				    "¿Está seguro de que desea eliminar todos los datos de la jornada?\n\nEsta acción no se puede deshacer.",
+				    "Advertencia - Limpiar Jornada",
+				    JOptionPane.YES_NO_OPTION,
+				    JOptionPane.WARNING_MESSAGE
+				);
+
+				if (respuesta == JOptionPane.YES_OPTION) {
+				    limpiarJornada();
+				    JOptionPane.showMessageDialog(this, "Datos de la jornada eliminados correctamente.");
+				}
 		}
 		
 	}
@@ -2301,52 +2083,76 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		Object o = lse.getSource();
 		int index;
 		index = ((JList<?>)o).getSelectedIndex();
+		
+		// SINCRONIZAR SELECCIÓN
 		if(index >= 0) {
-			/*SELECCIONAR EL RESTO DE LISTAS DE LAS JORNADAS*/
-			listEquipos_resultadosJornadas.setSelectedIndex(index);
-			listPTOS_resultadosJornadas.setSelectedIndex(index);
-			listPJ_resultadosJornadas.setSelectedIndex(index);
-			listPG_resultadosJornadas.setSelectedIndex(index);
-			listPP_resultadosJornadas.setSelectedIndex(index);
-			listSG_resultadosJornadas.setSelectedIndex(index);
-			listSP_resultadosJornadas.setSelectedIndex(index);
-			listTA_resultadosJornadas.setSelectedIndex(index);
-			listTC_resultadosJornadas.setSelectedIndex(index);
-			
-			/*CAMBIAR TXT FIELDS*/
-			
-			// Comprobamos que el index sea válido y que los modelos no estén vacíos
-			if (index >= 0 &&
-			    index < dlmJornadasEquipos_resultado.getSize() &&
-			    index < dlmJornadasPuntos_resultado.getSize() &&
-			    index < dlmJornadasPartidosJugados_resultado.getSize() &&
-			    index < dlmJornadasPartidosGanados_resultado.getSize() &&
-			    index < dlmJornadasPartidosPerdidos_resultado.getSize() &&
-			    index < dlmJornadasSetsGanados_resultado.getSize() &&
-			    index < dlmJornadasSetsPerdidos_resultado.getSize() &&
-			    index < dlmJornadasTantosFavor_resultado.getSize() &&
-			    index < dlmJornadasTantosContra_resultado.getSize()
-			) {
-			    txtEquipos_resultadosJornadas.setText(dlmJornadasEquipos_resultado.get(index));
-			    txtPtos_resultadosJornadas.setText(Integer.toString(dlmJornadasPuntos_resultado.get(index)));
-			    txtPJ_resultadosJornadas.setText(Integer.toString(dlmJornadasPartidosJugados_resultado.get(index)));
-			    txtPG_resultadosJornadas.setText(Integer.toString(dlmJornadasPartidosGanados_resultado.get(index)));
-			    txtPP_resultadosJornadas.setText(Integer.toString(dlmJornadasPartidosPerdidos_resultado.get(index)));
-			    txtSG_resultadosJornadas.setText(Integer.toString(dlmJornadasSetsGanados_resultado.get(index)));
-			    txtSP_resultadosJornadas.setText(Integer.toString(dlmJornadasSetsPerdidos_resultado.get(index)));
-			    txtTA_resultadosJornadas.setText(Integer.toString(dlmJornadasTantosFavor_resultado.get(index)));
-			    txtTC_resultadosJornadas.setText(Integer.toString(dlmJornadasTantosContra_resultado.get(index)));
-			} else {
-			    // Si no es válido, limpiamos los JTextField para evitar mostrar datos incorrectos
-			    txtPtos_resultadosJornadas.setText("");
-			    txtPJ_resultadosJornadas.setText("");
-			    txtPG_resultadosJornadas.setText("");
-			    txtPP_resultadosJornadas.setText("");
-			    txtSG_resultadosJornadas.setText("");
-			    txtSP_resultadosJornadas.setText("");
-			    txtTA_resultadosJornadas.setText("");
-			    txtTC_resultadosJornadas.setText("");
-			}
+			listNombreEquiposLocal.setSelectedIndex(index);
+			listSetsLocales.setSelectedIndex(index); 
+			listS1TL.setSelectedIndex(index);
+			listS2TL.setSelectedIndex(index);
+			listS3TL.setSelectedIndex(index);
+			listS4TL.setSelectedIndex(index);
+			listS5TL.setSelectedIndex(index);
+			listNombreEquiposVisitantes.setSelectedIndex(index);
+			listSetsVisitantes.setSelectedIndex(index);
+			listS1TV.setSelectedIndex(index);
+			listS2TV.setSelectedIndex(index);
+			listS3TV.setSelectedIndex(index);
+			listS4TV.setSelectedIndex(index);
+			listS5TV.setSelectedIndex(index);
 		}	
+		// SINCRONIZAR NOMBRE EQUIPOS, Y JTEXTFIELDS
+		if(index >= 0 &&
+	        index < dlmJornadasEqLocal.getSize() &&
+	        index < dlmJornadasEqVisitante.getSize() &&
+	        index < dlmJornadaSetsL.getSize() &&
+	        index < dlmJornadaS1TAL.getSize() &&
+	        index < dlmJornadaS2TAL.getSize() &&
+	        index < dlmJornadaS3TAL.getSize() &&
+	        index < dlmJornadaS4TAL.getSize() &&
+	        index < dlmJornadaS5TAL.getSize() &&
+	        index < dlmJornadaSetsV.getSize() &&
+	        index < dlmJornadaS1TAV.getSize() &&
+	        index < dlmJornadaS2TAV.getSize() &&
+	        index < dlmJornadaS3TAV.getSize() &&
+	        index < dlmJornadaS4TAV.getSize() &&
+	        index < dlmJornadaS5TAV.getSize()) {
+			// UNA VEZ COMPROBADO QUE PODEMOS ACCEDER ALAS DLM ACTUALIZAMOS LOS JTEXT FIELDS Y LOS NOMBRES DE LOS EQUIPOS
+			//--LOCALES--
+			lblEquipoLocal_ResultadoPartido.setText(dlmJornadasEqLocal.get(index));
+			txtSestL.setText(Integer.toString(dlmJornadaSetsL.get(index)));
+			txtS1TaL.setText(Integer.toString(dlmJornadaS1TAL.get(index)));
+			txtS2TaL.setText(Integer.toString(dlmJornadaS2TAL.get(index)));
+			txtS3TaL.setText(Integer.toString(dlmJornadaS3TAL.get(index)));
+			txtS4TaL.setText(Integer.toString(dlmJornadaS4TAL.get(index)));
+			txtS5TaL.setText(Integer.toString(dlmJornadaS5TAL.get(index)));
+			//--VISITANTES--
+			lblEquipoVisitante_ResultadoPartido.setText(dlmJornadasEqVisitante.get(index));
+			txtSetsV.setText(Integer.toString(dlmJornadaSetsV.get(index)));
+			txtS1TavV.setText(Integer.toString(dlmJornadaS1TAV.get(index)));
+			txtS2TaV.setText(Integer.toString(dlmJornadaS2TAV.get(index)));
+			txtS3TaV.setText(Integer.toString(dlmJornadaS3TAV.get(index)));
+			txtS4TaV.setText(Integer.toString(dlmJornadaS4TAV.get(index)));
+			txtS5TaV.setText(Integer.toString(dlmJornadaS5TAV.get(index)));
+			
+		} else {
+			//--LOCALES--
+			lblEquipoLocal_ResultadoPartido.setText("EQUIPO LOCAL");
+			txtSestL.setText("");
+			txtS1TaL.setText("");
+			txtS2TaL.setText("");
+			txtS3TaL.setText("");
+			txtS4TaL.setText("");
+			txtS5TaL.setText("");
+			//--VISITANTES--
+			lblEquipoVisitante_ResultadoPartido.setText("EQUIPO VISITANTE");
+			txtSetsV.setText("");
+			txtS1TavV.setText("");
+			txtS2TaV.setText("");
+			txtS3TaV.setText("");
+			txtS4TaV.setText("");
+			txtS5TaV.setText("");
+			
+		}
 	}
 }
