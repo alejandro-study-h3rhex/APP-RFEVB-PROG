@@ -23,6 +23,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.BoxLayout;
@@ -112,7 +114,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JList<Integer> listS5TV;
 	private JPanel panelTxtJornadasContainer;
 	private JPanel panelBtnContainer;
-	private JButton btnInsertar_resultadosJornadas;
+	private JButton btnGuardarCambios_resultadosJornadas;
 	private JButton btnBorrar_resultadosJornadas;
 	private JButton btnLimpiar_resultadosJornadas;
 	private JPanel txtLocales;
@@ -121,17 +123,17 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private JLabel lblEquipoVisitante_ResultadoPartido;
 	private JPanel localesInput;
 	private JLabel lblSetsTotales;
-	private JTextField textField_6;
+	private JTextField txtSestL;
 	private JLabel lblS1Ta;
-	private JTextField textField_7;
+	private JTextField txtS1TaL;
 	private JLabel lblS2Ta;
-	private JTextField textField_8;
+	private JTextField txtS2TaL;
 	private JLabel lblS3Ta;
-	private JTextField textField_9;
+	private JTextField txtS3TaL;
 	private JLabel lblS4Ta;
-	private JTextField textField_10;
+	private JTextField txtS4TaL;
 	private JLabel lblS5Ta;
-	private JTextField textField_11;
+	private JTextField txtS5TaL;
 	private JPanel visitantesInput;
 	private JLabel lblSetsTotalesV;
 	private JTextField txtSetsV;
@@ -227,6 +229,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	private DefaultListModel<Integer> dlmClasificacionSetsPerdidos;
 	private DefaultListModel<Integer> dlmClasificacionTantosFavor;
 	private DefaultListModel<Integer> dlmClasificacionTantosContra;
+	private JPanel panelTituloClasificacion;
+	private JLabel lblClasificacion;
 	
 	// -- DLMs --
 	
@@ -415,7 +419,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelTitulo = new JPanel();
 		panelJornadas.add(panelTitulo);
 		
-		lblGestionarJornadas = new JLabel("RESULTADOS JORNADAS");
+		lblGestionarJornadas = 	new JLabel("JORNADAS");
 		lblGestionarJornadas.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblGestionarJornadas.setForeground(azulPrimero);
 		lblGestionarJornadas.setFont(new Font("Leelawadee", Font.BOLD, 25));
@@ -434,6 +438,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListasJornadas.setLayout(gbl_panelListasJornadas);
 		
 		panelNumeroJornadas = new JPanel();
+		panelNumeroJornadas.setMaximumSize(new Dimension(75, 0));
+		panelNumeroJornadas.setMinimumSize(new Dimension(75, 0));
 		panelNumeroJornadas.setBackground(azulSegundo);
 		GridBagConstraints gbc_panelNumeroJornadas = new GridBagConstraints();
 		gbc_panelNumeroJornadas.insets = new Insets(0, 0, 0, 5);
@@ -477,6 +483,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerLocales.setLayout(gbl_panelListContainerLocales);
 		
 		listNombreEquiposLocal = new JList<String>(dlmJornadasEqLocal);
+		listNombreEquiposLocal.addListSelectionListener(this);
+		listNombreEquiposLocal.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listNombreEquiposLocal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listNombreEquiposLocal.setBackground(azulTercero);
 		GridBagConstraints gbc_listNombreEquiposLocal = new GridBagConstraints();
@@ -487,6 +495,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerLocales.add(listNombreEquiposLocal, gbc_listNombreEquiposLocal);
 		
 		listSetsLocales = new JList<Integer>(dlmJornadaSetsL);
+		listSetsLocales.addListSelectionListener(this);
+		listSetsLocales.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSetsLocales.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listSetsLocales.setBackground(azulTercero);
 		GridBagConstraints gbc_listSetsLocales = new GridBagConstraints();
@@ -497,6 +507,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerLocales.add(listSetsLocales, gbc_listSetsLocales);
 		
 		listS1TL = new JList<Integer>(dlmJornadaS1TAL);
+		listS1TL.addListSelectionListener(this);
+		listS1TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS1TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS1TL.setBackground(azulTercero);
 		GridBagConstraints gbc_listS1TL = new GridBagConstraints();
@@ -507,6 +519,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerLocales.add(listS1TL, gbc_listS1TL);
 		
 		listS2TL = new JList<Integer>(dlmJornadaS2TAL);
+		listS2TL.addListSelectionListener(this);
+		listS2TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS2TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS2TL.setBackground(azulTercero);
 		GridBagConstraints gbc_listS2TL = new GridBagConstraints();
@@ -517,6 +531,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerLocales.add(listS2TL, gbc_listS2TL);
 		
 		listS3TL = new JList<Integer>(dlmJornadaS3TAL);
+		listS3TL.addListSelectionListener(this);
+		listS3TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS3TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS3TL.setBackground(azulTercero);
 		GridBagConstraints gbc_listS3TL = new GridBagConstraints();
@@ -527,6 +543,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerLocales.add(listS3TL, gbc_listS3TL);
 		
 		listS4TL = new JList<Integer>(dlmJornadaS4TAL);
+		listS4TL.addListSelectionListener(this);
+		listS4TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS4TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS4TL.setBackground(azulTercero);
 		GridBagConstraints gbc_listS4TL = new GridBagConstraints();
@@ -537,6 +555,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerLocales.add(listS4TL, gbc_listS4TL);
 		
 		listS5TL = new JList<Integer>(dlmJornadaS5TAL);
+		listS5TL.addListSelectionListener(this);
+		listS5TL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS5TL.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS5TL.setBackground(azulTercero);
 		GridBagConstraints gbc_listS5TL = new GridBagConstraints();
@@ -574,6 +594,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerVisitantes.setLayout(gbl_panelListContainerVisitantes);
 		
 		listNombreEquiposVisitantes = new JList<String>(dlmJornadasEqVisitante);
+		listNombreEquiposVisitantes.addListSelectionListener(this);
+		listNombreEquiposVisitantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listNombreEquiposVisitantes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listNombreEquiposVisitantes.setBackground(azulTercero);
 		GridBagConstraints gbc_listNombreEquiposVisitantes = new GridBagConstraints();
@@ -584,6 +606,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerVisitantes.add(listNombreEquiposVisitantes, gbc_listNombreEquiposVisitantes);
 		
 		listSetsVisitantes = new JList<Integer>(dlmJornadaSetsV);
+		listSetsVisitantes.addListSelectionListener(this);
+		listSetsVisitantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSetsVisitantes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listSetsVisitantes.setBackground(azulTercero);
 		GridBagConstraints gbc_listSetsVisitantes = new GridBagConstraints();
@@ -594,6 +618,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerVisitantes.add(listSetsVisitantes, gbc_listSetsVisitantes);
 		
 		listS1TV = new JList<Integer>(dlmJornadaS1TAV);
+		listS1TV.addListSelectionListener(this);
+		listS1TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS1TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS1TV.setBackground(azulTercero);
 		GridBagConstraints gbc_listS1TV = new GridBagConstraints();
@@ -604,6 +630,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerVisitantes.add(listS1TV, gbc_listS1TV);
 		
 		listS2TV = new JList<Integer>(dlmJornadaS2TAV);
+		listS2TV.addListSelectionListener(this);
+		listS2TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS2TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS2TV.setBackground(azulTercero);
 		GridBagConstraints gbc_listS2TV = new GridBagConstraints();
@@ -614,6 +642,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerVisitantes.add(listS2TV, gbc_listS2TV);
 		
 		listS3TV = new JList<Integer>(dlmJornadaS3TAV);
+		listS3TV.addListSelectionListener(this);
+		listS3TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS3TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS3TV.setBackground(azulTercero);
 		GridBagConstraints gbc_listS3TV = new GridBagConstraints();
@@ -624,6 +654,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerVisitantes.add(listS3TV, gbc_listS3TV);
 		
 		listS4TV = new JList<Integer>(dlmJornadaS4TAV);
+		listS4TV.addListSelectionListener(this);
+		listS4TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS4TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS4TV.setBackground(azulTercero);
 		GridBagConstraints gbc_listS4TV = new GridBagConstraints();
@@ -634,6 +666,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerVisitantes.add(listS4TV, gbc_listS4TV);
 		
 		listS5TV = new JList<Integer>(dlmJornadaS5TAV);
+		listS5TV.addListSelectionListener(this);
+		listS5TV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listS5TV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listS5TV.setBackground(azulTercero);
 		GridBagConstraints gbc_listS5TV = new GridBagConstraints();
@@ -643,11 +677,9 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelListContainerVisitantes.add(listS5TV, gbc_listS5TV);
 		
 		JPanel panelBotonesJornadas = new JPanel();
-		panelBotonesJornadas.setPreferredSize(new Dimension(950, 200));
-		panelBotonesJornadas.setMaximumSize(new Dimension(1000, 250));
-		if(!this.username.equals(Login.arbitro_user)) {
-			panelBotonesJornadas.setVisible(false);
-		}
+		panelBotonesJornadas.setPreferredSize(new Dimension(1100, 220));
+		panelBotonesJornadas.setMaximumSize(new Dimension(1000, 220));
+		
 		panelJornadas.add(panelBotonesJornadas);
 		panelBotonesJornadas.setLayout(new BoxLayout(panelBotonesJornadas, BoxLayout.Y_AXIS));
 		
@@ -660,6 +692,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		txtLocales.setLayout(new BorderLayout(0, 0));
 		
 		lblEquipoLocal_ResultadoPartido= new JLabel("EQUIPO LOCAL");
+		lblEquipoLocal_ResultadoPartido.setPreferredSize(new Dimension(200, 50));
 		lblEquipoLocal_ResultadoPartido.setVerticalAlignment(SwingConstants.TOP);
 		lblEquipoLocal_ResultadoPartido.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEquipoLocal_ResultadoPartido.setHorizontalAlignment(SwingConstants.LEFT);
@@ -673,67 +706,70 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		lblSetsTotales.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		localesInput.add(lblSetsTotales);
 		
-		textField_6 = new JTextField();
-		textField_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_6.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
-		textField_6.setEditable(false);
-		textField_6.setColumns(3);
-		localesInput.add(textField_6);
+		txtSestL = new JTextField();
+		txtSestL.setEnabled(false);
+		txtSestL.setEditable(false);
+		txtSestL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSestL.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
+		txtSestL.setColumns(3);
+		localesInput.add(txtSestL);
 		
 		lblS1Ta = new JLabel("S1 - TA:");
+		
 		lblS1Ta.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblS1Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		localesInput.add(lblS1Ta);
 		
-		textField_7 = new JTextField();
-		textField_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_7.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
-		textField_7.setColumns(3);
-		localesInput.add(textField_7);
+		
+		txtS1TaL = new JTextField();
+		txtS1TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS1TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS1TaL.setColumns(3);
+		localesInput.add(txtS1TaL);
 		
 		lblS2Ta = new JLabel("S2 - TA:");
 		lblS2Ta.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblS2Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		localesInput.add(lblS2Ta);
 		
-		textField_8 = new JTextField();
-		textField_8.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_8.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
-		textField_8.setColumns(3);
-		localesInput.add(textField_8);
+		txtS2TaL = new JTextField();
+		txtS2TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS2TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS2TaL.setColumns(3);
+		localesInput.add(txtS2TaL);
 		
 		lblS3Ta = new JLabel("S3 - TA:");
 		lblS3Ta.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblS3Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		localesInput.add(lblS3Ta);
 		
-		textField_9 = new JTextField();
-		textField_9.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_9.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
-		textField_9.setColumns(3);
-		localesInput.add(textField_9);
+		txtS3TaL = new JTextField();
+		txtS3TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS3TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS3TaL.setColumns(3);
+		localesInput.add(txtS3TaL);
 		
 		lblS4Ta = new JLabel("S4 - TA:");
 		lblS4Ta.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblS4Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		localesInput.add(lblS4Ta);
 		
-		textField_10 = new JTextField();
-		textField_10.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_10.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
-		textField_10.setColumns(3);
-		localesInput.add(textField_10);
+		txtS4TaL = new JTextField();
+		txtS4TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS4TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS4TaL.setColumns(3);
+		localesInput.add(txtS4TaL);
 		
 		lblS5Ta = new JLabel("S5 - TA:");
 		lblS5Ta.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblS5Ta.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		localesInput.add(lblS5Ta);
 		
-		textField_11 = new JTextField();
-		textField_11.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_11.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
-		textField_11.setColumns(3);
-		localesInput.add(textField_11);
+		txtS5TaL = new JTextField();
+		txtS5TaL.setHorizontalAlignment(SwingConstants.CENTER);
+		txtS5TaL.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 15));
+		txtS5TaL.setColumns(3);
+		localesInput.add(txtS5TaL);
 		
 		
 		txtVisitantes = new JPanel();
@@ -741,6 +777,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		txtVisitantes.setLayout(new BorderLayout(0, 0));
 		
 		lblEquipoVisitante_ResultadoPartido = new JLabel("EQUIPO VISITANTE");
+		lblEquipoVisitante_ResultadoPartido.setPreferredSize(new Dimension(200, 50));
 		lblEquipoVisitante_ResultadoPartido.setVerticalAlignment(SwingConstants.TOP);
 		lblEquipoVisitante_ResultadoPartido.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblEquipoVisitante_ResultadoPartido.setHorizontalAlignment(SwingConstants.LEFT);
@@ -755,9 +792,10 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		visitantesInput.add(lblSetsTotalesV);
 		
 		txtSetsV = new JTextField();
+		txtSetsV.setEnabled(false);
+		txtSetsV.setEditable(false);
 		txtSetsV.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSetsV.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
-		txtSetsV.setEditable(false);
 		txtSetsV.setColumns(3);
 		visitantesInput.add(txtSetsV);
 		
@@ -820,19 +858,22 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelBotonesJornadas.add(panelBtnContainer);
 		panelBtnContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		btnInsertar_resultadosJornadas = new JButton("Insertar");
-		btnInsertar_resultadosJornadas.setForeground(new Color(51, 153, 204));
-		btnInsertar_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnInsertar_resultadosJornadas.setBackground(new Color(253, 253, 150));
-		panelBtnContainer.add(btnInsertar_resultadosJornadas);
+		btnGuardarCambios_resultadosJornadas = new JButton("Guardar Cambios");
+		btnGuardarCambios_resultadosJornadas.addActionListener(this);
+		btnGuardarCambios_resultadosJornadas.setForeground(new Color(51, 153, 204));
+		btnGuardarCambios_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnGuardarCambios_resultadosJornadas.setBackground(new Color(253, 253, 150));
+		panelBtnContainer.add(btnGuardarCambios_resultadosJornadas);
 		
-		btnBorrar_resultadosJornadas = new JButton("Borrar");
+		btnBorrar_resultadosJornadas = new JButton("Borrar Partido");
+		btnBorrar_resultadosJornadas.addActionListener(this);
 		btnBorrar_resultadosJornadas.setForeground(new Color(51, 153, 204));
 		btnBorrar_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBorrar_resultadosJornadas.setBackground(new Color(253, 253, 150));
 		panelBtnContainer.add(btnBorrar_resultadosJornadas);
 		
-		btnLimpiar_resultadosJornadas = new JButton("Limpiar");
+		btnLimpiar_resultadosJornadas = new JButton("Limpiar Jornada");
+		btnLimpiar_resultadosJornadas.addActionListener(this);
 		btnLimpiar_resultadosJornadas.setForeground(new Color(51, 153, 204));
 		btnLimpiar_resultadosJornadas.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnLimpiar_resultadosJornadas.setBackground(new Color(253, 253, 150));
@@ -844,6 +885,15 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		scrollPanel.add(Clasificacion);
 		Clasificacion.setLayout(new BoxLayout(Clasificacion, BoxLayout.Y_AXIS));
 		
+		panelTituloClasificacion = new JPanel();
+		Clasificacion.add(panelTituloClasificacion);
+		
+		lblClasificacion = new JLabel("CLASIFICACIÓN");
+		lblClasificacion.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblClasificacion.setForeground(new Color(0, 128, 192));
+		lblClasificacion.setFont(new Font("Leelawadee", Font.BOLD, 25));
+		panelTituloClasificacion.add(lblClasificacion);
+		
 		panelGestionarClasificacionHeader = new JPanel();
 		panelGestionarClasificacionHeader.setBackground(new Color(0, 128, 192));
 		Clasificacion.add(panelGestionarClasificacionHeader);
@@ -852,6 +902,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		panelGestionClasificacionListas = new JPanel();
 		Clasificacion.add(panelGestionClasificacionListas);
 		panelGestionClasificacionListas.setLayout(new GridLayout(0, 9, 0, 0));
+		
 		
 		/*CLASIFIACION EQUIPOS*/
 		listEquipos__resultadosClasificacion = new JList<String>(dlmEquipos);
@@ -999,20 +1050,41 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		
 		
 		
+		
+		
 // ----------------------------------- GESTION USUARIOS ------------------------------------ //  
 	    
 	    /*GESTION USUARIOS*/
 		
 		if (username_param.equals(Login.arbitro_user)){
-			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			this.setTitle(this.getTitle() + " - GESTIÓN ARBITRO");
+		} else {
+			panelBtnContainer.setVisible(false);
+			btnGuardarCambios_resultadosJornadas.setEnabled(false);
+			btnBorrar_resultadosJornadas.setEnabled(false);
+			btnLimpiar_resultadosJornadas.setEnabled(false);
+			txtS1TaL.setEnabled(false);
+			txtS2TaL.setEnabled(false);
+			txtS3TaL.setEnabled(false);
+			txtS4TaL.setEnabled(false);
+			txtS5TaL.setEnabled(false);
+			txtSetsV.setEnabled(false);
+			txtS1TavV.setEnabled(false);
+			txtS2TaV.setEnabled(false);
+			txtS3TaV.setEnabled(false);
+			txtS4TaV.setEnabled(false);
+			txtS5TaV.setEnabled(false);
+			
 		}
+		
 		//ESTABLECEMOS LOS DATOS DE LAS JORNADAS
 		definirDatosResultadosJornadasPorDefecto();
 		//ACTUALIZAR LAS JORNADAS
 		cambiarJornada(comboBoxJornadas, headerNJornadas);
 		//ACTUALIZAR CLASIFICACIÓN
 		actualizarPosicionClasifiacion();
+		listNombreEquiposLocal.setSelectedIndex(0);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	// -- METODOS (FUNCIONES) PRIVADAS --
@@ -1162,6 +1234,8 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	  
 	    // 6. ACTUALIZA LA ETIQUETA DEL NÚMERO DE JORNADA
 	    nJornada.setText("Nº " + (jornadaIndex + 1));
+	
+	    listNombreEquiposLocal.setSelectedIndex(0);
 	}
 	
 	private void definirDatosResultadosJornadasPorDefecto() {
@@ -1387,30 +1461,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 	
 	
 	
-	// -- EVENTO --
-    private void insertarResultadosJornada() {
-      
-    }
-    
-    private void limpiarJornada() {
-    	// usamos equipo porque esta dlm no cambia
-    	
-    }
-
-    /*ESTE METODO ES UNA ASISTENCIA PARA LOS EVENTOS DE INSERTAR, BORRAR Y LIMIPIAR 
-     * QUE SE ENCARGA DE ACTUALIZAR LOS DATOS DE LOS EQUIPOS EN SUS MATRICES*/
-    /**
-     * Sincroniza los datos de los DLM (la vista) con la matriz (el modelo)
-     * para la jornada seleccionada y recalcula la fila total de CADA equipo.
-     */
-    
-    
-	private void actualizarDatosMatrizJornadas() {
-	}
-    
-    private void sincronizarJornadaParaEquipo(int[][] matrizDelEquipo, int jornadaIndex, int dlmIndex) {
-      
-    }
     
     /*CALCULA EL TOTAL DE CADA PARAMETRO DE LA CLASIFICACION DE CADA EQUIPO --> Necesario para actualizar la clasificacion*/
     private void recalcularTotalParaEquipo(int[][] matrizDelEquipo) {
@@ -1433,7 +1483,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
        
        // Se itera sobre cada jornada (fila) en la matriz del equipo.
        // Suponiendo que la matrizDelEquipo.length es el número total de jornadas (10).
-       for (int J = 0; J < matrizDelEquipo.length; J++) {
+       for (int J = 0; J < ROW_TOTAL; J++) {
            // Calcular puntos
            puntosTotales += matrizDelEquipo[J][COL_PUNTOS];
            
@@ -1632,6 +1682,332 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     	   
         return posicion; // Devuelve el número de equipos que quedaron por encima
     }
+    
+
+	
+    private void insertarResultadosJornada() {
+        int partidoSeleccionado = listNombreEquiposLocal.getSelectedIndex();
+        int jornadaIndex = comboBoxJornadas.getSelectedIndex();
+        
+        int setsGanadosLocal = 0;
+        int setsGanadosVisitante = 0;
+       
+        
+        // 1. PRIMERO: Validar que no haya campos vacíos
+        if (txtS1TaL.getText().trim().isEmpty() || 
+            txtS2TaL.getText().trim().isEmpty() || 
+            txtS3TaL.getText().trim().isEmpty() || 
+            txtS4TaL.getText().trim().isEmpty() || 
+            txtS5TaL.getText().trim().isEmpty() ||
+            txtS1TavV.getText().trim().isEmpty() || 
+            txtS2TaV.getText().trim().isEmpty() || 
+            txtS3TaV.getText().trim().isEmpty() || 
+            txtS4TaV.getText().trim().isEmpty() || 
+            txtS5TaV.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Todos los campos deben estar completos.\nSi un set no se jugó, introduce 0.",
+                "Validación - Campos Vacíos", 
+                JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
+        
+        // 2. SEGUNDO: Parsear los valores (ahora sabemos que no están vacíos)
+        int s1TaL = Integer.parseInt(txtS1TaL.getText().trim());
+        int s2TaL = Integer.parseInt(txtS2TaL.getText().trim());
+        int s3TaL = Integer.parseInt(txtS3TaL.getText().trim());
+        int s4TaL = Integer.parseInt(txtS4TaL.getText().trim());
+        int s5TaL = Integer.parseInt(txtS5TaL.getText().trim());
+        
+        int s1TaV = Integer.parseInt(txtS1TavV.getText().trim());
+        int s2TaV = Integer.parseInt(txtS2TaV.getText().trim());
+        int s3TaV = Integer.parseInt(txtS3TaV.getText().trim());
+        int s4TaV = Integer.parseInt(txtS4TaV.getText().trim());
+        int s5TaV = Integer.parseInt(txtS5TaV.getText().trim());
+        
+        // 3. TERCERO: Validar que no haya valores negativos
+        if (s1TaL < 0 || s2TaL < 0 || s3TaL < 0 || s4TaL < 0 || s5TaL < 0 ||
+            s1TaV < 0 || s2TaV < 0 || s3TaV < 0 || s4TaV < 0 || s5TaV < 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Los tantos no pueden ser negativos.",
+                "Validación - Valores Negativos", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }  
+        
+        // 4. Al menos los 3 primeros sets deben estar jugados (al menos un equipo con tantos > 0)
+        if ((s1TaL == 0 && s1TaV == 0) || 
+            (s2TaL == 0 && s2TaV == 0) || 
+            (s3TaL == 0 && s3TaV == 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Los sets 1, 2 y 3 son obligatorios. Al menos un equipo debe tener tantos en cada uno.",
+                "Validación - Sets Obligatorios", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // 5. Comprobar empates (solo en sets que se jugaron)
+        if ((s1TaL == s1TaV && s1TaL > 0) || 
+            (s2TaL == s2TaV && s2TaL > 0) || 
+            (s3TaL == s3TaV && s3TaL > 0) ||
+            (s4TaL == s4TaV && s4TaL > 0) ||
+            (s5TaL == s5TaV && s5TaL > 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: No puede haber empates en los sets.\nCada set debe tener un ganador claro.",
+                "Validación - Empate No Permitido", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+     // 6. CALCULAR SETS GANADOS (solo contar sets que se jugaron)
+        // Set 1
+        if (s1TaL > 0 || s1TaV > 0) {  // Solo si el set se jugó
+            if (s1TaL > s1TaV) setsGanadosLocal++; 
+            else if (s1TaV > s1TaL) setsGanadosVisitante++;
+        }
+
+        // Set 2
+        if (s2TaL > 0 || s2TaV > 0) {
+            if (s2TaL > s2TaV) setsGanadosLocal++; 
+            else if (s2TaV > s2TaL) setsGanadosVisitante++;
+        }
+
+        // Set 3
+        if (s3TaL > 0 || s3TaV > 0) {
+            if (s3TaL > s3TaV) setsGanadosLocal++; 
+            else if (s3TaV > s3TaL) setsGanadosVisitante++;
+        }
+
+        // Set 4
+        if (s4TaL > 0 || s4TaV > 0) {
+            if (s4TaL > s4TaV) setsGanadosLocal++; 
+            else if (s4TaV > s4TaL) setsGanadosVisitante++;
+        }
+
+        // Set 5
+        if (s5TaL > 0 || s5TaV > 0) {
+            if (s5TaL > s5TaV) setsGanadosLocal++; 
+            else if (s5TaV > s5TaL) setsGanadosVisitante++;
+        }
+        
+        // 7. Validar que haya un ganador (3 sets)
+        if (setsGanadosLocal != 3 && setsGanadosVisitante != 3) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: El partido no está completo. Un equipo debe ganar 3 sets.",
+                "Validación - Partido Incompleto", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // 8. Validar que no se jueguen sets de más (SI YA HAY GANADOR)
+        int totalSetsJugados = setsGanadosLocal + setsGanadosVisitante;
+        
+        // Si terminó 3-0, los sets 4 y 5 deben estar en 0
+        if (totalSetsJugados == 3 && (s4TaL > 0 || s4TaV > 0 || s5TaL > 0 || s5TaV > 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Si el partido terminó 3-0, los sets 4 y 5 deben estar en 0.",
+                "Validación - Sets Extra", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Si terminó 3-1, el set 5 debe estar en 0
+        if (totalSetsJugados == 4 && (s5TaL > 0 || s5TaV > 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Si el partido terminó 3-1, el set 5 debe estar en 0.",
+                "Validación - Sets Extra", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+     // 10. ACTUALIZAR DLMs
+        txtSestL.setText(Integer.toString(setsGanadosLocal));
+        dlmJornadaSetsL.set(partidoSeleccionado, setsGanadosLocal);
+        dlmJornadaS1TAL.set(partidoSeleccionado, s1TaL);
+        dlmJornadaS2TAL.set(partidoSeleccionado, s2TaL);
+        dlmJornadaS3TAL.set(partidoSeleccionado, s3TaL);
+        dlmJornadaS4TAL.set(partidoSeleccionado, s4TaL);
+        dlmJornadaS5TAL.set(partidoSeleccionado, s5TaL);
+
+        txtSetsV.setText(Integer.toString(setsGanadosVisitante));
+        dlmJornadaSetsV.set(partidoSeleccionado, setsGanadosVisitante);
+        dlmJornadaS1TAV.set(partidoSeleccionado, s1TaV);
+        dlmJornadaS2TAV.set(partidoSeleccionado, s2TaV);
+        dlmJornadaS3TAV.set(partidoSeleccionado, s3TaV);
+        dlmJornadaS4TAV.set(partidoSeleccionado, s4TaV);
+        dlmJornadaS5TAV.set(partidoSeleccionado, s5TaV);
+
+        // 11. ACTUALIZAR MATRICES DIRECTAMENTE
+        String nombreEquipoLocal = lblEquipoLocal_ResultadoPartido.getText();
+        String nombreEquipoVisitante = lblEquipoVisitante_ResultadoPartido.getText();
+
+        int[][] matriz_eq_local = obtenterMatrizPorNombreEquipo(nombreEquipoLocal);
+        int[][] matriz_eq_visitante = obtenterMatrizPorNombreEquipo(nombreEquipoVisitante);
+
+ 
+        // Determinar ganador
+        boolean isLocalWinner = setsGanadosLocal > setsGanadosVisitante;
+        boolean isVisitanteWinner = setsGanadosVisitante > setsGanadosLocal;
+
+        // Calcular puntos: 2 por victoria, 1 por derrota
+        int puntosLocal = isLocalWinner ? 2 : 1;
+        int puntosVisitante = isVisitanteWinner ? 2 : 1;
+
+        // MATRIZ EQUIPO LOCAL
+        matriz_eq_local[jornadaIndex][COL_PUNTOS] = puntosLocal;
+        matriz_eq_local[jornadaIndex][COL_SG] = setsGanadosLocal;
+        matriz_eq_local[jornadaIndex][COL_SP] = setsGanadosVisitante;
+        matriz_eq_local[jornadaIndex][COL_TA] = s1TaL + s2TaL + s3TaL + s4TaL + s5TaL;
+        matriz_eq_local[jornadaIndex][COL_TC] = s1TaV + s2TaV + s3TaV + s4TaV + s5TaV;
+        matriz_eq_local[jornadaIndex][COL_S1_TA] = s1TaL;
+        matriz_eq_local[jornadaIndex][COL_S2_TA] = s2TaL;
+        matriz_eq_local[jornadaIndex][COL_S3_TA] = s3TaL;
+        matriz_eq_local[jornadaIndex][COL_S4_TA] = s4TaL;
+        matriz_eq_local[jornadaIndex][COL_S5_TA] = s5TaL;
+        matriz_eq_local[jornadaIndex][COL_PG] = isLocalWinner ? 1 : 0;
+        matriz_eq_local[jornadaIndex][COL_PP] = isLocalWinner ? 0 : 1;
+        matriz_eq_local[jornadaIndex][COL_PJ] = 1;
+
+        // MATRIZ EQUIPO VISITANTE
+        matriz_eq_visitante[jornadaIndex][COL_PUNTOS] = puntosVisitante;
+        matriz_eq_visitante[jornadaIndex][COL_SG] = setsGanadosVisitante;
+        matriz_eq_visitante[jornadaIndex][COL_SP] = setsGanadosLocal;
+        matriz_eq_visitante[jornadaIndex][COL_TA] = s1TaV + s2TaV + s3TaV + s4TaV + s5TaV;
+        matriz_eq_visitante[jornadaIndex][COL_TC] = s1TaL + s2TaL + s3TaL + s4TaL + s5TaL;
+        matriz_eq_visitante[jornadaIndex][COL_S1_TA] = s1TaV;
+        matriz_eq_visitante[jornadaIndex][COL_S2_TA] = s2TaV;
+        matriz_eq_visitante[jornadaIndex][COL_S3_TA] = s3TaV;
+        matriz_eq_visitante[jornadaIndex][COL_S4_TA] = s4TaV;
+        matriz_eq_visitante[jornadaIndex][COL_S5_TA] = s5TaV;
+        matriz_eq_visitante[jornadaIndex][COL_PG] = isVisitanteWinner ? 1 : 0;
+        matriz_eq_visitante[jornadaIndex][COL_PP] = isVisitanteWinner ? 0 : 1;
+        matriz_eq_visitante[jornadaIndex][COL_PJ] = 1;
+
+        // 12. Recalcular totales
+        recalcularTotalParaEquipo(matriz_eq_local);
+        recalcularTotalParaEquipo(matriz_eq_visitante);
+
+        // 13. ACTUALIZAR CLASIFICACIÓN
+        actualizarPosicionClasifiacion();
+
+
+        // 14. MENSAJE DE ÉXITO
+        JOptionPane.showMessageDialog(this, 
+            "Resultados guardados correctamente.",
+            "Guardado Exitoso", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void borrarPatido() {
+        int partidoSeleccionado = listNombreEquiposLocal.getSelectedIndex();
+        
+        // 1. PRIMERO: Actualizar las DLM a 0
+        dlmJornadaSetsL.set(partidoSeleccionado, 0);
+        dlmJornadaS1TAL.set(partidoSeleccionado, 0);
+        dlmJornadaS2TAL.set(partidoSeleccionado, 0);
+        dlmJornadaS3TAL.set(partidoSeleccionado, 0);
+        dlmJornadaS4TAL.set(partidoSeleccionado, 0);
+        dlmJornadaS5TAL.set(partidoSeleccionado, 0);
+        
+        dlmJornadaSetsV.set(partidoSeleccionado, 0);
+        dlmJornadaS1TAV.set(partidoSeleccionado, 0);
+        dlmJornadaS2TAV.set(partidoSeleccionado, 0);
+        dlmJornadaS3TAV.set(partidoSeleccionado, 0);
+        dlmJornadaS4TAV.set(partidoSeleccionado, 0);
+        dlmJornadaS5TAV.set(partidoSeleccionado, 0);
+        
+        // 2. SEGUNDO: Obtener los equipos del partido seleccionado
+        String nombreEquipoLocal = dlmJornadasEqLocal.get(partidoSeleccionado);
+        String nombreEquipoVisitante = dlmJornadasEqVisitante.get(partidoSeleccionado);
+        
+        int[][] matrizEquipoLocal = obtenterMatrizPorNombreEquipo(nombreEquipoLocal);
+        int[][] matrizEquipoVisitante = obtenterMatrizPorNombreEquipo(nombreEquipoVisitante);
+        
+        int jornadaIndex = comboBoxJornadas.getSelectedIndex();
+        
+        // 3. TERCERO: Poner a 0 en las matrices
+        asignarResultadosJornada(matrizEquipoLocal, jornadaIndex, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        asignarResultadosJornada(matrizEquipoVisitante, jornadaIndex, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+       
+        
+        // 4. CUARTO: Recalcular totales
+        recalcularTotalParaEquipo(matrizEquipoLocal);
+        recalcularTotalParaEquipo(matrizEquipoVisitante);
+        
+        // 5. QUINTO: Actualizar clasificación
+        actualizarPosicionClasifiacion();
+        
+        // 6. SEXTO: Actualizar la vista de los JTextField
+        txtSestL.setText("0");
+        txtS1TaL.setText("0");
+        txtS2TaL.setText("0");
+        txtS3TaL.setText("0");
+        txtS4TaL.setText("0");
+        txtS5TaL.setText("0");
+        txtSetsV.setText("0");
+        txtS1TavV.setText("0");
+        txtS2TaV.setText("0");
+        txtS3TaV.setText("0");
+        txtS4TaV.setText("0");
+        txtS5TaV.setText("0");
+    }
+    
+    private void limpiarJornada() {
+        int jornadaIndex = comboBoxJornadas.getSelectedIndex();
+        
+        // 1. PRIMERO: Limpiar todas las DLM de la jornada
+        for(int i = 0; i < (equipos.length/2); i++) {
+            dlmJornadaSetsL.set(i, 0);
+            dlmJornadaS1TAL.set(i, 0);
+            dlmJornadaS2TAL.set(i, 0);
+            dlmJornadaS3TAL.set(i, 0);
+            dlmJornadaS4TAL.set(i, 0);
+            dlmJornadaS5TAL.set(i, 0);
+            
+            dlmJornadaSetsV.set(i, 0);
+            dlmJornadaS1TAV.set(i, 0);
+            dlmJornadaS2TAV.set(i, 0);
+            dlmJornadaS3TAV.set(i, 0);
+            dlmJornadaS4TAV.set(i, 0);
+            dlmJornadaS5TAV.set(i, 0);
+        }
+        
+        // 2. SEGUNDO: Limpiar las matrices de todos los partidos de la jornada
+        for (int i = 0; i < dlmJornadasEqLocal.getSize(); i++) {
+            String nombreEquipoLocal = dlmJornadasEqLocal.get(i);
+            String nombreEquipoVisitante = dlmJornadasEqVisitante.get(i);
+            
+            int[][] matrizEquipoLocal = obtenterMatrizPorNombreEquipo(nombreEquipoLocal);
+            int[][] matrizEquipoVisitante = obtenterMatrizPorNombreEquipo(nombreEquipoVisitante);
+            
+            // Poner a 0 en las matrices
+            asignarResultadosJornada(matrizEquipoLocal, jornadaIndex, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            asignarResultadosJornada(matrizEquipoVisitante, jornadaIndex, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            
+            // Recalcular totales
+            recalcularTotalParaEquipo(matrizEquipoLocal);
+            recalcularTotalParaEquipo(matrizEquipoVisitante);
+        }
+        
+        // 3. TERCERO: Actualizar clasificación
+        actualizarPosicionClasifiacion();
+        
+        // 4. CUARTO: Actualizar vista si hay un partido seleccionado
+        int partidoSeleccionado = listNombreEquiposLocal.getSelectedIndex();
+        if(partidoSeleccionado >= 0) {
+            txtSestL.setText("0");
+            txtS1TaL.setText("0");
+            txtS2TaL.setText("0");
+            txtS3TaL.setText("0");
+            txtS4TaL.setText("0");
+            txtS5TaL.setText("0");
+            txtSetsV.setText("0");
+            txtS1TavV.setText("0");
+            txtS2TaV.setText("0");
+            txtS3TaV.setText("0");
+            txtS4TaV.setText("0");
+            txtS5TaV.setText("0");
+        }
+    }
+   
         
 // ---------------------- EVENT LISTENERS ------------------------------------ //    
     
@@ -1664,16 +2040,39 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		}
 			
 		// SOLO EL ARBITRO PUEDE EJECTUTAR ESTOS EVENTOS
-		if(o == btnInsertar_resultadosJornadas && username.equals(Login.arbitro_user)) {
+		if(o == btnGuardarCambios_resultadosJornadas && username.equals(Login.arbitro_user)) {
 			insertarResultadosJornada();
 		}
 		
 		if(o == btnBorrar_resultadosJornadas && username.equals(Login.arbitro_user)) {
-         
+			int respuesta = JOptionPane.showConfirmDialog(
+				    this,
+				    "¿Está seguro de que desea eliminar todos los datos del partido?\n\nEsta acción no se puede deshacer.",
+				    "Advertencia - Borrar Partido",
+				    JOptionPane.YES_NO_OPTION,
+				    JOptionPane.WARNING_MESSAGE
+				);
+
+				if (respuesta == JOptionPane.YES_OPTION) {
+					borrarPatido();
+				    JOptionPane.showMessageDialog(this, "Datos del partido eliminados correctamente.");
+				}
 		}
 		
 		if(o == btnLimpiar_resultadosJornadas && username.equals(Login.arbitro_user)) {
-			limpiarJornada();
+			// PARA EVITAR QUE EL USUARIO BORRE SIN QUERER LOS DATOS
+			int respuesta = JOptionPane.showConfirmDialog(
+				    this,
+				    "¿Está seguro de que desea eliminar todos los datos de la jornada?\n\nEsta acción no se puede deshacer.",
+				    "Advertencia - Limpiar Jornada",
+				    JOptionPane.YES_NO_OPTION,
+				    JOptionPane.WARNING_MESSAGE
+				);
+
+				if (respuesta == JOptionPane.YES_OPTION) {
+				    limpiarJornada();
+				    JOptionPane.showMessageDialog(this, "Datos de la jornada eliminados correctamente.");
+				}
 		}
 		
 	}
@@ -1684,9 +2083,76 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 		Object o = lse.getSource();
 		int index;
 		index = ((JList<?>)o).getSelectedIndex();
+		
+		// SINCRONIZAR SELECCIÓN
 		if(index >= 0) {
-			
-			
+			listNombreEquiposLocal.setSelectedIndex(index);
+			listSetsLocales.setSelectedIndex(index); 
+			listS1TL.setSelectedIndex(index);
+			listS2TL.setSelectedIndex(index);
+			listS3TL.setSelectedIndex(index);
+			listS4TL.setSelectedIndex(index);
+			listS5TL.setSelectedIndex(index);
+			listNombreEquiposVisitantes.setSelectedIndex(index);
+			listSetsVisitantes.setSelectedIndex(index);
+			listS1TV.setSelectedIndex(index);
+			listS2TV.setSelectedIndex(index);
+			listS3TV.setSelectedIndex(index);
+			listS4TV.setSelectedIndex(index);
+			listS5TV.setSelectedIndex(index);
 		}	
+		// SINCRONIZAR NOMBRE EQUIPOS, Y JTEXTFIELDS
+		if(index >= 0 &&
+	        index < dlmJornadasEqLocal.getSize() &&
+	        index < dlmJornadasEqVisitante.getSize() &&
+	        index < dlmJornadaSetsL.getSize() &&
+	        index < dlmJornadaS1TAL.getSize() &&
+	        index < dlmJornadaS2TAL.getSize() &&
+	        index < dlmJornadaS3TAL.getSize() &&
+	        index < dlmJornadaS4TAL.getSize() &&
+	        index < dlmJornadaS5TAL.getSize() &&
+	        index < dlmJornadaSetsV.getSize() &&
+	        index < dlmJornadaS1TAV.getSize() &&
+	        index < dlmJornadaS2TAV.getSize() &&
+	        index < dlmJornadaS3TAV.getSize() &&
+	        index < dlmJornadaS4TAV.getSize() &&
+	        index < dlmJornadaS5TAV.getSize()) {
+			// UNA VEZ COMPROBADO QUE PODEMOS ACCEDER ALAS DLM ACTUALIZAMOS LOS JTEXT FIELDS Y LOS NOMBRES DE LOS EQUIPOS
+			//--LOCALES--
+			lblEquipoLocal_ResultadoPartido.setText(dlmJornadasEqLocal.get(index));
+			txtSestL.setText(Integer.toString(dlmJornadaSetsL.get(index)));
+			txtS1TaL.setText(Integer.toString(dlmJornadaS1TAL.get(index)));
+			txtS2TaL.setText(Integer.toString(dlmJornadaS2TAL.get(index)));
+			txtS3TaL.setText(Integer.toString(dlmJornadaS3TAL.get(index)));
+			txtS4TaL.setText(Integer.toString(dlmJornadaS4TAL.get(index)));
+			txtS5TaL.setText(Integer.toString(dlmJornadaS5TAL.get(index)));
+			//--VISITANTES--
+			lblEquipoVisitante_ResultadoPartido.setText(dlmJornadasEqVisitante.get(index));
+			txtSetsV.setText(Integer.toString(dlmJornadaSetsV.get(index)));
+			txtS1TavV.setText(Integer.toString(dlmJornadaS1TAV.get(index)));
+			txtS2TaV.setText(Integer.toString(dlmJornadaS2TAV.get(index)));
+			txtS3TaV.setText(Integer.toString(dlmJornadaS3TAV.get(index)));
+			txtS4TaV.setText(Integer.toString(dlmJornadaS4TAV.get(index)));
+			txtS5TaV.setText(Integer.toString(dlmJornadaS5TAV.get(index)));
+			
+		} else {
+			//--LOCALES--
+			lblEquipoLocal_ResultadoPartido.setText("EQUIPO LOCAL");
+			txtSestL.setText("");
+			txtS1TaL.setText("");
+			txtS2TaL.setText("");
+			txtS3TaL.setText("");
+			txtS4TaL.setText("");
+			txtS5TaL.setText("");
+			//--VISITANTES--
+			lblEquipoVisitante_ResultadoPartido.setText("EQUIPO VISITANTE");
+			txtSetsV.setText("");
+			txtS1TavV.setText("");
+			txtS2TaV.setText("");
+			txtS3TaV.setText("");
+			txtS4TaV.setText("");
+			txtS5TaV.setText("");
+			
+		}
 	}
 }

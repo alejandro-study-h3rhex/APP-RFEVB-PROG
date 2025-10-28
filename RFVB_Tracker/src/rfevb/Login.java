@@ -36,12 +36,9 @@ public class Login extends JFrame implements ActionListener{
 	
 	/*USUARIOS Y CONTRASEÑAS*/
 	
-	//public static String arbitro_user = "arbitro_rfvb";
-	//private String arbitro_password ="Jorn4da";
-	
-	public static String arbitro_user = "arbitro";
-	private String arbitro_password ="arbitro";
-	public static String anonimo_user = "anonimo";
+	public static String arbitro_user = "arbitro_rfvb";
+	private String arbitro_password ="Jorn4da";
+	private static String anonimo_user = "anonimo";
 	private String anonimo_password = "anonimo";
 	
 
@@ -87,7 +84,7 @@ public class Login extends JFrame implements ActionListener{
 		lbl_Icono.setIcon(new ImageIcon(Login.class.getResource("assets/favicon/icono-federacion.png")));
 		northPanel.add(lbl_Icono);
 		
-		JLabel lbl_titulo_federacion = new JLabel("Real Federacion Española de Voleibol");
+		JLabel lbl_titulo_federacion = new JLabel("Real Federación Española de Voleibol");
 		lbl_titulo_federacion.setForeground(new Color(0, 128, 192));
 		lbl_titulo_federacion.setFont(new Font("Leelawadee", lbl_titulo_federacion.getFont().getStyle() | Font.BOLD, 25));
 		northPanel.add(lbl_titulo_federacion);
