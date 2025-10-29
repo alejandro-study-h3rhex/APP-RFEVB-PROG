@@ -1685,6 +1685,31 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
     
 
 	
+ // Método auxiliar para verificar diferencias desproporcionadas (devuelve true si el usuario cancela)
+    private boolean verificarDiferenciaDesproporcionada(int tantosGanador, int tantosPerdedor, int numeroSet) {
+        int diferencia = tantosGanador - tantosPerdedor;
+        
+        // Para sets 1-4: advertir si la diferencia es mayor a 10 puntos
+        // Para set 5: advertir si la diferencia es mayor a 7 puntos
+        int umbralAdvertencia = (numeroSet == 5) ? 7 : 10;
+        
+        if (diferencia > umbralAdvertencia) {
+            int respuesta = JOptionPane.showConfirmDialog(this,
+                "Advertencia: El set " + numeroSet + " tiene una diferencia de " + diferencia + " tantos (" + 
+                tantosGanador + "-" + tantosPerdedor + ").\n" +
+                "Esta diferencia es muy grande y poco común en voleibol.\n\n" +
+                "¿Está seguro de que los datos son correctos?",
+                "Advertencia - Diferencia Desproporcionada",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+            
+            if (respuesta == JOptionPane.NO_OPTION) {
+                return true; // Usuario canceló
+            }
+        }
+        return false; // Continuar
+    }
+
     private void insertarResultadosJornada() {
         int partidoSeleccionado = listNombreEquiposLocal.getSelectedIndex();
         int jornadaIndex = comboBoxJornadas.getSelectedIndex();
@@ -1711,7 +1736,28 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             return; 
         }
         
-        // 2. SEGUNDO: Parsear los valores (ahora sabemos que no están vacíos)
+        // 2. SEGUNDO: Validar que sean números enteros válidos (solo dígitos 0-9)
+        String regex = "^\\d+$";  // Solo acepta números enteros positivos
+        
+        if (!txtS1TaL.getText().trim().matches(regex) || 
+            !txtS2TaL.getText().trim().matches(regex) || 
+            !txtS3TaL.getText().trim().matches(regex) || 
+            !txtS4TaL.getText().trim().matches(regex) || 
+            !txtS5TaL.getText().trim().matches(regex) ||
+            !txtS1TavV.getText().trim().matches(regex) || 
+            !txtS2TaV.getText().trim().matches(regex) || 
+            !txtS3TaV.getText().trim().matches(regex) || 
+            !txtS4TaV.getText().trim().matches(regex) || 
+            !txtS5TaV.getText().trim().matches(regex)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Los tantos deben ser números enteros válidos.\n" +
+                "Solo se permiten dígitos del 0 al 9.",
+                "Validación - Formato Incorrecto", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // 3. TERCERO: Parsear los valores (ahora sabemos que son números válidos)
         int s1TaL = Integer.parseInt(txtS1TaL.getText().trim());
         int s2TaL = Integer.parseInt(txtS2TaL.getText().trim());
         int s3TaL = Integer.parseInt(txtS3TaL.getText().trim());
@@ -1723,16 +1769,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
         int s3TaV = Integer.parseInt(txtS3TaV.getText().trim());
         int s4TaV = Integer.parseInt(txtS4TaV.getText().trim());
         int s5TaV = Integer.parseInt(txtS5TaV.getText().trim());
-        
-        // 3. TERCERO: Validar que no haya valores negativos
-        if (s1TaL < 0 || s2TaL < 0 || s3TaL < 0 || s4TaL < 0 || s5TaL < 0 ||
-            s1TaV < 0 || s2TaV < 0 || s3TaV < 0 || s4TaV < 0 || s5TaV < 0) {
-            JOptionPane.showMessageDialog(this, 
-                "Error: Los tantos no pueden ser negativos.",
-                "Validación - Valores Negativos", 
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }  
         
         // 4. Al menos los 3 primeros sets deben estar jugados (al menos un equipo con tantos > 0)
         if ((s1TaL == 0 && s1TaV == 0) || 
@@ -1758,38 +1794,221 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             return;
         }
         
-     // 6. CALCULAR SETS GANADOS (solo contar sets que se jugaron)
+        // 6. CALCULAR SETS GANADOS (solo contar sets que se jugaron)
         // Set 1
-        if (s1TaL > 0 || s1TaV > 0) {  // Solo si el set se jugó
+        if (s1TaL > 0 || s1TaV > 0) {
+            int diferencia = s1TaL - s1TaV;
+            if (diferencia < 2 && diferencia > -2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El set 1 debe tener una diferencia mínima de 2 tantos.",
+                    "Validación - Diferencia Insuficiente", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int ganadorS1 = (s1TaL > s1TaV) ? s1TaL : s1TaV;
+            int perdedorS1 = (s1TaL > s1TaV) ? s1TaV : s1TaL;
+            
+            if (ganadorS1 < 25) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El ganador del set 1 debe tener al menos 25 tantos.",
+                    "Validación - Tantos Insuficientes", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (perdedorS1 >= 25 && (ganadorS1 - perdedorS1) != 2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: En el set 1, cuando ambos equipos tienen 25+ tantos, la diferencia debe ser exactamente 2.",
+                    "Validación - Diferencia Incorrecta", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Advertencia de diferencia desproporcionada
+            if (verificarDiferenciaDesproporcionada(ganadorS1, perdedorS1, 1)) {
+                return; // Usuario canceló
+            }
+            
             if (s1TaL > s1TaV) setsGanadosLocal++; 
             else if (s1TaV > s1TaL) setsGanadosVisitante++;
         }
 
         // Set 2
         if (s2TaL > 0 || s2TaV > 0) {
+            int diferencia = s2TaL - s2TaV;
+            if (diferencia < 2 && diferencia > -2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El set 2 debe tener una diferencia mínima de 2 tantos.",
+                    "Validación - Diferencia Insuficiente", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int ganadorS2 = (s2TaL > s2TaV) ? s2TaL : s2TaV;
+            int perdedorS2 = (s2TaL > s2TaV) ? s2TaV : s2TaL;
+            
+            if (ganadorS2 < 25) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El ganador del set 2 debe tener al menos 25 tantos.",
+                    "Validación - Tantos Insuficientes", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (perdedorS2 >= 25 && (ganadorS2 - perdedorS2) != 2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: En el set 2, cuando ambos equipos tienen 25+ tantos, la diferencia debe ser exactamente 2.",
+                    "Validación - Diferencia Incorrecta", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Advertencia de diferencia desproporcionada
+            if (verificarDiferenciaDesproporcionada(ganadorS2, perdedorS2, 2)) {
+                return; // Usuario canceló
+            }
+            
             if (s2TaL > s2TaV) setsGanadosLocal++; 
             else if (s2TaV > s2TaL) setsGanadosVisitante++;
         }
 
         // Set 3
         if (s3TaL > 0 || s3TaV > 0) {
+            int diferencia = s3TaL - s3TaV;
+            if (diferencia < 2 && diferencia > -2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El set 3 debe tener una diferencia mínima de 2 tantos.",
+                    "Validación - Diferencia Insuficiente", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int ganadorS3 = (s3TaL > s3TaV) ? s3TaL : s3TaV;
+            int perdedorS3 = (s3TaL > s3TaV) ? s3TaV : s3TaL;
+            
+            if (ganadorS3 < 25) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El ganador del set 3 debe tener al menos 25 tantos.",
+                    "Validación - Tantos Insuficientes", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (perdedorS3 >= 25 && (ganadorS3 - perdedorS3) != 2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: En el set 3, cuando ambos equipos tienen 25+ tantos, la diferencia debe ser exactamente 2.",
+                    "Validación - Diferencia Incorrecta", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Advertencia de diferencia desproporcionada
+            if (verificarDiferenciaDesproporcionada(ganadorS3, perdedorS3, 3)) {
+                return; // Usuario canceló
+            }
+            
             if (s3TaL > s3TaV) setsGanadosLocal++; 
             else if (s3TaV > s3TaL) setsGanadosVisitante++;
         }
-
-        // Set 4
+        
+        // 7. VALIDAR QUE NO HAYA GANADOR ANTES DEL SET 4
+        if ((setsGanadosLocal == 3 || setsGanadosVisitante == 3) && (s4TaL > 0 || s4TaV > 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Ya hay un ganador con 3 sets. No se puede jugar el set 4.",
+                "Validación - Ganador Definido", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Set 4 - Solo si no hay ganador aún
         if (s4TaL > 0 || s4TaV > 0) {
+            int diferencia = s4TaL - s4TaV;
+            if (diferencia < 2 && diferencia > -2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El set 4 debe tener una diferencia mínima de 2 tantos.",
+                    "Validación - Diferencia Insuficiente", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int ganadorS4 = (s4TaL > s4TaV) ? s4TaL : s4TaV;
+            int perdedorS4 = (s4TaL > s4TaV) ? s4TaV : s4TaL;
+            
+            if (ganadorS4 < 25) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El ganador del set 4 debe tener al menos 25 tantos.",
+                    "Validación - Tantos Insuficientes", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (perdedorS4 >= 25 && (ganadorS4 - perdedorS4) != 2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: En el set 4, cuando ambos equipos tienen 25+ tantos, la diferencia debe ser exactamente 2.",
+                    "Validación - Diferencia Incorrecta", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Advertencia de diferencia desproporcionada
+            if (verificarDiferenciaDesproporcionada(ganadorS4, perdedorS4, 4)) {
+                return; // Usuario canceló
+            }
+            
             if (s4TaL > s4TaV) setsGanadosLocal++; 
             else if (s4TaV > s4TaL) setsGanadosVisitante++;
         }
+        
+        // 8. VALIDAR QUE NO HAYA GANADOR ANTES DEL SET 5
+        if ((setsGanadosLocal == 3 || setsGanadosVisitante == 3) && (s5TaL > 0 || s5TaV > 0)) {
+            JOptionPane.showMessageDialog(this, 
+                "Error: Ya hay un ganador con 3 sets. No se puede jugar el set 5.",
+                "Validación - Ganador Definido", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        // Set 5
+        // Set 5 - Solo si no hay ganador aún (mínimo 15 tantos)
         if (s5TaL > 0 || s5TaV > 0) {
+            int diferencia = s5TaL - s5TaV;
+            if (diferencia < 2 && diferencia > -2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El set 5 debe tener una diferencia mínima de 2 tantos.",
+                    "Validación - Diferencia Insuficiente", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int ganadorS5 = (s5TaL > s5TaV) ? s5TaL : s5TaV;
+            int perdedorS5 = (s5TaL > s5TaV) ? s5TaV : s5TaL;
+            
+            if (ganadorS5 < 15) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: El ganador del set 5 debe tener al menos 15 tantos.",
+                    "Validación - Tantos Insuficientes", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (perdedorS5 >= 15 && (ganadorS5 - perdedorS5) != 2) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error: En el set 5, cuando ambos equipos tienen 15+ tantos, la diferencia debe ser exactamente 2.",
+                    "Validación - Diferencia Incorrecta", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Advertencia de diferencia desproporcionada
+            if (verificarDiferenciaDesproporcionada(ganadorS5, perdedorS5, 5)) {
+                return; // Usuario canceló
+            }
+            
             if (s5TaL > s5TaV) setsGanadosLocal++; 
             else if (s5TaV > s5TaL) setsGanadosVisitante++;
         }
         
-        // 7. Validar que haya un ganador (3 sets)
+        // 9. Validar que haya un ganador al final (3 sets)
         if (setsGanadosLocal != 3 && setsGanadosVisitante != 3) {
             JOptionPane.showMessageDialog(this, 
                 "Error: El partido no está completo. Un equipo debe ganar 3 sets.",
@@ -1798,27 +2017,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
             return;
         }
         
-        // 8. Validar que no se jueguen sets de más (SI YA HAY GANADOR)
-        int totalSetsJugados = setsGanadosLocal + setsGanadosVisitante;
-        
-        // Si terminó 3-0, los sets 4 y 5 deben estar en 0
-        if (totalSetsJugados == 3 && (s4TaL > 0 || s4TaV > 0 || s5TaL > 0 || s5TaV > 0)) {
-            JOptionPane.showMessageDialog(this, 
-                "Error: Si el partido terminó 3-0, los sets 4 y 5 deben estar en 0.",
-                "Validación - Sets Extra", 
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Si terminó 3-1, el set 5 debe estar en 0
-        if (totalSetsJugados == 4 && (s5TaL > 0 || s5TaV > 0)) {
-            JOptionPane.showMessageDialog(this, 
-                "Error: Si el partido terminó 3-1, el set 5 debe estar en 0.",
-                "Validación - Sets Extra", 
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-     // 10. ACTUALIZAR DLMs
+        // 10. ACTUALIZAR DLMs
         txtSestL.setText(Integer.toString(setsGanadosLocal));
         dlmJornadaSetsL.set(partidoSeleccionado, setsGanadosLocal);
         dlmJornadaS1TAL.set(partidoSeleccionado, s1TaL);
@@ -1842,7 +2041,7 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
         int[][] matriz_eq_local = obtenterMatrizPorNombreEquipo(nombreEquipoLocal);
         int[][] matriz_eq_visitante = obtenterMatrizPorNombreEquipo(nombreEquipoVisitante);
 
- 
+     
         // Determinar ganador
         boolean isLocalWinner = setsGanadosLocal > setsGanadosVisitante;
         boolean isVisitanteWinner = setsGanadosVisitante > setsGanadosLocal;
@@ -1887,7 +2086,6 @@ public class AppPrincipal extends JFrame implements ActionListener, ListSelectio
 
         // 13. ACTUALIZAR CLASIFICACIÓN
         actualizarPosicionClasifiacion();
-
 
         // 14. MENSAJE DE ÉXITO
         JOptionPane.showMessageDialog(this, 
