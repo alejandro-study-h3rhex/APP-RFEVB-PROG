@@ -27,7 +27,7 @@ java version "21.0.x"
 
 ### Opción 1: Doble clic (más fácil)
 
-1. Localiza el archivo `gestion-voleibol.jar`
+1. Localiza el archivo `RFEVB-Tracker-v1.0.0.jar`
 2. Haz **doble clic** sobre el archivo
 3. La aplicación se abrirá automáticamente
 
@@ -42,7 +42,7 @@ java version "21.0.x"
    ```
 3. Ejecuta el comando:
    ```bash
-   java -jar gestion-voleibol.jar
+   java -jar RFEVB-Tracker-v1.0.0.jar
    ```
 
 ---
